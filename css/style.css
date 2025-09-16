@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+    padding: 1rem;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #eeeeee;
+    }
+}
+
+@media (min-width: 600px) {
+    body {
+        padding: 2rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
+
+#hero {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 10;
+    transition: height 0.1s ease-out;
+}
+
+#hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('../assets/images/background.png') center/cover;
+    filter: blur(0px);
+    transform: scale(1);
+    transition: all 0.1s ease-out;
+    will-change: filter, transform;
+}
+
+#hero-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-size: clamp(2.5rem, 16vmin, 8rem);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    transition: all 0.1s ease-out;
+    will-change: transform, font-size, left, top;
+}
+
+#content {
+    position: relative;
+    z-index: 1;
+    margin-top: 100vh;
+    padding: 1.5rem 0.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 480px) {
+    #hero-title {
+        font-size: clamp(1.5rem, 12vw, 3.5rem);
+        letter-spacing: 0.04em;
+    }
+    #content {
+        padding: 1rem 0.2rem;
+    }
+}
+
+@media (min-width: 900px) {
+    #content {
+        padding: 2.5rem 2rem;
+        max-width: 1200px;
+    }
+}
