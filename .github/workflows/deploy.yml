@@ -14,7 +14,7 @@ jobs:
       - name: 2. Rsync to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
-          switches: -avz --delete --exclude='.git*'
+          switches: -avz --delete --exclude='.git*' --chmod=Dg+rwx,Fg+rw
           path: ./
           remote_path: ${{ secrets.VPS_TARGET_DIR }}
           remote_host: ${{ secrets.VPS_HOST }}
