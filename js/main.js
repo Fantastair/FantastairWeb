@@ -6,6 +6,7 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e =
 
 const hero = document.getElementById('hero');
 const heroBg = document.getElementById('hero-bg');
+const heroIconWrapper = document.getElementById('hero-icon-wrapper');
 const heroTitle = document.getElementById('hero-title');
 const content = document.getElementById('content');
 
@@ -37,11 +38,10 @@ function updateHeroWhileScrolling() {
     const max = 8;
     heroTitle.style.fontSize = `clamp(${min}rem, ${ideal}vmin, ${max}rem)`;
 
-    const currentLeft = finalTitleLeft * ratio ** 2 + window.innerWidth * (1 - ratio ** 2) / 2;
-    const currentTop = finalTitleTop * ratio + window.innerHeight * (1 - ratio) / 2;
+    heroIconWrapper.style.top = `${-40 * ratio + (1 - ratio) * 40}vh`;
 
-    heroTitle.style.left = `${currentLeft}px`;
-    heroTitle.style.top = `${currentTop}px`;
+    heroTitle.style.left = `${finalTitleLeft * ratio ** 2 + window.innerWidth * (1 - ratio ** 2) / 2}px`;
+    heroTitle.style.top = `${finalTitleTop * ratio + window.innerHeight * (1 - ratio) * 0.55}px`;
     heroTitle.style.transform = `translate(-${50 * (1 - ratio ** 2)}%, -50%)`;
 }
 

@@ -48,9 +48,33 @@ body {
     will-change: filter, transform;
 }
 
+#hero-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20vmin;
+    height: 20vmin;
+    z-index: 11;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+#hero-icon {
+    width: 90%;
+    height: 90%;
+    display: block;
+    border-radius: 50%;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.18));
+}
+
 #hero-title {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;

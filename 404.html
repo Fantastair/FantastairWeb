@@ -3,91 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>页面未找到 - Fantastair</title>
+    <title>点击任意处返回首页</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="../assets/images/icon.ico">
-    <style>
-        /* 404页面特有样式 */
-        .error-container {
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-        
-        .error-code {
-            font-size: clamp(3rem, 20vmin, 10rem);
-            font-weight: 900;
-            margin-bottom: 1rem;
-            color: #444;
-            letter-spacing: 0.1em;
-        }
-        
-        .error-message {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #666;
-        }
-        
-        .home-link {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            background-color: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        .home-link:hover {
-            background-color: #555;
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            .error-code {
-                color: #ccc;
-            }
-            
-            .error-message {
-                color: #aaa;
-            }
-            
-            .home-link {
-                background-color: #eee;
-                color: #121212;
-            }
-            
-            .home-link:hover {
-                background-color: #fff;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .error-message {
-                font-size: 1.2rem;
-            }
-            
-            .home-link {
-                padding: 0.6rem 1.4rem;
-            }
-        }
-    </style>
 </head>
 <body>
 
     <div id="hero">
-        <div id="hero-bg"></div>
-        <h1 id="hero-title">Error</h1>
+        <a href="index.html"><div id="hero-bg"></div></a>
+        <h1 id="hero-title">404 NOT FOUND!</h1>
     </div>
 
-    <main id="content">
-        <section style="height: 40vh;"></section>
-        <div class="error-container">
-            <div class="error-code">404</div>
-            <p class="error-message">抱歉，您访问的页面不存在</p>
-            <a href="index.html" class="home-link">返回首页</a>
-        </div>
-        <section style="height: 40vh;"></section>
-    </main>
-
-    <script src="js/main.js"></script>
 </body>
 </html>
