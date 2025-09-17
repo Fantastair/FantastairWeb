@@ -35,16 +35,14 @@ body {
     height: 100vh;
     overflow: hidden;
     z-index: 10;
-    transition: height 0.1s ease-out;
 }
 
 #hero-bg {
     position: absolute;
     inset: 0;
-    background: url('../assets/images/background.png') center/cover;
+    background: url('../assets/images/background.webp') center/cover;
     filter: blur(0px);
     transform: scale(1);
-    transition: all 0.1s ease-out;
     will-change: filter, transform;
 }
 
@@ -59,9 +57,10 @@ body {
     transform: translate(-50%, -50%);
     width: 20vmin;
     height: 20vmin;
-    z-index: 11;
     background-color: #ffffff;
     border-radius: 50%;
+    will-change: top;
+    box-shadow: #00000033 0 6px 24px, #0000001a 0 2px 8px;
 }
 
 #hero-icon {
@@ -69,7 +68,7 @@ body {
     height: 90%;
     display: block;
     border-radius: 50%;
-    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.18));
+    box-shadow: #00000033 0 6px 24px, #0000001a 0 2px 8px;
 }
 
 #hero-title {
@@ -84,7 +83,6 @@ body {
     color: #ffffff;
     text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
     white-space: nowrap;
-    transition: all 0.1s ease-out;
     will-change: transform, font-size, left, top;
 }
 
@@ -112,5 +110,72 @@ body {
     #content {
         padding: 2.5rem 2rem;
         max-width: 1200px;
+    }
+}
+
+#top-nav {
+    position: fixed;
+    top: 0px;
+    right: 20px;
+    height: 60px;
+    z-index: 20;
+    display: flex;
+    gap: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+#top-nav.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 12px;
+    top: 50%;
+    /* transform: translateY(-50%); */
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    transform: translateY(-2px);
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+
+.nav-text {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    #top-nav {
+        top: 15px;
+        right: 15px;
+        gap: 10px;
+    }
+    
+    .nav-item {
+        padding: 10px;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+    }
+    
+    .nav-text {
+        display: none;
+    }
+    
+    .nav-icon {
+        margin-right: 0;
+        font-size: 1.4rem;
     }
 }

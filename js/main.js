@@ -9,6 +9,7 @@ const heroBg = document.getElementById('hero-bg');
 const heroIconWrapper = document.getElementById('hero-icon-wrapper');
 const heroTitle = document.getElementById('hero-title');
 const content = document.getElementById('content');
+const topNav = document.getElementById('top-nav');
 
 const finalHeight = 60;
 const finalTitleTop = finalHeight / 2;
@@ -16,17 +17,27 @@ const finalTitleLeft = finalHeight / 4;
 
 let navLocked = false;
 
+function lockHero() {
+    navLocked = true;
+    topNav.classList.add('show');
+}
+
+function unlockHero() {
+    navLocked = false;
+    topNav.classList.remove('show');
+}
+
 function updateHeroWhileScrolling() {
     const scrollY = window.scrollY;
     const rawRatio = scrollY / (window.innerHeight - finalHeight);
     const ratio = Math.min(rawRatio, 1);
 
     if (navLocked && ratio < 1) {
-        navLocked = false;
+        unlockHero();
     }
     if (navLocked) return;
     if (!navLocked && ratio === 1) {
-        navLocked = true;
+        lockHero();
     }
 
     hero.style.height = `${(1 - ratio) * (window.innerHeight - finalHeight) + finalHeight}px`;
