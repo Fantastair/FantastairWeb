@@ -43,7 +43,7 @@ body {
     background: url('../assets/images/background.webp') center/cover;
     filter: blur(0px);
     transform: scale(1);
-    will-change: filter, transform;
+    will-change: auto;
 }
 
 #hero-icon-wrapper {
@@ -59,7 +59,7 @@ body {
     height: 20vmin;
     background-color: #ffffff;
     border-radius: 50%;
-    will-change: top;
+    will-change: auto;
     box-shadow: #00000033 0 6px 24px, #0000001a 0 2px 8px;
 }
 
@@ -83,7 +83,27 @@ body {
     color: #ffffff;
     text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
     white-space: nowrap;
-    will-change: transform, font-size, left, top;
+    will-change: auto;
+}
+
+.hero-letter {
+    animation: shine 4s ease-in-out infinite alternate;
+    will-change: auto;
+}
+
+@keyframes shine {
+    0% {
+        color: #ffffff;
+        text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
+    }
+    50% {
+        color: #ff5e71;
+        text-shadow: 0 0 28px #ff5e71, 0 2px 8px rgba(0,0,0,0.3);
+    }
+    100% {
+        color: #ffffff;
+        text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
+    }
 }
 
 #content {
@@ -138,7 +158,6 @@ body {
     color: #fff;
     padding: 8px 12px;
     top: 50%;
-    /* transform: translateY(-50%); */
     transition: all 0.3s ease;
 }
 
