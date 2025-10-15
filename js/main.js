@@ -16,14 +16,17 @@ const finalTitleTop = finalHeight / 2;
 const finalTitleLeft = finalHeight / 4;
 
 let navLocked = false;
+let navShowed = false;
 
-function lockHero() {
-    navLocked = true;
+function showNav() {
+    if (navShowed) return;
+    navShowed = true;
     topNav.classList.add('show');
 }
 
-function unlockHero() {
-    navLocked = false;
+function hideNav() {
+    if (!navShowed) return;
+    navShowed = false;
     topNav.classList.remove('show');
 }
 
@@ -33,11 +36,17 @@ function updateHeroWhileScrolling() {
     const ratio = Math.min(rawRatio, 1);
 
     if (navLocked && ratio < 1) {
-        unlockHero();
+        navLocked = false;
     }
     if (navLocked) return;
     if (!navLocked && ratio === 1) {
-        lockHero();
+        navLocked = true;
+    }
+
+    if (ratio < 0.2) {
+        hideNav();
+    } else {
+        showNav();
     }
 
     hero.style.height = `${(1 - ratio) * (window.innerHeight - finalHeight) + finalHeight}px`;
@@ -66,3 +75,42 @@ window.addEventListener('scroll', () => {
         ticking = true;
     }
 });
+
+document.getElementById('home-link').addEventListener('click', function(e) {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// 二维码弹出层处理
+const modal = document.getElementById("qr-modal");
+const modalImg = document.getElementById("qr-image");
+const captionText = document.getElementById("caption");
+
+// QQ
+document.getElementById("show-qq-qr").onclick = function() {
+  modal.style.display = "block";
+  modalImg.src = "/assets/images/qq_card.jpg";
+}
+
+// 微信
+document.getElementById("show-wechat-qr").onclick = function() {
+  modal.style.display = "block";
+  modalImg.src = "/assets/images/wx_card.jpg";
+}
+
+// 获取 <span> 元素，设置关闭按钮
+const span = document.getElementsByClassName("close-btn")[0];
+
+// 点击 <span> (x), 关闭模态框
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+
+// 点击模态框外部, 关闭模态框
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}

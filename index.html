@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fantastair</title>
+    <title>Fantastair的个人主页</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="assets/images/icon.ico">
     <link href="css/fontawesome.min.css" rel="stylesheet" />
     <link href="css/regular.min.css" rel="stylesheet" />
+    <link href="css/brands.min.css" rel="stylesheet" />
+    <link href="css/solid.min.css" rel="stylesheet" />
 </head>
 <body>
     <div id="hero">
@@ -16,19 +18,15 @@
             <img id="hero-icon" src="assets/images/icon.ico" alt="Fantastair Icon" />
         </div>
         <nav id="top-nav">
-            <a href="#" class="nav-item">
+            <a href="#hero" class="nav-item" id="home-link">
                 <span class=" nav-icon fa-regular fa-house"></span>
                 <span class="nav-text">首页</span>
             </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon fa-regular fa-address-card"></span>
-                <span class="nav-text">关于</span>
-            </a>
-            <a href="#" class="nav-item">
+            <a href="#column" class="nav-item">
                 <span class="nav-icon fa-regular fa-object-group"></span>
-                <span class="nav-text">服务</span>
+                <span class="nav-text">专栏</span>
             </a>
-            <a href="#" class="nav-item">
+            <a href="#contact" class="nav-item">
                 <span class="nav-icon fa-regular fa-message"></span>
                 <span class="nav-text">联系</span>
             </a>
@@ -38,10 +36,101 @@
         </div>
     </div>
     <main id="content">
-        <section style="height: 50vh;"></section>
-        泥嚎🚀。
-        <section style="height: 50vh;"></section>
+        <!-- 专栏部分 -->
+        <section id="column" class="content-section">
+            <h2>专栏</h2>
+            <p>这里是我的技术文章和分享...</p>
+            <!-- 你可以在这里添加更多专栏内容 -->
+        </section>
+        <!-- 联系部分 -->
+        <section id="contact" class="contact-section">
+            <div class="contact-container">
+                <h2>联系我</h2>
+                <p class="contact-intro">欢迎通过以下方式与我取得联系</p>
+
+                <div class="contact-methods">
+
+                    <a href="https://github.com/Fantastair" target="_blank">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-brands fa-github"></span>
+                        </div>
+                        <h3>GitHub</h3>
+                        <p>Fantastair</p>
+                    </div>
+                    </a>
+
+                    <a href="mailto:fantastair@qq.com">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-regular fa-envelope"></span>
+                        </div>
+                        <h3>邮箱</h3>
+                        <p>fantastair@qq.com</p>
+                    </div>
+                    </a>
+
+                    <a href="https://t.me/Fantastair" target="_blank">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-brands fa-telegram"></span>
+                        </div>
+                        <h3>Telegram</h3>
+                        <p>Fantastair</p>
+                    </div>
+                    </a>
+                </div>
+
+                <div class="contact-methods">
+                    <a href="javascript:void(0);" id="show-qq-qr">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-brands fa-qq"></span>
+                        </div>
+                        <h3>QQ</h3>
+                        <p>2364209908</p>
+                    </div>
+                    </a>
+
+                    <a href="javascript:void(0);" id="show-wechat-qr">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-brands fa-weixin"></span>
+                        </div>
+                        <h3>微信</h3>
+                        <p>Fantastair</p>
+                    </div>
+                    </a>
+
+                    <a href="https://space.bilibili.com/2041660957" target="_blank">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-brands fa-bilibili"></span>
+                        </div>
+                        <h3>bilibili</h3>
+                        <p>Fantastair</p>
+                    </div>
+                    </a>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <span class="fa-solid fa-location-dot"></span>
+                        </div>
+                        <h3>位置</h3>
+                        <p>中国 · 山东</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- 二维码弹出层 -->
+    <div id="qr-modal" class="qr-modal">
+        <span class="close-btn">&times;</span>
+        <img class="qr-modal-content" id="qr-image">
+        <div id="caption"></div>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>

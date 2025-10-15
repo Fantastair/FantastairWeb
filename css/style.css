@@ -80,7 +80,7 @@ body {
     font-size: clamp(2.5rem, 16vmin, 8rem);
     font-weight: 900;
     letter-spacing: 0.1em;
-    color: #ffffff;
+    color: #f0b6d2;
     text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
     white-space: nowrap;
     will-change: auto;
@@ -93,7 +93,7 @@ body {
 
 @keyframes shine {
     0% {
-        color: #ffffff;
+        color: #f0b6d2;
         text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
     }
     50% {
@@ -101,7 +101,7 @@ body {
         text-shadow: 0 0 28px #ff5e71, 0 2px 8px rgba(0,0,0,0.3);
     }
     100% {
-        color: #ffffff;
+        color: #f0b6d2;
         text-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
     }
 }
@@ -197,4 +197,185 @@ body {
         margin-right: 0;
         font-size: 1.4rem;
     }
+}
+
+.content-section {
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    scroll-margin-top: 60px; /* 为固定导航栏留出空间 */
+}
+
+.contact-section {
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-bottom: -6rem;
+    padding: 4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(-45deg, #2f374c 0%, #0d1b28 100%);
+    color: white;
+    scroll-margin-top: 60px;
+}
+
+.contact-container {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+}
+
+.contact-methods a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact-section h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.contact-intro {
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.contact-method {
+    padding: 2rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.contact-method:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.contact-method h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.contact-method p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 3rem 1rem;
+    }
+    
+    .contact-section h2 {
+        font-size: 2.5rem;
+    }
+    
+    .contact-methods {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .contact-method {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* 深色模式下的内容样式 */
+@media (prefers-color-scheme: dark) {
+    .content-section {
+        background-color: #1a1a1a;
+        color: #eeeeee;
+    }
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 二维码弹出层样式 */
+.qr-modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+}
+
+.qr-modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+    position: absolute;
+    top: calc(50% + 160px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
 }
