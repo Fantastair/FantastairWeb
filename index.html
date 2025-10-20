@@ -4,22 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fantastair的个人主页</title>
+    
+    <!-- 样式表 -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="assets/images/icon.ico">
+    
+    <!-- Font Awesome 图标 -->
     <link href="css/fontawesome.min.css" rel="stylesheet" />
     <link href="css/regular.min.css" rel="stylesheet" />
     <link href="css/brands.min.css" rel="stylesheet" />
     <link href="css/solid.min.css" rel="stylesheet" />
 </head>
 <body>
+    <!-- 英雄区域/顶部展示区 -->
     <div id="hero">
         <div id="hero-bg"></div>
         <div id="hero-icon-wrapper">
-            <img id="hero-icon" src="assets/images/icon.ico" alt="Fantastair Icon" />
+            <img id="hero-icon" src="assets/images/icon.ico" alt="Fantastair 头像" />
         </div>
+        
+        <!-- 顶部导航 -->
         <nav id="top-nav">
             <a href="#hero" class="nav-item" id="home-link">
-                <span class=" nav-icon fa-regular fa-house"></span>
+                <span class="nav-icon fa-regular fa-house"></span>
                 <span class="nav-text">首页</span>
             </a>
             <a href="#column" class="nav-item">
@@ -31,85 +38,130 @@
                 <span class="nav-text">联系</span>
             </a>
         </nav>
+        
+        <!-- 主标题动画 -->
         <div id="hero-title">
-            <span class="hero-letter">F</span><span class="hero-letter" style="animation-delay: 0.2s;">a</span><span class="hero-letter" style="animation-delay: 0.4s;">n</span><span class="hero-letter" style="animation-delay: 0.6s;">t</span><span class="hero-letter" style="animation-delay: 0.8s;">a</span><span class="hero-letter" style="animation-delay: 1.0s;">s</span><span class="hero-letter" style="animation-delay: 1.2s;">t</span><span class="hero-letter" style="animation-delay: 1.4s;">a</span><span class="hero-letter" style="animation-delay: 1.6s;">i</span><span class="hero-letter" style="animation-delay: 1.8s;">r</span>
+            <span class="hero-letter">F</span><!--
+         --><span class="hero-letter" style="animation-delay: 0.2s;">a</span><!--
+         --><span class="hero-letter" style="animation-delay: 0.4s;">n</span><!--
+         --><span class="hero-letter" style="animation-delay: 0.6s;">t</span><!--
+         --><span class="hero-letter" style="animation-delay: 0.8s;">a</span><!--
+         --><span class="hero-letter" style="animation-delay: 1.0s;">s</span><!--
+         --><span class="hero-letter" style="animation-delay: 1.2s;">t</span><!--
+         --><span class="hero-letter" style="animation-delay: 1.4s;">a</span><!--
+         --><span class="hero-letter" style="animation-delay: 1.6s;">i</span><!--
+         --><span class="hero-letter" style="animation-delay: 1.8s;">r</span>
         </div>
     </div>
+
+    <!-- 主要内容区域 -->
     <main id="content">
         <!-- 专栏部分 -->
         <section id="column" class="content-section">
-            <h2>专栏</h2>
-            <p>这里是我的技术文章和分享...</p>
-            <!-- 你可以在这里添加更多专栏内容 -->
+            <!-- 一言区域 -->
+            <p id="hitokoto">
+                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()">:D 获取中...</a>
+            </p>
+            
+            <!-- 专栏容器 -->
+            <div class="column-container">
+                <!-- 专栏项目模板 -->
+                <article class="column-item" data-href="https://example.com/article1">
+                    <div class="column-bg" style="background-image: url('assets/images/background.webp');"></div>
+                    <div class="column-content">
+                        <h3 class="column-title">文章一</h3>
+                        <p class="column-desc">简介...</p>
+                    </div>
+                </article>
+                
+                <article class="column-item" data-href="https://example.com/article2">
+                    <div class="column-bg" style="background-image: url('assets/images/column-bg2.webp');"></div>
+                    <div class="column-content">
+                        <h3 class="column-title">文章二</h3>
+                        <p class="column-desc">简介...</p>
+                    </div>
+                </article>
+                
+                <article class="column-item" data-href="https://example.com/article3">
+                    <div class="column-bg" style="background-image: url('assets/images/column-bg3.webp');"></div>
+                    <div class="column-content">
+                        <h3 class="column-title">文章三</h3>
+                        <p class="column-desc">简介...</p>
+                    </div>
+                </article>
+            </div>
         </section>
+
         <!-- 联系部分 -->
         <section id="contact" class="contact-section">
             <div class="contact-container">
                 <h2>联系我</h2>
                 <p class="contact-intro">欢迎通过以下方式与我取得联系</p>
 
+                <!-- 联系方式部分 -->
                 <div class="contact-methods">
-
-                    <a href="https://github.com/Fantastair" target="_blank">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-brands fa-github"></span>
+                    <!-- 社交媒体链接 -->
+                    <a href="https://github.com/Fantastair" target="_blank" rel="noopener" class="contact-link">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <span class="fa-brands fa-github"></span>
+                            </div>
+                            <h3>GitHub</h3>
+                            <p>Fantastair</p>
                         </div>
-                        <h3>GitHub</h3>
-                        <p>Fantastair</p>
-                    </div>
                     </a>
 
-                    <a href="mailto:fantastair@qq.com">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-regular fa-envelope"></span>
+                    <a href="mailto:fantastair@qq.com" class="contact-link">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <span class="fa-regular fa-envelope"></span>
+                            </div>
+                            <h3>邮箱</h3>
+                            <p>fantastair@qq.com</p>
                         </div>
-                        <h3>邮箱</h3>
-                        <p>fantastair@qq.com</p>
-                    </div>
                     </a>
 
-                    <a href="https://t.me/Fantastair" target="_blank">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-brands fa-telegram"></span>
+                    <a href="https://t.me/Fantastair" target="_blank" rel="noopener" class="contact-link">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <span class="fa-brands fa-telegram"></span>
+                            </div>
+                            <h3>Telegram</h3>
+                            <p>Fantastair</p>
                         </div>
-                        <h3>Telegram</h3>
-                        <p>Fantastair</p>
-                    </div>
                     </a>
                 </div>
 
                 <div class="contact-methods">
-                    <a href="javascript:void(0);" id="show-qq-qr">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-brands fa-qq"></span>
+                    <!-- 二维码联系方式 -->
+                    <a href="javascript:void(0);" class="contact-link qr-trigger" data-qr-type="qq">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <span class="fa-brands fa-qq"></span>
+                            </div>
+                            <h3>QQ</h3>
+                            <p>2364209908</p>
                         </div>
-                        <h3>QQ</h3>
-                        <p>2364209908</p>
-                    </div>
                     </a>
 
-                    <a href="javascript:void(0);" id="show-wechat-qr">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-brands fa-weixin"></span>
+                    <a href="javascript:void(0);" class="contact-link qr-trigger" data-qr-type="wechat">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <span class="fa-brands fa-weixin"></span>
+                            </div>
+                            <h3>微信</h3>
+                            <p>Fantastair</p>
                         </div>
-                        <h3>微信</h3>
-                        <p>Fantastair</p>
-                    </div>
                     </a>
 
-                    <a href="https://space.bilibili.com/2041660957" target="_blank">
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-brands fa-bilibili"></span>
+                    <a href="https://space.bilibili.com/2041660957" target="_blank" rel="noopener" class="contact-link">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <span class="fa-brands fa-bilibili"></span>
+                            </div>
+                            <h3>bilibili</h3>
+                            <p>Fantastair</p>
                         </div>
-                        <h3>bilibili</h3>
-                        <p>Fantastair</p>
-                    </div>
                     </a>
 
                     <div class="contact-method">
@@ -121,21 +173,28 @@
                     </div>
                 </div>
                 
-                <div class="contact-footer">
+                <!-- 页脚信息 -->
+                <footer class="contact-footer">
                     <p>fantastair.cn@2025</p>
-                    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"><img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" style="height: 20px; vertical-align: middle;"> 浙ICP备2025179704号-1</a></p>
-                </div>
+                    <p>
+                        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+                            <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" alt="备案图标" style="height: 20px; vertical-align: middle;">
+                            浙ICP备2025179704号-1
+                        </a>
+                    </p>
+                </footer>
             </div>
         </section>
     </main>
 
-    <!-- 二维码弹出层 -->
-    <div id="qr-modal" class="qr-modal">
-        <span class="close-btn">&times;</span>
-        <img class="qr-modal-content" id="qr-image">
+    <!-- 二维码模态框 -->
+    <div id="qr-modal" class="qr-modal" aria-hidden="true">
+        <span class="close-btn" role="button" aria-label="关闭二维码">&times;</span>
+        <img class="qr-modal-content" id="qr-image" alt="联系二维码">
         <div id="caption"></div>
     </div>
 
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
