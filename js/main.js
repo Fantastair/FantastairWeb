@@ -219,8 +219,8 @@ function setupQRCodeModal() {
  */
 function showQRCode(type) {
     const qrImages = {
-        qq: '/assets/images/qq_card.jpg',
-        wechat: '/assets/images/wx_card.jpg'
+        qq: '/assets/images/qq_card.webp',
+        wechat: '/assets/images/wx_card.webp'
     };
     
     const captions = {
@@ -311,10 +311,47 @@ function refreshHitokoto() {
     }, 300);
 }
 
+// ===== 专栏背景图懒加载 =====
+function lazyLoadColumnBackgrounds() {
+    const columnItems = document.querySelectorAll('.column-bg[data-bg]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bg = entry.target;
+                    const imageUrl = bg.getAttribute('data-bg');
+                    
+                    // 预加载图片
+                    const img = new Image();
+                    img.onload = () => {
+                        bg.style.backgroundImage = `url('${imageUrl}')`;
+                        bg.classList.add('loaded');
+                    };
+                    img.src = imageUrl;
+                    
+                    observer.unobserve(bg);
+                }
+            });
+        }, {
+            rootMargin: '50px' // 提前50px开始加载
+        });
+        
+        columnItems.forEach(bg => imageObserver.observe(bg));
+    } else {
+        // 不支持 IntersectionObserver 的浏览器，直接加载所有图片
+        columnItems.forEach(bg => {
+            const imageUrl = bg.getAttribute('data-bg');
+            bg.style.backgroundImage = `url('${imageUrl}')`;
+        });
+    }
+}
+
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     init();
     fetchHitokoto(); // 初始加载一言
+    lazyLoadColumnBackgrounds(); // 初始化懒加载
 });
 
 // 导出函数供全局使用（如果需要）
