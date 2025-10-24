@@ -3,16 +3,51 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>点击任意处返回首页</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="../assets/images/icon.ico">
+    <title>404 - 页面未找到 | Fantastair</title>
+    <link rel="stylesheet" href="css/404.css" />
+    <link rel="icon" href="assets/images/icon.ico">
+    
+    <!-- Font Awesome 图标 -->
+    <link href="css/fontawesome.min.css" rel="stylesheet" />
+    <link href="css/regular.min.css" rel="stylesheet" />
+    <link href="css/solid.min.css" rel="stylesheet" />
 </head>
 <body>
-
-    <div id="hero">
-        <a href="index.html"><div id="hero-bg"></div></a>
-        <h1 id="hero-title">404 NOT FOUND!</h1>
+    <!-- 404 主容器 -->
+    <div id="error-container">
+        <div id="error-bg"></div>
+        
+        <!-- 404 内容 -->
+        <div id="error-content">
+            <!-- 404 图标 -->
+            <div id="error-icon">
+                <span class="fa-regular fa-face-sad-tear"></span>
+            </div>
+            
+            <!-- 404 标题 -->
+            <h1 id="error-title">
+                <span class="error-letter">4</span><!--
+             --><span class="error-letter" style="animation-delay: 0.3s;">0</span><!--
+             --><span class="error-letter" style="animation-delay: 0.6s;">4</span>
+            </h1>
+            
+            <!-- 错误信息 -->
+            <p id="error-message">哎呀！你访问的页面走丢了...</p>
+            <p id="error-description">可能是链接过期了，或者页面被移动到了其他地方</p>
+            
+            <!-- 返回按钮 -->
+            <a href="index.html" id="home-button">
+                <span class="fa-regular fa-house"></span>
+                返回首页
+            </a>
+            
+            <!-- 一言 -->
+            <p id="hitokoto">
+                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()">:D 获取中...</a>
+            </p>
+        </div>
     </div>
-
+    
+    <script src="js/404.js"></script>
 </body>
 </html>
