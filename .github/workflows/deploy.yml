@@ -30,9 +30,9 @@ jobs:
       # 4. 把源码复制到 dist，准备最小化
       - name: Copy source to dist
         run: |
+          rm -rf dist          # 确保没有旧 dist
           mkdir -p dist
-          cp -r . dist/
-          rm -rf dist/.git dist/.github dist/dist dist/node_modules
+          rsync -av --exclude=dist --exclude=.git --exclude=.github . dist/
 
       # 5. 最小化 HTML/CSS/JS
       - name: Minify
