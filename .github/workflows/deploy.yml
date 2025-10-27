@@ -1,4 +1,5 @@
 name: Deploy-Static
+
 on:
   push:
     branches: [master]
@@ -8,20 +9,49 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 1. Checkout
+      # 1. 检出源码（不动原文件）
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: 2. Minify HTML, CSS, JS
-        uses: preact/action-minify@v2
+      # 2. 缓存 npm 依赖目录，第二次开始提速
+      - name: Cache npm
+        uses: actions/cache@v4
         with:
-          src: './'      # 源目录
-          dest: './build' # 输出压缩后文件的目录
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-minify-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-minify-
 
-      - name: 3. Rsync to VPS
+      # 3. 安装最小化工具（全局或 npx 均可，这里用 npx 省权限）
+      - name: Install minifier tools
+        run: |
+          npm install -g html-minifier-terser cssnano-cli terser
+
+      # 4. 把源码复制到 dist，准备最小化
+      - name: Copy source to dist
+        run: |
+          mkdir -p dist
+          cp -r . dist/
+          rm -rf dist/.git dist/.github dist/dist dist/node_modules
+
+      # 5. 最小化 HTML/CSS/JS
+      - name: Minify
+        run: |
+          # HTML
+          find dist -name "*.html" -exec npx html-minifier-terser \
+            --collapse-whitespace --remove-comments --minify-css --minify-js \
+            -o {} {} \;
+          # CSS
+          find dist -name "*.css" -exec npx cssnano {} {} \;
+          # JS
+          find dist -name "*.js" -exec npx terser {} -o {} \;
+
+      # 6. 仅同步最小化后的 dist 目录到 VPS
+      - name: Rsync to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -rlvz --delete --exclude='.git*' --chmod=Dg+rwx,Fg+rw
-          path: ./build/  # 从 build 目录同步文件
+          path: ./dist/
           remote_path: ${{ secrets.VPS_TARGET_DIR }}
           remote_host: ${{ secrets.VPS_HOST }}
           remote_user: ${{ secrets.VPS_USER }}
