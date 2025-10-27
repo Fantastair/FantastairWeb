@@ -81,15 +81,17 @@ body {
     height: 100vh;
     padding: 2rem;
     text-align: center;
+    /* 向上移动整体内容 */
+    transform: translateY(-5vh);
 }
 
 /* 404 图标 */
 #error-icon {
     font-size: clamp(4rem, 15vmin, 8rem);
     color: var(--primary-color);
-    margin-bottom: 2rem;
+    margin-top: 5vh;
     animation: floatIcon 3s ease-in-out infinite;
-    text-shadow: 
+    text-shadow:
         0 0 20px var(--primary-color),
         0 0 40px rgba(240, 182, 210, 0.5);
 }
@@ -109,7 +111,7 @@ body {
     font-weight: 900;
     letter-spacing: 0.1em;
     color: var(--primary-color);
-    text-shadow: 
+    text-shadow:
         0 0 20px var(--primary-color),
         2px 2px 10px rgba(0, 0, 0, 0.5);
     margin-bottom: 1rem;
@@ -124,13 +126,13 @@ body {
 @keyframes shine {
     0%, 100% {
         color: var(--primary-color);
-        text-shadow: 
+        text-shadow:
             0 0 20px var(--primary-color),
             2px 2px 10px rgba(0, 0, 0, 0.5);
     }
     50% {
         color: var(--primary-dark);
-        text-shadow: 
+        text-shadow:
             0 0 40px var(--primary-dark),
             2px 2px 10px rgba(0, 0, 0, 0.5);
     }
@@ -157,15 +159,17 @@ body {
 #home-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
-    padding: 1rem 2.5rem;
+    padding: 1.2rem 2.5rem;
+    min-height: 54px;
     font-size: 1.2rem;
     font-weight: 600;
     text-decoration: none;
     color: #fff;
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     border-radius: 50px;
-    box-shadow: 
+    box-shadow:
         0 4px 15px rgba(240, 182, 210, 0.4),
         0 0 20px rgba(240, 182, 210, 0.3);
     transition: var(--transition);
@@ -190,7 +194,7 @@ body {
 
 #home-button:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 
+    box-shadow:
         0 6px 25px rgba(240, 182, 210, 0.6),
         0 0 30px rgba(240, 182, 210, 0.5);
 }
@@ -199,105 +203,51 @@ body {
     transform: translateY(-1px) scale(1.02);
 }
 
-/* 一言样式 */
-#hitokoto {
-    margin-top: 3rem;
-    text-align: center;
-    font-style: italic;
-    max-width: 700px;
-}
-
-#hitokoto_text {
-    text-decoration: none;
-    color: #fff;
-    font-size: clamp(1rem, 2.5vmin, 1.3rem);
-    line-height: 1.6;
-    display: inline-block;
-    padding: 1rem 2rem;
-    transition: var(--transition);
-    border-radius: 15px;
-    background: rgba(240, 182, 210, 0.1);
-    border: 1px solid rgba(240, 182, 210, 0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    cursor: pointer;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-#hitokoto_text:hover {
-    background: rgba(240, 182, 210, 0.2);
-    border-color: rgba(240, 182, 210, 0.5);
-    transform: translateY(-2px);
-}
-
-/* 一言动画 */
-@keyframes typing {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-#hitokoto_text.loaded {
-    animation: typing 0.8s ease-in-out;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-#hitokoto_text.refreshing {
-    animation: pulse 1s ease-in-out;
-}
-
 /* ===== 响应式设计 ===== */
 @media (max-width: 768px) {
     #error-content {
         padding: 1.5rem;
+        transform: translateY(-3vh);
     }
-    
+
     #error-icon {
         font-size: clamp(3rem, 12vmin, 6rem);
+        margin-top: 3vh;
         margin-bottom: 1.5rem;
     }
-    
+
     #error-title {
         font-size: clamp(3rem, 15vmin, 8rem);
         letter-spacing: 0.05em;
     }
-    
+
     #error-message {
         font-size: clamp(1.2rem, 3.5vmin, 2rem);
         margin-bottom: 0.75rem;
     }
-    
+
     #error-description {
         font-size: clamp(0.9rem, 2vmin, 1.1rem);
         margin-bottom: 2rem;
     }
-    
+
     #home-button {
-        padding: 0.9rem 2rem;
+        padding: 1.1rem 2rem;
+        min-height: 50px;
         font-size: 1.1rem;
         gap: 0.6rem;
-    }
-    
-    #hitokoto {
-        margin-top: 2rem;
-    }
-    
-    #hitokoto_text {
-        font-size: clamp(0.9rem, 2vmin, 1.1rem);
-        padding: 0.9rem 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
     #error-content {
         padding: 1rem;
+        transform: translateY(-2vh);
     }
-    
+
     #home-button {
-        padding: 0.8rem 1.5rem;
+        padding: 1rem 1.5rem;
+        min-height: 48px;
         font-size: 1rem;
     }
 }
@@ -306,39 +256,33 @@ body {
 @media (max-height: 600px) and (orientation: landscape) {
     #error-content {
         padding: 1rem;
+        transform: translateY(0);
     }
-    
+
     #error-icon {
         font-size: 3rem;
+        margin-top: 0;
         margin-bottom: 0.5rem;
     }
-    
+
     #error-title {
         font-size: 4rem;
         margin-bottom: 0.5rem;
     }
-    
+
     #error-message {
         font-size: 1.2rem;
         margin-bottom: 0.5rem;
     }
-    
+
     #error-description {
         font-size: 0.9rem;
         margin-bottom: 1rem;
     }
-    
+
     #home-button {
-        padding: 0.7rem 1.5rem;
+        padding: 0.9rem 1.5rem;
+        min-height: 44px;
         font-size: 1rem;
-    }
-    
-    #hitokoto {
-        margin-top: 1rem;
-    }
-    
-    #hitokoto_text {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
     }
 }

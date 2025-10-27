@@ -1,0 +1,176 @@
+/* ===== 一言样式 ===== */
+#hitokoto {
+    margin: 2rem 0 3rem;
+    text-align: center;
+    font-style: italic;
+    position: relative;
+    padding: 0 2rem;
+}
+
+#hitokoto_text {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    position: relative;
+    display: inline-block;
+    padding: 1.5rem 2rem;
+    transition: var(--transition);
+    border-radius: var(--border-radius);
+    background: rgba(240, 182, 210, 0.1);
+    border: 1px solid rgba(240, 182, 210, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+/* 浅色模式一言样式 */
+@media (prefers-color-scheme: light) {
+    #hitokoto_text {
+        background: rgba(240, 182, 210, 0.08);
+        border: 1px solid rgba(240, 182, 210, 0.4);
+        color: #333;
+        box-shadow: 0 4px 15px var(--shadow-light);
+    }
+
+    #hitokoto_text:hover {
+        background: rgba(240, 182, 210, 0.15);
+        border-color: rgba(240, 182, 210, 0.6);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px var(--shadow-light);
+    }
+}
+
+/* 深色模式一言样式 */
+@media (prefers-color-scheme: dark) {
+    #hitokoto_text {
+        background: rgba(240, 182, 210, 0.05);
+        border: 1px solid rgba(240, 182, 210, 0.1);
+        color: var(--text-dark);
+        box-shadow: 0 4px 15px var(--shadow-dark);
+    }
+
+    #hitokoto_text:hover {
+        background: rgba(240, 182, 210, 0.1);
+        border-color: rgba(240, 182, 210, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px var(--shadow-dark);
+    }
+}
+
+/* 引用符号 */
+#hitokoto::before,
+#hitokoto::after {
+    content: '"';
+    font-size: 3rem;
+    color: rgba(240, 182, 210, 0.5);
+    position: absolute;
+    font-family: serif;
+    line-height: 1;
+}
+
+#hitokoto::before {
+    top: -10px;
+    left: 0;
+}
+
+#hitokoto::after {
+    bottom: -20px;
+    right: 0;
+}
+
+/* 一言动画 */
+@keyframes typing {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 一言自定义提示框 */
+#hitokoto_text::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-style: normal;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+#hitokoto_text::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+#hitokoto_text:hover::after,
+#hitokoto_text:hover::before {
+    opacity: 1;
+    transition-delay: 0.5s; /* 悬停0.5秒后显示 */
+}
+
+/* 点击后不再显示提示框 */
+#hitokoto_text.tooltip-shown:hover::after,
+#hitokoto_text.tooltip-shown:hover::before {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+#hitokoto_text.loaded {
+    animation: typing 0.8s ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+#hitokoto_text.refreshing {
+    animation: pulse 1s ease-in-out;
+}
+
+/* 响应式一言 */
+@media (max-width: 768px) {
+    #hitokoto {
+        margin: 1.5rem 0 2rem;
+        padding: 0 1rem;
+    }
+    
+    #hitokoto_text {
+        font-size: 1.2rem;
+        padding: 1.2rem 1.5rem;
+    }
+    
+    #hitokoto::before,
+    #hitokoto::after {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #hitokoto_text {
+        font-size: 1.1rem;
+        padding: 1rem 1.2rem;
+    }
+    
+    #hitokoto::before,
+    #hitokoto::after {
+        font-size: 2rem;
+    }
+}

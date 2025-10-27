@@ -11,11 +11,17 @@ jobs:
       - name: 1. Checkout
         uses: actions/checkout@v4
 
-      - name: 2. Rsync to VPS
+      - name: 2. Minify HTML, CSS, JS
+        uses: preact/action-minify@v2
+        with:
+          src: './'      # 源目录
+          dest: './build' # 输出压缩后文件的目录
+
+      - name: 3. Rsync to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -rlvz --delete --exclude='.git*' --chmod=Dg+rwx,Fg+rw
-          path: ./
+          path: ./build/  # 从 build 目录同步文件
           remote_path: ${{ secrets.VPS_TARGET_DIR }}
           remote_host: ${{ secrets.VPS_HOST }}
           remote_user: ${{ secrets.VPS_USER }}

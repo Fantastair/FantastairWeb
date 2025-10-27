@@ -4,11 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fantastair的个人主页</title>
-    
+
     <!-- 样式表 -->
+    <link rel="icon" href="assets/images/icon.ico" />
+    <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="assets/images/icon.ico">
-    
+    <link rel="stylesheet" href="css/hitokoto.css" />
+
     <!-- Font Awesome 图标 -->
     <link href="css/fontawesome.min.css" rel="stylesheet" />
     <link href="css/regular.min.css" rel="stylesheet" />
@@ -22,7 +24,7 @@
         <div id="hero-icon-wrapper">
             <img id="hero-icon" src="assets/images/icon.ico" alt="Fantastair 头像" />
         </div>
-        
+
         <!-- 顶部导航 -->
         <nav id="top-nav">
             <a href="#hero" class="nav-item" id="home-link">
@@ -38,7 +40,7 @@
                 <span class="nav-text">联系</span>
             </a>
         </nav>
-        
+
         <!-- 主标题动画 -->
         <div id="hero-title">
             <span class="hero-letter">F</span><!--
@@ -60,13 +62,13 @@
         <section id="column" class="content-section">
             <!-- 一言区域 -->
             <p id="hitokoto">
-                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()">:D 获取中...</a>
+                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()" data-tooltip="试试点击这句话😚">茫茫句海，总有一句适合你...</a>
             </p>
 
             <!-- 专栏容器 -->
             <div class="column-container">
                 <!-- 专栏项目模板 -->
-                <article class="column-item" data-href="https://example.com/article1">
+                <article class="column-item" data-href="article.html?article=airport-tyrant">
                     <div class="column-bg" data-bg="assets/images/article_bg_01.webp"></div>
                     <div class="column-content">
                         <p class="column-title">机场霸王</p>
@@ -80,7 +82,7 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="https://example.com/article2">
+                <article class="column-item" data-href="article.html?article=minesweeper">
                     <div class="column-bg" data-bg="assets/images/article_bg_02.webp"></div>
                     <div class="column-content">
                         <p class="column-title">扫雷（反物质版）</p>
@@ -94,7 +96,7 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="https://example.com/article3">
+                <article class="column-item" data-href="article.html?article=pythoneye">
                     <div class="column-bg" data-bg="assets/images/article_bg_03.webp"></div>
                     <div class="column-content">
                         <p class="column-title">PythonEye</p>
@@ -106,6 +108,52 @@
                             <span class="column-tag">debug</span>
                         </div>
                         <p class="column-desc">可视化python代码调试工具</p>
+                    </div>
+                </article>
+
+                <article class="column-item" data-href="article.html?article=serial-lens">
+                    <div class="column-bg" data-bg="assets/images/article_bg_04.webp"></div>
+                    <div class="column-content">
+                        <p class="column-title">串口透镜</p>
+                        <div>
+                            <span class="column-tag">STM32</span>
+                            <span class="column-tag">python</span>
+                            <span class="column-tag">串口通信</span>
+                            <span class="column-tag">调试分析工具</span>
+                        </div>
+                        <p class="column-desc">实时串口通信内容显示终端</p>
+                    </div>
+                </article>
+
+                <article class="column-item" data-href="article.html?article=fantas-v3">
+                    <div class="column-bg" data-bg="assets/images/article_bg_05.webp"></div>
+                    <div class="column-content">
+                        <p class="column-title">第三代Fantas框架</p>
+                        <div>
+                            <span class="column-tag">python</span>
+                            <span class="column-tag">pygame-ce</span>
+                            <span class="column-tag">fantas-v3</span>
+                            <span class="column-tag">图形框架</span>
+                        </div>
+                        <p class="column-desc">
+                            基于pygame的跨平台计算机图形开发框架</br>
+                            仍在开发中，敬请期待！
+                        </p>
+                    </div>
+                </article>
+
+                <article class="column-item" data-href="article.html?article=3d-print-pcb">
+                    <div class="column-bg" data-bg="assets/images/article_bg_06.webp"></div>
+                    <div class="column-content">
+                        <p class="column-title">快速PCB制板工艺</p>
+                        <div>
+                            <span class="column-tag">PCB</span>
+                            <span class="column-tag">3D打印</span>
+                        </div>
+                        <p class="column-desc">
+                            一种基于3D打印的PCB制板工艺</br>
+                            工艺仍在实验中，欢迎交流！
+                        </p>
                     </div>
                 </article>
             </div>
@@ -191,16 +239,22 @@
                         <p>中国 · 山东</p>
                     </div>
                 </div>
-                
+
                 <!-- 页脚信息 -->
                 <footer class="contact-footer">
-                    <p>fantastair.cn@2025</p>
-                    <p>
-                        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-                            <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" alt="备案图标" style="height: 20px; vertical-align: middle;">
-                            浙ICP备2025179704号-1
-                        </a>
-                    </p>
+                    <a href="https://github.com/Fantastair/FantastairWeb" target="_blank" rel="noopener noreferrer">
+                        <span class="fa-brands fa-github"></span>本网站源代码由GitHub的公共仓库托管，欢迎访问
+                    </a>
+                    <br/>
+                    <a href="https://hitokoto.cn/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 20px; vertical-align: middle;">
+                        一句话服务由一言（Hitokoto）提供
+                    </a>
+                    <br/>
+                    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" alt="备案图标" style="height: 20px; vertical-align: middle;">
+                        浙ICP备2025179704号-1
+                    </a>
                 </footer>
             </div>
         </section>
@@ -215,5 +269,6 @@
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script src="js/hitokoto.js"></script>
 </body>
 </html>

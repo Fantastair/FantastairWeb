@@ -1,0 +1,48 @@
+<!-- 文章元数据 -->
+<div data-field="title">机场霸王</div>
+<div data-field="date">2023年6月15日</div>
+<div data-field="tags">
+    <span data-tag>python</span>
+    <span data-tag>pygame</span>
+    <span data-tag>fantas-v1</span>
+    <span data-tag>游戏</span>
+</div>
+
+<!-- 文章内容 -->
+<div data-field="content">
+    <h2>项目介绍</h2>
+    <p>《机场霸王》是我使用 Python 和 Pygame 开发的第一个完整游戏项目，也是 Fantas 框架的起点。</p>
+    
+    <h2>开发背景</h2>
+    <p>这个项目始于大学时期，当时我想学习游戏开发，但发现现有的游戏引擎对于初学者来说过于复杂。于是决定从最基础的开始，用 Python 的 Pygame 库构建一个简单的游戏框架。</p>
+    
+    <h2>技术特点</h2>
+    <ul>
+        <li>基于 Python 3.8 + Pygame 2.0</li>
+        <li>自定义的简单游戏循环和状态管理</li>
+        <li>基本的碰撞检测系统</li>
+        <li>简单的动画和音效处理</li>
+    </ul>
+    
+    <h2>代码示例</h2>
+    <pre><code>def main():
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    clock = pygame.time.Clock()
+    
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        screen.fill((0, 0, 0))
+        # 游戏逻辑和渲染...
+        pygame.display.flip()
+        clock.tick(60)
+    
+    pygame.quit()</code></pre>
+    
+    <h2>项目意义</h2>
+    <p>虽然《机场霸王》在技术上相对简单，但它为我后续的开发工作奠定了重要基础。从这个项目中积累的经验直接促成了 Fantas 框架的诞生。</p>
+</div>

@@ -1,0 +1,305 @@
+/* ===== 文章页特有样式 ===== */
+
+/* 文章英雄区域 */
+#article-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0d1b28 0%, #1a2d3e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+#article-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/images/background_small.webp') center/cover no-repeat;
+    opacity: 0.3;
+    filter: blur(2px);
+}
+
+#article-hero-bg.loaded {
+    background: url('../assets/images/background.webp') center/cover no-repeat;
+    transition: background 0.5s ease-in-out;
+}
+
+#article-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 2rem;
+}
+
+.article-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-shadow: 
+        0 0 20px var(--primary-color),
+        2px 2px 8px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+    animation: titleAppear 1s ease-out;
+}
+
+@keyframes titleAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.article-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.article-date {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.article-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.article-tag {
+    padding: 0.4rem 1rem;
+    background: rgba(240, 182, 210, 0.2);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(240, 182, 210, 0.3);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.article-tag:hover {
+    background: rgba(240, 182, 210, 0.3);
+    transform: translateY(-2px);
+}
+
+/* 返回首页按钮 */
+.back-to-home {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-to-home:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 文章内容容器 */
+.article-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    background: var(--bg-light);
+    color: var(--text-light);
+    min-height: 60vh;
+}
+
+@media (prefers-color-scheme: dark) {
+    .article-container {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+    }
+}
+
+/* 文章内容样式 */
+.article-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.article-content h2 {
+    color: var(--primary-color);
+    margin: 3rem 0 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.article-content h3 {
+    color: var(--primary-dark);
+    margin: 2.5rem 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.article-content ul, .article-content ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.article-content li {
+    margin-bottom: 0.5rem;
+}
+
+.article-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(240, 182, 210, 0.05);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    font-style: italic;
+}
+
+.article-content code {
+    background: rgba(240, 182, 210, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    border: 1px solid rgba(240, 182, 210, 0.2);
+}
+
+.article-content pre {
+    background: rgba(0, 0, 0, 0.8);
+    color: #f8f8f2;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.article-content pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 2rem auto;
+    display: block;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    .article-content table {
+        background: #1e1e1e;
+        box-shadow: 0 4px 15px var(--shadow-dark);
+    }
+}
+
+.article-content th,
+.article-content td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(240, 182, 210, 0.2);
+}
+
+.article-content th {
+    background: rgba(240, 182, 210, 0.1);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #article-hero {
+        height: 50vh;
+        min-height: 350px;
+    }
+    
+    .article-title {
+        font-size: 2.5rem;
+    }
+    
+    #article-hero-content {
+        padding: 0 1rem;
+    }
+    
+    .back-to-home {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .article-container {
+        padding: 3rem 1.5rem;
+    }
+    
+    .article-content h2 {
+        font-size: 1.7rem;
+    }
+    
+    .article-content h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-title {
+        font-size: 2rem;
+    }
+    
+    .article-container {
+        padding: 2rem 1rem;
+    }
+    
+    .article-meta {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .article-tags {
+        justify-content: center;
+    }
+}

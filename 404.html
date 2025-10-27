@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - 页面未找到 | Fantastair</title>
+    <link rel="icon" href="assets/images/icon.ico" />
+    <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/404.css" />
-    <link rel="icon" href="assets/images/icon.ico">
-    
+    <link rel="stylesheet" href="css/hitokoto.css" />
+
     <!-- Font Awesome 图标 -->
     <link href="css/fontawesome.min.css" rel="stylesheet" />
     <link href="css/regular.min.css" rel="stylesheet" />
@@ -16,38 +18,34 @@
     <!-- 404 主容器 -->
     <div id="error-container">
         <div id="error-bg"></div>
-        
         <!-- 404 内容 -->
         <div id="error-content">
             <!-- 404 图标 -->
             <div id="error-icon">
                 <span class="fa-regular fa-face-sad-tear"></span>
             </div>
-            
             <!-- 404 标题 -->
             <h1 id="error-title">
                 <span class="error-letter">4</span><!--
              --><span class="error-letter" style="animation-delay: 0.3s;">0</span><!--
              --><span class="error-letter" style="animation-delay: 0.6s;">4</span>
             </h1>
-            
             <!-- 错误信息 -->
             <p id="error-message">哎呀！你访问的页面走丢了...</p>
             <p id="error-description">可能是链接过期了，或者页面被移动到了其他地方</p>
-            
             <!-- 返回按钮 -->
             <a href="index.html" id="home-button">
                 <span class="fa-regular fa-house"></span>
                 返回首页
             </a>
-            
-            <!-- 一言 -->
+            <!-- 一言区域 -->
             <p id="hitokoto">
-                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()">:D 获取中...</a>
+                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()" data-tooltip="试试点击这句话😚">茫茫句海，总有一句适合你...</a>
             </p>
         </div>
     </div>
-    
+
     <script src="js/404.js"></script>
+    <script src="js/hitokoto.js"></script>
 </body>
 </html>
