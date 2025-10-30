@@ -43,16 +43,16 @@ class ArticlePage {
             const scrollY = window.scrollY;
             const hero = document.getElementById('article-hero');
             const heroBg = document.getElementById('article-hero-bg');
-            
+
             if (!hero || !heroBg) return;
 
             const heroHeight = hero.offsetHeight;
             const scrollRatio = Math.min(scrollY / heroHeight, 1);
-            
+
             // 背景模糊和缩放效果
             heroBg.style.filter = `blur(${scrollRatio * 3}px)`;
             heroBg.style.transform = `scale(${1 + scrollRatio * 0.1})`;
-            
+
             // 内容淡出效果
             const content = document.getElementById('article-hero-content');
             if (content) {
@@ -78,7 +78,7 @@ class ArticlePage {
     setupInteractions() {
         // 代码块复制功能
         this.setupCodeCopy();
-        
+
         // 图片点击放大
         this.setupImageZoom();
     }
@@ -104,7 +104,7 @@ class ArticlePage {
         try {
             const text = codeBlock.textContent;
             await navigator.clipboard.writeText(text);
-            
+
             // 显示复制成功提示
             this.showCopySuccess(codeBlock);
         } catch (err) {
@@ -119,7 +119,7 @@ class ArticlePage {
         const originalText = codeBlock.textContent;
         codeBlock.textContent = '已复制到剪贴板！';
         codeBlock.style.backgroundColor = 'rgba(16, 185, 129, 0.2)';
-        
+
         setTimeout(() => {
             codeBlock.textContent = originalText;
             codeBlock.style.backgroundColor = '';
@@ -156,7 +156,7 @@ class ArticlePage {
             z-index: 1000;
             cursor: zoom-out;
         `;
-        
+
         const modalImg = document.createElement('img');
         modalImg.src = img.src;
         modalImg.alt = img.alt;
@@ -166,15 +166,15 @@ class ArticlePage {
             object-fit: contain;
             border-radius: 10px;
         `;
-        
+
         modal.appendChild(modalImg);
         document.body.appendChild(modal);
-        
+
         // 点击关闭
         modal.addEventListener('click', () => {
             document.body.removeChild(modal);
         });
-        
+
         // ESC键关闭
         document.addEventListener('keydown', function closeOnEscape(e) {
             if (e.key === 'Escape') {

@@ -12,7 +12,7 @@ class TemplateLoader {
     async init() {
         // 从 URL 参数获取文章 ID
         const articleId = this.getArticleIdFromURL();
-        
+
         if (articleId) {
             await this.loadArticle(articleId);
             this.renderArticle();
@@ -33,7 +33,7 @@ class TemplateLoader {
             if (!response.ok) {
                 throw new Error('文章不存在');
             }
-            
+
             const html = await response.text();
             this.articleData = this.parseArticleHTML(html);
         } catch (error) {
@@ -76,7 +76,7 @@ class TemplateLoader {
         // 更新标签
         const tagsContainer = document.querySelector('.article-tags[data-field="tags"]');
         if (tagsContainer && this.articleData.tags.length > 0) {
-            tagsContainer.innerHTML = this.articleData.tags.map(tag => 
+            tagsContainer.innerHTML = this.articleData.tags.map(tag =>
                 `<span class="article-tag">${tag}</span>`
             ).join('');
         }
@@ -85,7 +85,7 @@ class TemplateLoader {
         const contentElement = document.querySelector('.article-content[data-field="content"]');
         if (contentElement) {
             contentElement.innerHTML = this.articleData.content;
-            
+
             // 处理内容中的代码块和图片
             this.processContentElements(contentElement);
         }
@@ -107,7 +107,7 @@ class TemplateLoader {
             if (language) {
                 block.setAttribute('data-language', language);
             }
-            
+
             // 添加行号
             this.addLineNumbers(block);
         });
@@ -162,7 +162,7 @@ class TemplateLoader {
             const lineNumbers = document.createElement('div');
             lineNumbers.className = 'line-numbers';
             lineNumbers.innerHTML = lines.map((_, i) => `<span>${i + 1}</span>`).join('\n');
-            
+
             const wrapper = document.createElement('div');
             wrapper.className = 'code-block-wrapper';
             codeBlock.parentNode.insertBefore(wrapper, codeBlock);
@@ -216,15 +216,15 @@ class TemplateLoader {
         };
 
         Object.entries(metaTags).forEach(([property, content]) => {
-            let meta = document.querySelector(`meta[property="${property}"]`) || 
+            let meta = document.querySelector(`meta[property="${property}"]`) ||
                        document.querySelector(`meta[name="${property}"]`);
-            
+
             if (!meta) {
                 meta = document.createElement('meta');
                 meta.setAttribute(property.startsWith('og:') ? 'property' : 'name', property);
                 document.head.appendChild(meta);
             }
-            
+
             meta.setAttribute('content', content);
         });
     }
@@ -234,7 +234,7 @@ class TemplateLoader {
      */
     getArticleDescription() {
         if (!this.articleData.content) return 'Fantastair 的专栏文章';
-        
+
         // 从内容中提取前 150 个字符作为描述
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = this.articleData.content;

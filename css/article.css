@@ -42,7 +42,7 @@
     font-weight: 900;
     margin-bottom: 1.5rem;
     color: var(--primary-color);
-    text-shadow: 
+    text-shadow:
         0 0 20px var(--primary-color),
         2px 2px 8px rgba(0, 0, 0, 0.5);
     line-height: 1.2;
@@ -256,30 +256,30 @@
         height: 50vh;
         min-height: 350px;
     }
-    
+
     .article-title {
         font-size: 2.5rem;
     }
-    
+
     #article-hero-content {
         padding: 0 1rem;
     }
-    
+
     .back-to-home {
         top: 1rem;
         left: 1rem;
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
     }
-    
+
     .article-container {
         padding: 3rem 1.5rem;
     }
-    
+
     .article-content h2 {
         font-size: 1.7rem;
     }
-    
+
     .article-content h3 {
         font-size: 1.3rem;
     }
@@ -289,16 +289,16 @@
     .article-title {
         font-size: 2rem;
     }
-    
+
     .article-container {
         padding: 2rem 1rem;
     }
-    
+
     .article-meta {
         flex-direction: column;
         gap: 0.8rem;
     }
-    
+
     .article-tags {
         justify-content: center;
     }

@@ -258,7 +258,7 @@ function setupColumnItems() {
             const href = item.dataset.href;
             if (href) {
                 // 如果是外部链接，新窗口打开
-                if (href.startsWith('http')) {
+                if (href.startsWith('https')) {
                     window.open(href, '_blank', 'noopener,noreferrer');
                 } else {
                     // 如果是内部文章链接，当前窗口打开
@@ -273,7 +273,7 @@ function setupColumnItems() {
                 e.preventDefault();
                 const href = item.dataset.href;
                 if (href) {
-                    if (href.startsWith('http')) {
+                    if (href.startsWith('https')) {
                         window.open(href, '_blank', 'noopener,noreferrer');
                     } else {
                         window.location.href = href;

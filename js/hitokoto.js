@@ -6,10 +6,10 @@
 function fetchHitokoto() {
     const hitokotoElement = document.querySelector('#hitokoto_text');
     if (!hitokotoElement) return;
-    
+
     hitokotoElement.innerText = '茫茫句海，总有一句适合你...';
     hitokotoElement.classList.remove('loaded', 'refreshing');
-    
+
     fetch('https://v1.hitokoto.cn')
         .then(response => {
             if (!response.ok) throw new Error('网络响应不正常');
@@ -34,18 +34,18 @@ let hitokotoClicked = false;
 function refreshHitokoto() {
     const hitokotoElement = document.querySelector('#hitokoto_text');
     hitokotoElement.classList.add('refreshing');
-    
+
     // 只在第一次点击时更改提示文字
     if (!hitokotoClicked) {
         hitokotoElement.setAttribute('data-tooltip', '就是这样👍');
         hitokotoClicked = true;
-        
+
         // 添加 class 来禁用后续的悬浮提示
         setTimeout(() => {
             hitokotoElement.classList.add('tooltip-shown');
         }, 1500); // 显示"就是这样👍"1.5秒后禁用
     }
-    
+
     setTimeout(() => {
         fetchHitokoto();
     }, 300);
