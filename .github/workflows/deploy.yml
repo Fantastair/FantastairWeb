@@ -1,5 +1,4 @@
 name: Deploy-Static
-
 on:
   push:
     branches: [master]
@@ -9,12 +8,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. 检出源码（不动原文件）
-      - name: Checkout
+      - name: 1. Checkout
         uses: actions/checkout@v4
 
-      # 2. 同步目录到 VPS
-      - name: Rsync to VPS
+      - name: 2. Rsync to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -rlvz --delete --exclude='.git*' --chmod=Dg+rwx,Fg+rw
