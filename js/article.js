@@ -1,8 +1,3 @@
-/**
- * Fantastair - 文章页交互功能
- * 包含背景加载、动画效果等
- */
-
 class ArticlePage {
     constructor() {
         this.init();

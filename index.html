@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/hitokoto.css" />
+    <link rel="stylesheet" href="css/column.css" />
 
     <!-- Font Awesome 图标 -->
     <link href="css/fontawesome.min.css" rel="stylesheet" />
@@ -62,17 +63,22 @@
         <section id="column" class="content-section">
             <!-- 一言区域 -->
             <p id="hitokoto">
-                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()" data-tooltip="试试点击这句话😚">茫茫句海，总有一句适合你...</a>
+                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()" data-tooltip="试试点击这句话😚">
+                    <span class="hitokoto-content">茫茫句海，总有一句适合你...</span>
+                    <button class="hitokoto-copy-btn" title="复制一言">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </a>
             </p>
 
             <!-- 专栏容器 -->
             <div class="column-container">
                 <!-- 专栏项目模板 -->
-                <article class="column-item" data-href="article.html?article=airport-tyrant">
+                <article class="column-item" data-href="article.html?article=airport-tyrant" tabindex="0">
                     <div class="column-bg" data-bg="assets/images/article_bg_01.webp"></div>
                     <div class="column-content">
                         <p class="column-title">机场霸王</p>
-                        <div>
+                        <div class="column-tags">
                             <span class="column-tag">python</span>
                             <span class="column-tag">pygame</span>
                             <span class="column-tag">fantas-v1</span>
@@ -82,11 +88,11 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="article.html?article=minesweeper">
+                <article class="column-item" data-href="article.html?article=minesweeper" tabindex="0">
                     <div class="column-bg" data-bg="assets/images/article_bg_02.webp"></div>
                     <div class="column-content">
                         <p class="column-title">扫雷（反物质版）</p>
-                        <div>
+                        <div class="column-tags">
                             <span class="column-tag">python</span>
                             <span class="column-tag">pygame</span>
                             <span class="column-tag">fantas-v2</span>
@@ -96,11 +102,11 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="article.html?article=pythoneye">
+                <article class="column-item" data-href="article.html?article=pythoneye" tabindex="0">
                     <div class="column-bg" data-bg="assets/images/article_bg_03.webp"></div>
                     <div class="column-content">
                         <p class="column-title">PythonEye</p>
-                        <div>
+                        <div class="column-tags">
                             <span class="column-tag">python</span>
                             <span class="column-tag">pygame</span>
                             <span class="column-tag">fantas-v2</span>
@@ -111,11 +117,11 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="article.html?article=serial-lens">
+                <article class="column-item" data-href="article.html?article=serial-lens" tabindex="0">
                     <div class="column-bg" data-bg="assets/images/article_bg_04.webp"></div>
                     <div class="column-content">
                         <p class="column-title">串口透镜</p>
-                        <div>
+                        <div class="column-tags">
                             <span class="column-tag">STM32</span>
                             <span class="column-tag">python</span>
                             <span class="column-tag">串口通信</span>
@@ -125,11 +131,11 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="article.html?article=fantas-v3">
+                <article class="column-item" data-href="article.html?article=fantas-v3" tabindex="0">
                     <div class="column-bg" data-bg="assets/images/article_bg_05.webp"></div>
                     <div class="column-content">
                         <p class="column-title">第三代Fantas框架</p>
-                        <div>
+                        <div class="column-tags">
                             <span class="column-tag">python</span>
                             <span class="column-tag">pygame-ce</span>
                             <span class="column-tag">fantas-v3</span>
@@ -142,11 +148,11 @@
                     </div>
                 </article>
 
-                <article class="column-item" data-href="article.html?article=3d-print-pcb">
+                <article class="column-item" data-href="article.html?article=3d-print-pcb" tabindex="0">
                     <div class="column-bg" data-bg="assets/images/article_bg_06.webp"></div>
                     <div class="column-content">
                         <p class="column-title">快速PCB制板工艺</p>
-                        <div>
+                        <div class="column-tags">
                             <span class="column-tag">PCB</span>
                             <span class="column-tag">3D打印</span>
                         </div>
@@ -247,7 +253,7 @@
                     </a>
                     <br/>
                     <a href="https://hitokoto.cn/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 20px; vertical-align: middle;">
+                        <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 20px; vertical-align: middle;" title="一言图标" alt="一言图标"/>
                         一句话服务由一言（Hitokoto）提供
                     </a>
                     <br/>

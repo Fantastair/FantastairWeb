@@ -1,8 +1,3 @@
-/**
- * Fantastair 404页面 - 交互功能
- * 包含背景加载、一言功能等
- */
-
 // 控制台信息
 console.log("404 页面已加载 - Fantastair");
 
@@ -11,18 +6,14 @@ const elements = {
     errorBg: document.getElementById('error-bg'),
 };
 
-/**
- * 初始化函数
- */
+// 初始化函数
 function init() {
     loadHighResBackground();
     addKeyboardNavigation();
     console.log("404页面初始化完成");
 }
 
-/**
- * 加载高清背景图片
- */
+// 加载高清背景图片
 function loadHighResBackground() {
     const highResImage = new Image();
     highResImage.src = 'assets/images/background.webp';
@@ -35,9 +26,7 @@ function loadHighResBackground() {
     };
 }
 
-/**
- * 添加键盘导航支持
- */
+// 添加键盘导航支持
 function addKeyboardNavigation() {
     // 按下回车键返回首页
     document.addEventListener('keydown', (e) => {
@@ -46,15 +35,6 @@ function addKeyboardNavigation() {
         }
     });
 }
-
-/**
- * 页面可见性变化时刷新一言
- */
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-        console.log("页面重新可见，刷新一言");
-    }
-});
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', init);

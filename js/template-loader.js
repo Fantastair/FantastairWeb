@@ -1,8 +1,3 @@
-/**
- * Fantastair - 动态模板加载系统
- * 无需额外依赖，纯 JavaScript 实现
- */
-
 class TemplateLoader {
     constructor() {
         this.articleData = null;

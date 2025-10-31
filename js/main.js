@@ -1,8 +1,3 @@
-/**
- * Fantastair 个人主页 - 主要交互功能
- * 包含滚动效果、导航控制、一言功能、二维码模态框等
- */
-
 // 控制台欢迎信息
 console.log("泥嚎 🚀 - Fantastair 个人主页已加载");
 
@@ -248,43 +243,60 @@ function closeQRCode() {
 }
 
 /**
- * 设置专栏项目交互
+ * 设置专栏项目交互 - 优化版
  */
 function setupColumnItems() {
     const columnItems = document.querySelectorAll('.column-item');
     
     columnItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const href = item.dataset.href;
-            if (href) {
-                // 如果是外部链接，新窗口打开
-                if (href.startsWith('https')) {
-                    window.open(href, '_blank', 'noopener,noreferrer');
-                } else {
-                    // 如果是内部文章链接，当前窗口打开
-                    window.location.href = href;
+        // 鼠标点击事件
+        item.addEventListener('click', (e) => {
+            // 添加点击反馈
+            item.style.transform = 'translateY(-2px) scale(0.98)';
+            
+            setTimeout(() => {
+                const href = item.dataset.href;
+                if (href) {
+                    // 如果是外部链接，新窗口打开
+                    if (href.startsWith('https')) {
+                        window.open(href, '_blank', 'noopener,noreferrer');
+                    } else {
+                        // 如果是内部文章链接，当前窗口打开
+                        window.location.href = href;
+                    }
                 }
-            }
+            }, 150);
         });
         
         // 键盘可访问性
         item.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                const href = item.dataset.href;
-                if (href) {
-                    if (href.startsWith('https')) {
-                        window.open(href, '_blank', 'noopener,noreferrer');
-                    } else {
-                        window.location.href = href;
+                item.style.transform = 'translateY(-2px) scale(0.98)';
+                
+                setTimeout(() => {
+                    const href = item.dataset.href;
+                    if (href) {
+                        if (href.startsWith('https')) {
+                            window.open(href, '_blank', 'noopener,noreferrer');
+                        } else {
+                            window.location.href = href;
+                        }
                     }
-                }
+                }, 150);
+            }
+        });
+        
+        // 恢复原始状态
+        item.addEventListener('transitionend', (e) => {
+            if (e.propertyName === 'transform') {
+                item.style.transform = '';
             }
         });
     });
 }
 
-// ===== 专栏背景图懒加载 =====
+// ===== 专栏背景图懒加载优化 =====
 function lazyLoadColumnBackgrounds() {
     const columnItems = document.querySelectorAll('.column-bg[data-bg]');
     
@@ -301,21 +313,36 @@ function lazyLoadColumnBackgrounds() {
                         bg.style.backgroundImage = `url('${imageUrl}')`;
                         bg.classList.add('loaded');
                     };
+                    img.onerror = () => {
+                        console.warn(`Failed to load image: ${imageUrl}`);
+                        // 可以设置一个默认的背景图
+                        bg.style.backgroundImage = `url('assets/images/background_small.webp')`;
+                        bg.classList.add('loaded');
+                    };
                     img.src = imageUrl;
                     
                     observer.unobserve(bg);
                 }
             });
         }, {
-            rootMargin: '50px' // 提前50px开始加载
+            rootMargin: '50px' // 提前100px开始加载，提升用户体验
         });
-        
+
         columnItems.forEach(bg => imageObserver.observe(bg));
     } else {
         // 不支持 IntersectionObserver 的浏览器，直接加载所有图片
         columnItems.forEach(bg => {
             const imageUrl = bg.getAttribute('data-bg');
-            bg.style.backgroundImage = `url('${imageUrl}')`;
+            const img = new Image();
+            img.onload = () => {
+                bg.style.backgroundImage = `url('${imageUrl}')`;
+                bg.classList.add('loaded');
+            };
+            img.onerror = () => {
+                bg.style.backgroundImage = `url('assets/images/default-bg.webp')`;
+                bg.classList.add('loaded');
+            };
+            img.src = imageUrl;
         });
     }
 }
@@ -323,5 +350,6 @@ function lazyLoadColumnBackgrounds() {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     init();
-    lazyLoadColumnBackgrounds(); // 初始化懒加载
+    setupColumnItems();
+    lazyLoadColumnBackgrounds();
 });
