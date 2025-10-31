@@ -39,31 +39,20 @@
 
 .article-title {
     font-size: 3.5rem;
-    font-weight: 900;
+    font-weight: var(--font-weight-black);
     margin-bottom: 1.5rem;
-    color: var(--primary-color);
-    text-shadow:
-        0 0 20px var(--primary-color),
+    color: var(--color-primary);
+    text-shadow: 
+        0 0 20px var(--color-primary),
         2px 2px 8px rgba(0, 0, 0, 0.5);
     line-height: 1.2;
-    animation: titleAppear 1s ease-out;
-}
-
-@keyframes titleAppear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    animation: fadeInUp 1s ease-out;
 }
 
 .article-meta {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--size-gap-md);
     align-items: center;
     margin-bottom: 2rem;
 }
@@ -76,7 +65,7 @@
 
 .article-tags {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--size-gap-sm);
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -89,7 +78,7 @@
     font-size: 0.9rem;
     border: 1px solid rgba(240, 182, 210, 0.3);
     backdrop-filter: blur(10px);
-    transition: var(--transition);
+    transition: var(--transition-normal);
 }
 
 .article-tag:hover {
@@ -109,7 +98,7 @@
     border-radius: 25px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    transition: var(--transition);
+    transition: var(--transition-normal);
     z-index: 10;
     display: flex;
     align-items: center;
@@ -127,15 +116,15 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 4rem 2rem;
-    background: var(--bg-light);
-    color: var(--text-light);
+    background: var(--color-bg-light);
+    color: var(--color-text-light);
     min-height: 60vh;
 }
 
 @media (prefers-color-scheme: dark) {
     .article-container {
-        background: var(--bg-dark);
-        color: var(--text-dark);
+        background: var(--color-bg-dark);
+        color: var(--color-text-dark);
     }
 }
 
@@ -146,20 +135,20 @@
 }
 
 .article-content h2 {
-    color: var(--primary-color);
+    color: var(--color-primary);
     margin: 3rem 0 1.5rem;
     font-size: 2rem;
-    font-weight: 700;
-    border-left: 4px solid var(--primary-color);
+    font-weight: var(--font-weight-bold);
+    border-left: 4px solid var(--color-primary);
     padding-left: 1rem;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .article-content h3 {
-    color: var(--primary-dark);
+    color: var(--color-primary-dark);
     margin: 2.5rem 0 1rem;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .article-content p {
@@ -177,11 +166,11 @@
 }
 
 .article-content blockquote {
-    border-left: 4px solid var(--primary-color);
+    border-left: 4px solid var(--color-primary);
     padding: 1rem 1.5rem;
     margin: 2rem 0;
     background: rgba(240, 182, 210, 0.05);
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border-radius: 0 var(--size-border-radius) var(--size-border-radius) 0;
     font-style: italic;
 }
 
@@ -198,7 +187,7 @@
     background: rgba(0, 0, 0, 0.8);
     color: #f8f8f2;
     padding: 1.5rem;
-    border-radius: var(--border-radius);
+    border-radius: var(--size-border-radius);
     overflow-x: auto;
     margin: 2rem 0;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -214,26 +203,26 @@
 .article-content img {
     max-width: 100%;
     height: auto;
-    border-radius: var(--border-radius);
+    border-radius: var(--size-border-radius);
     margin: 2rem auto;
     display: block;
-    box-shadow: 0 4px 20px var(--shadow-light);
+    box-shadow: 0 4px 20px var(--color-shadow-light);
 }
 
 .article-content table {
     width: 100%;
     border-collapse: collapse;
     margin: 2rem 0;
-    background: var(--bg-light);
-    border-radius: var(--border-radius);
+    background: var(--color-bg-light);
+    border-radius: var(--size-border-radius);
     overflow: hidden;
-    box-shadow: 0 4px 15px var(--shadow-light);
+    box-shadow: 0 4px 15px var(--color-shadow-light);
 }
 
 @media (prefers-color-scheme: dark) {
     .article-content table {
         background: #1e1e1e;
-        box-shadow: 0 4px 15px var(--shadow-dark);
+        box-shadow: 0 4px 15px var(--color-shadow-dark);
     }
 }
 
@@ -246,8 +235,8 @@
 
 .article-content th {
     background: rgba(240, 182, 210, 0.1);
-    color: var(--primary-color);
-    font-weight: 600;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
 }
 
 /* 响应式设计 */

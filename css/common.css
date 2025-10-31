@@ -1,0 +1,100 @@
+/* ===== CSS 变量系统 ===== */
+:root {
+    /* 颜色系统 */
+    --color-primary: #f0b6d2;
+    --color-primary-dark: #ff5e71;
+    --color-bg-light: #ffffff;
+    --color-bg-dark: #121212;
+    --color-text-light: #000000;
+    --color-text-dark: #eeeeee;
+    --color-shadow-light: rgba(0, 0, 0, 0.1);
+    --color-shadow-dark: rgba(0, 0, 0, 0.3);
+    --color-overlay: rgba(0, 0, 0, 0.8);
+    
+    /* 尺寸系统 */
+    --size-nav-height: 60px;
+    --size-border-radius: 15px;
+    --size-container-width: 1200px;
+    --size-section-padding: 4rem 2rem;
+    --size-gap-sm: 0.5rem;
+    --size-gap-md: 1rem;
+    --size-gap-lg: 2rem;
+    
+    /* 字体系统 */
+    --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-black: 900;
+    
+    /* 动画系统 */
+    --transition-fast: all 0.2s ease;
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* 层级系统 */
+    --z-index-dropdown: 1000;
+    --z-index-sticky: 1020;
+    --z-index-fixed: 1030;
+    --z-index-modal: 1040;
+    --z-index-popover: 1050;
+    --z-index-tooltip: 1060;
+}
+
+/* ===== 重置和基础样式 ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family-base);
+    line-height: 1.6;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-light);
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== 深色模式支持 ===== */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--color-bg-dark);
+        color: var(--color-text-dark);
+    }
+}
+
+/* ===== 无障碍支持 ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ===== 选择样式 ===== */
+::selection {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+::-moz-selection {
+    background-color: var(--color-primary);
+    color: white;
+}

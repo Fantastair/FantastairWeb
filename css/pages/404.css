@@ -1,41 +1,6 @@
-/* ===== 重置和基础样式 ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ===== 404页面样式 ===== */
 
-:root {
-    /* 颜色变量 - 与主页保持一致 */
-    --primary-color: #f0b6d2;
-    --primary-dark: #ff5e71;
-    --bg-light: #ffffff;
-    --bg-dark: #121212;
-    --text-light: #000000;
-    --text-dark: #eeeeee;
-    --shadow-light: rgba(0, 0, 0, 0.1);
-    --shadow-dark: rgba(0, 0, 0, 0.3);
-    --transition: all 0.3s ease;
-}
-
-body {
-    font-family: system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
-    background-color: var(--bg-light);
-    color: var(--text-light);
-    overflow: hidden;
-    height: 100vh;
-}
-
-/* 深色模式支持 */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: var(--bg-dark);
-        color: var(--text-dark);
-    }
-}
-
-/* ===== 404 容器样式 ===== */
+/* 404 容器样式 */
 #error-container {
     position: fixed;
     inset: 0;
@@ -70,10 +35,10 @@ body {
     }
 }
 
-/* ===== 404 内容区域 ===== */
+/* 404 内容区域 */
 #error-content {
     position: relative;
-    z-index: 10;
+    z-index: var(--z-index-sticky);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,11 +53,11 @@ body {
 /* 404 图标 */
 #error-icon {
     font-size: clamp(4rem, 15vmin, 8rem);
-    color: var(--primary-color);
+    color: var(--color-primary);
     margin-top: 5vh;
     animation: floatIcon 3s ease-in-out infinite;
-    text-shadow:
-        0 0 20px var(--primary-color),
+    text-shadow: 
+        0 0 20px var(--color-primary),
         0 0 40px rgba(240, 182, 210, 0.5);
 }
 
@@ -108,40 +73,19 @@ body {
 /* 404 标题 */
 #error-title {
     font-size: clamp(4rem, 20vmin, 12rem);
-    font-weight: 900;
+    font-weight: var(--font-weight-black);
     letter-spacing: 0.1em;
-    color: var(--primary-color);
-    text-shadow:
-        0 0 20px var(--primary-color),
+    color: var(--color-primary);
+    text-shadow: 
+        0 0 20px var(--color-primary),
         2px 2px 10px rgba(0, 0, 0, 0.5);
     margin-bottom: 1rem;
-}
-
-.error-letter {
-    display: inline-block;
-    animation: shine 4s ease-in-out infinite alternate;
-    will-change: color, text-shadow;
-}
-
-@keyframes shine {
-    0%, 100% {
-        color: var(--primary-color);
-        text-shadow:
-            0 0 20px var(--primary-color),
-            2px 2px 10px rgba(0, 0, 0, 0.5);
-    }
-    50% {
-        color: var(--primary-dark);
-        text-shadow:
-            0 0 40px var(--primary-dark),
-            2px 2px 10px rgba(0, 0, 0, 0.5);
-    }
 }
 
 /* 错误信息 */
 #error-message {
     font-size: clamp(1.5rem, 4vmin, 2.5rem);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: #fff;
     margin-bottom: 1rem;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -164,15 +108,15 @@ body {
     padding: 1.2rem 2.5rem;
     min-height: 54px;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     text-decoration: none;
     color: #fff;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     border-radius: 50px;
-    box-shadow:
+    box-shadow: 
         0 4px 15px rgba(240, 182, 210, 0.4),
         0 0 20px rgba(240, 182, 210, 0.3);
-    transition: var(--transition);
+    transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
 }
@@ -194,7 +138,7 @@ body {
 
 #home-button:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow:
+    box-shadow: 
         0 6px 25px rgba(240, 182, 210, 0.6),
         0 0 30px rgba(240, 182, 210, 0.5);
 }

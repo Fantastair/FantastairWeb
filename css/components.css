@@ -1,0 +1,186 @@
+/* ===== 按钮组件系统 ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-gap-sm);
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-radius: var(--size-border-radius);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    user-select: none;
+}
+
+/* 主要按钮 */
+.btn--primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+    box-shadow: 0 4px 15px rgba(240, 182, 210, 0.4);
+}
+
+.btn--primary:hover,
+.btn--primary:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(240, 182, 210, 0.6);
+}
+
+.btn--primary:active {
+    transform: translateY(0);
+}
+
+/* 幽灵按钮 */
+.btn--ghost {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 按钮尺寸 */
+.btn--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn--lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+/* ===== 卡片组件系统 ===== */
+.card {
+    background: var(--color-bg-light);
+    border-radius: var(--size-border-radius);
+    box-shadow: 0 4px 20px var(--color-shadow-light);
+    transition: var(--transition-normal);
+    overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        background: #1e1e1e;
+        box-shadow: 0 4px 20px var(--color-shadow-dark);
+    }
+}
+
+.card--interactive {
+    cursor: pointer;
+}
+
+.card--interactive:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px var(--color-shadow-light);
+}
+
+.card--interactive:active {
+    transform: translateY(-2px);
+}
+
+/* ===== 标签组件系统 ===== */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-medium);
+    border-radius: 12px;
+    background: rgba(240, 182, 210, 0.2);
+    color: inherit;
+    border: 1px solid rgba(240, 182, 210, 0.3);
+    transition: var(--transition-normal);
+    backdrop-filter: blur(10px);
+}
+
+.tag:hover {
+    transform: translateY(-2px);
+    background: rgba(240, 182, 210, 0.3);
+}
+
+/* 标签颜色变体 */
+.tag--blue { background-color: rgba(59, 130, 246, 0.8); }
+.tag--green { background-color: rgba(16, 185, 129, 0.8); }
+.tag--yellow { background-color: rgba(245, 158, 11, 0.8); }
+.tag--red { background-color: rgba(239, 68, 68, 0.8); }
+.tag--purple { background-color: rgba(168, 85, 247, 0.8); }
+
+/* ===== 模态框组件系统 ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: var(--z-index-modal);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-overlay);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.modal--visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.modal__content {
+    background: white;
+    border-radius: var(--size-border-radius);
+    padding: var(--size-gap-lg);
+    max-width: 90vw;
+    max-height: 90vh;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform var(--transition-normal);
+}
+
+.modal--visible .modal__content {
+    transform: scale(1);
+}
+
+.modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    transition: var(--transition-fast);
+}
+
+.modal__close:hover {
+    color: #333;
+}
+
+/* ===== 加载状态组件 ===== */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

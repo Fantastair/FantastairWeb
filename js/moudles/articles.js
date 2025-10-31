@@ -1,67 +1,102 @@
-class TemplateLoader {
+/**
+ * @file 文章管理模块
+ * @description 管理文章的加载、解析和显示
+ */
+
+class ArticleManager {
     constructor() {
         this.articleData = null;
+        this.currentArticleId = null;
         this.init();
     }
 
-    async init() {
-        // 从 URL 参数获取文章 ID
-        const articleId = this.getArticleIdFromURL();
-
-        if (articleId) {
-            await this.loadArticle(articleId);
-            this.renderArticle();
-            this.updatePageMetadata();
-        } else {
-            this.redirectTo404();
-        }
+    /**
+     * 初始化文章管理
+     */
+    init() {
+        console.log('📚 文章管理模块已初始化');
     }
 
+    /**
+     * 从URL参数获取文章ID
+     * @returns {string|null} 文章ID
+     */
     getArticleIdFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('article');
+        return Utils.getUrlParam('article');
     }
 
+    /**
+     * 加载文章
+     * @param {string} articleId - 文章ID
+     * @returns {Promise<Object>} 文章数据
+     */
     async loadArticle(articleId) {
         try {
             const response = await fetch(`articles/${articleId}.html`);
+            
             if (!response.ok) {
-                throw new Error('文章不存在');
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
 
             const html = await response.text();
             this.articleData = this.parseArticleHTML(html);
+            this.currentArticleId = articleId;
+            
+            return this.articleData;
+            
         } catch (error) {
-            console.error('加载文章失败:', error);
-            this.redirectTo404();
+            console.error('❌ 加载文章失败:', error);
+            throw error;
         }
     }
 
+    /**
+     * 解析文章HTML
+     * @param {string} html - HTML内容
+     * @returns {Object} 解析后的文章数据
+     */
     parseArticleHTML(html) {
-        // 创建临时 DOM 元素来解析 HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
 
-        // 提取文章数据 - 适配新的模板结构
         return {
             title: tempDiv.querySelector('[data-field="title"]')?.textContent || '未命名文章',
             date: tempDiv.querySelector('[data-field="date"]')?.textContent || '',
             tags: Array.from(tempDiv.querySelectorAll('[data-field="tags"] [data-tag]')).map(tag => tag.textContent),
             content: tempDiv.querySelector('[data-field="content"]')?.innerHTML || '<p>文章内容为空</p>',
-            // 新增：背景图片（如果有）
             background: tempDiv.querySelector('[data-field="background"]')?.textContent || ''
         };
     }
 
+    /**
+     * 渲染文章
+     */
     renderArticle() {
         if (!this.articleData) return;
 
-        // 更新文章标题
+        this.updateTitle();
+        this.updateMetadata();
+        this.updateContent();
+        this.updateBackground();
+    }
+
+    /**
+     * 更新标题
+     */
+    updateTitle() {
         const titleElement = document.querySelector('.article-title[data-field="title"]');
         if (titleElement) {
             titleElement.textContent = this.articleData.title;
         }
 
+        // 更新页面标题
+        document.title = `${this.articleData.title} - Fantastair`;
+    }
+
+    /**
+     * 更新元数据
+     */
+    updateMetadata() {
         // 更新日期
         const dateElement = document.querySelector('.article-date[data-field="date"]');
         if (dateElement) {
@@ -75,17 +110,25 @@ class TemplateLoader {
                 `<span class="article-tag">${tag}</span>`
             ).join('');
         }
+    }
 
-        // 更新内容
+    /**
+     * 更新内容
+     */
+    updateContent() {
         const contentElement = document.querySelector('.article-content[data-field="content"]');
         if (contentElement) {
-            contentElement.innerHTML = this.articleData.content;
-
-            // 处理内容中的代码块和图片
+            Utils.safeSetHTML(contentElement, this.articleData.content);
+            
+            // 处理内容中的特殊元素
             this.processContentElements(contentElement);
         }
+    }
 
-        // 设置自定义背景（如果有）
+    /**
+     * 更新背景
+     */
+    updateBackground() {
         if (this.articleData.background) {
             this.setCustomBackground(this.articleData.background);
         }
@@ -93,43 +136,34 @@ class TemplateLoader {
 
     /**
      * 处理内容中的特殊元素
+     * @param {Element} contentElement - 内容元素
      */
     processContentElements(contentElement) {
-        // 为代码块添加语言标识
+        this.enhanceCodeBlocks(contentElement);
+        this.enhanceTables(contentElement);
+        this.enhanceImages(contentElement);
+    }
+
+    /**
+     * 增强代码块
+     * @param {Element} contentElement - 内容元素
+     */
+    enhanceCodeBlocks(contentElement) {
         const codeBlocks = contentElement.querySelectorAll('pre code');
-        codeBlocks.forEach((block, index) => {
+        
+        codeBlocks.forEach((block) => {
+            // 检测代码语言
             const language = this.detectCodeLanguage(block.textContent);
             if (language) {
                 block.setAttribute('data-language', language);
             }
-
-            // 添加行号
-            this.addLineNumbers(block);
-        });
-
-        // 为表格添加响应式包装
-        const tables = contentElement.querySelectorAll('table');
-        tables.forEach(table => {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'table-responsive';
-            table.parentNode.insertBefore(wrapper, table);
-            wrapper.appendChild(table);
-        });
-
-        // 为图片添加加载动画
-        const images = contentElement.querySelectorAll('img');
-        images.forEach(img => {
-            img.loading = 'lazy';
-            img.addEventListener('load', () => {
-                img.style.opacity = '1';
-            });
-            img.style.opacity = '0';
-            img.style.transition = 'opacity 0.3s ease';
         });
     }
 
     /**
      * 检测代码语言
+     * @param {string} code - 代码内容
+     * @returns {string|null} 语言类型
      */
     detectCodeLanguage(code) {
         const patterns = {
@@ -149,57 +183,61 @@ class TemplateLoader {
     }
 
     /**
-     * 为代码块添加行号
+     * 增强表格
+     * @param {Element} contentElement - 内容元素
      */
-    addLineNumbers(codeBlock) {
-        const lines = codeBlock.textContent.split('\n');
-        if (lines.length > 1) {
-            const lineNumbers = document.createElement('div');
-            lineNumbers.className = 'line-numbers';
-            lineNumbers.innerHTML = lines.map((_, i) => `<span>${i + 1}</span>`).join('\n');
-
+    enhanceTables(contentElement) {
+        const tables = contentElement.querySelectorAll('table');
+        
+        tables.forEach(table => {
             const wrapper = document.createElement('div');
-            wrapper.className = 'code-block-wrapper';
-            codeBlock.parentNode.insertBefore(wrapper, codeBlock);
-            wrapper.appendChild(lineNumbers);
-            wrapper.appendChild(codeBlock);
-        }
+            wrapper.className = 'table-responsive';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
     }
 
     /**
-     * 设置自定义背景图片
+     * 增强图片
+     * @param {Element} contentElement - 内容元素
+     */
+    enhanceImages(contentElement) {
+        const images = contentElement.querySelectorAll('img');
+        
+        images.forEach(img => {
+            img.loading = 'lazy';
+            img.addEventListener('load', () => {
+                img.style.opacity = '1';
+            });
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.3s ease';
+        });
+    }
+
+    /**
+     * 设置自定义背景
+     * @param {string} backgroundUrl - 背景图片URL
      */
     setCustomBackground(backgroundUrl) {
         const heroBg = document.getElementById('article-hero-bg');
         if (heroBg && backgroundUrl) {
-            // 加载自定义背景
-            const customBg = new Image();
-            customBg.onload = () => {
-                heroBg.style.backgroundImage = `url('${backgroundUrl}')`;
-                heroBg.classList.add('loaded');
-            };
-            customBg.src = backgroundUrl;
+            Utils.loadImage(backgroundUrl)
+                .then(() => {
+                    heroBg.style.backgroundImage = `url('${backgroundUrl}')`;
+                    heroBg.classList.add('loaded');
+                })
+                .catch(() => {
+                    console.warn(`❌ 自定义背景加载失败: ${backgroundUrl}`);
+                });
         }
     }
 
     /**
-     * 更新页面元数据
-     */
-    updatePageMetadata() {
-        if (!this.articleData) return;
-
-        // 更新页面标题
-        document.title = `${this.articleData.title} - Fantastair`;
-
-        // 更新 Open Graph 元数据（用于社交媒体分享）
-        this.updateOpenGraphMetadata();
-    }
-
-    /**
-     * 更新 Open Graph 元数据
+     * 更新Open Graph元数据
      */
     updateOpenGraphMetadata() {
-        // 动态创建 meta 标签
+        if (!this.articleData) return;
+
         const metaTags = {
             'og:title': this.articleData.title,
             'og:type': 'article',
@@ -225,12 +263,12 @@ class TemplateLoader {
     }
 
     /**
-     * 获取文章描述（用于元数据）
+     * 获取文章描述
+     * @returns {string} 文章描述
      */
     getArticleDescription() {
         if (!this.articleData.content) return 'Fantastair 的专栏文章';
 
-        // 从内容中提取前 150 个字符作为描述
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = this.articleData.content;
         const text = tempDiv.textContent || '';
@@ -238,14 +276,39 @@ class TemplateLoader {
     }
 
     /**
-     * 重定向到 404 页面
+     * 获取当前文章数据
+     * @returns {Object|null} 文章数据
+     */
+    getCurrentArticleData() {
+        return this.articleData;
+    }
+
+    /**
+     * 获取当前文章ID
+     * @returns {string|null} 文章ID
+     */
+    getCurrentArticleId() {
+        return this.currentArticleId;
+    }
+
+    /**
+     * 重定向到404页面
      */
     redirectTo404() {
         window.location.href = '404.html';
     }
+
+    /**
+     * 销毁文章管理实例
+     */
+    destroy() {
+        this.articleData = null;
+        this.currentArticleId = null;
+        console.log('🔚 文章管理模块已销毁');
+    }
 }
 
-// 页面加载完成后初始化
+// 自动初始化
 document.addEventListener('DOMContentLoaded', () => {
-    new TemplateLoader();
+    window.articleManager = new ArticleManager();
 });

@@ -1,48 +1,70 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="auto">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Fantastair的专栏文章 - 技术分享和项目展示" />
+    
+    <!-- Open Graph Meta Tags (会在JS中动态更新) -->
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Fantastair" />
+    
     <title data-field="title">Fantastair - 专栏文章</title>
 
     <!-- 样式表 -->
-    <link rel="icon" href="assets/images/icon.ico" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/article.css" />
+    <link rel="icon" href="assets/images/icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/pages/article.css" />
 
     <!-- Font Awesome 图标 -->
-    <link href="css/fontawesome.min.css" rel="stylesheet" />
-    <link href="css/regular.min.css" rel="stylesheet" />
-    <link href="css/brands.min.css" rel="stylesheet" />
-    <link href="css/solid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/regular.min.css" />
+    <link rel="stylesheet" href="css/solid.min.css" />
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="assets/images/background.webp" as="image" />
 </head>
 <body>
+    <!-- 跳过导航链接 -->
+    <a href="#article-content" class="skip-link sr-only">跳转到文章内容</a>
+
     <!-- 简约版英雄区域 -->
-    <div id="article-hero">
-        <div id="article-hero-bg"></div>
+    <header id="article-hero" role="banner" aria-labelledby="article-title">
+        <div id="article-hero-bg" aria-hidden="true"></div>
+        
         <div id="article-hero-content">
-            <h1 class="article-title" data-field="title">文章标题</h1>
-            <div class="article-meta" data-field="meta">
-                <span class="article-date" data-field="date">发布日期</span>
-                <div class="article-tags" data-field="tags">
+            <h1 id="article-title" class="article-title" data-field="title">文章标题</h1>
+            
+            <div class="article-meta" data-field="meta" aria-label="文章信息">
+                <time class="article-date" data-field="date" datetime="">发布日期</time>
+                <div class="article-tags" data-field="tags" role="list" aria-label="文章标签">
                     <!-- 标签会动态插入 -->
                 </div>
             </div>
         </div>
-        <a href="index.html" class="back-to-home">
-            <span class="fa-regular fa-arrow-left"></span> 返回首页
+        
+        <a href="index.html" class="back-to-home btn btn--ghost" aria-label="返回首页">
+            <span class="fa-regular fa-arrow-left" aria-hidden="true"></span>
+            返回首页
         </a>
-    </div>
+    </header>
 
     <!-- 文章内容区域 -->
-    <main class="article-container">
-        <article class="article-content" data-field="content">
+    <main id="article-content" class="article-container" role="main">
+        <article class="article-content" data-field="content" aria-labelledby="article-title">
             <!-- 文章内容会动态插入 -->
+            <div class="loading-content" aria-live="polite" aria-label="文章加载中">
+                <p>正在加载文章内容...</p>
+            </div>
         </article>
     </main>
 
     <!-- JavaScript -->
-    <script src="js/template-loader.js"></script>
-    <script src="js/article.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/modules/articles.js"></script>
+    <script src="js/pages/article.js"></script>
 </body>
 </html>
