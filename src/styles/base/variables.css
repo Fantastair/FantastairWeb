@@ -1,0 +1,95 @@
+/* ===== CSS 设计令牌系统 ===== */
+
+/* 颜色系统 */
+:root {
+  /* 品牌色 */
+  --color-primary: #f0b6d2;
+  --color-primary-dark: #ff5e71;
+  --color-primary-light: #f8d8e5;
+  
+  /* 中性色 */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-900: #111827;
+  
+  /* 背景色 */
+  --bg-light: var(--color-white);
+  --bg-dark: #121212;
+  --bg-hero: #0d1b28;
+  
+  /* 文本色 */
+  --text-light: var(--color-black);
+  --text-dark: #eeeeee;
+  --text-muted: #6b7280;
+  
+  /* 阴影 */
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.3);
+  --shadow-primary: rgba(240, 182, 210, 0.3);
+}
+
+/* 深色模式变量 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-light: var(--bg-dark);
+    --text-light: var(--text-dark);
+  }
+}
+
+/* 间距系统 */
+:root {
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+}
+
+/* 字体系统 */
+:root {
+  --font-family-sans: system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'Courier New', monospace;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+}
+
+/* 布局系统 */
+:root {
+  --nav-height: 60px;
+  --border-radius-sm: 8px;
+  --border-radius: 15px;
+  --border-radius-lg: 20px;
+  
+  --transition-fast: 0.15s ease;
+  --transition: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  --z-index-dropdown: 1000;
+  --z-index-modal: 2000;
+  --z-index-tooltip: 3000;
+}
+
+/* 响应式断点 */
+:root {
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
