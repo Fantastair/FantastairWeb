@@ -4,277 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fantastair的个人主页</title>
+    <link rel="icon" href="assets/images/icon.webp" />
 
-    <!-- 样式表 -->
-    <link rel="icon" href="assets/images/icon.ico" />
-    <link rel="stylesheet" href="css/root.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/hitokoto.css" />
-    <link rel="stylesheet" href="css/column.css" />
+    <!-- 基础样式表 -->
+    <link href="src/styles/base/variables.css" rel="stylesheet" />
+
+    <!-- 组件样式表 -->
+    <link href="src/components/hero/hero.css" rel="stylesheet" />
 
     <!-- Font Awesome 图标 -->
-    <link href="css/fontawesome.min.css" rel="stylesheet" />
-    <link href="css/regular.min.css" rel="stylesheet" />
-    <link href="css/brands.min.css" rel="stylesheet" />
-    <link href="css/solid.min.css" rel="stylesheet" />
+    <link href="src/styles/fontawesome/fontawesome.min.css" rel="stylesheet" />
+    <link href="src/styles/fontawesome/regular.min.css" rel="stylesheet" />
+    <link href="src/styles/fontawesome/brands.min.css" rel="stylesheet" />
+    <link href="src/styles/fontawesome/solid.min.css" rel="stylesheet" />
+
+    <!-- js脚本 -->
+    <script src="src/scripts/main.js" type="module"></script>
 </head>
 <body>
-    <!-- 英雄区域/顶部展示区 -->
+    <!-- 英雄区域 -->
     <div id="hero">
-        <div id="hero-bg"></div>
-        <div id="hero-icon-wrapper">
-            <img id="hero-icon" src="assets/images/icon.ico" alt="Fantastair 头像" />
-        </div>
-
-        <!-- 顶部导航 -->
-        <nav id="top-nav">
-            <a href="#hero" class="nav-item" id="home-link">
-                <span class="nav-icon fa-regular fa-house"></span>
-                <span class="nav-text">首页</span>
-            </a>
-            <a href="#column" class="nav-item">
-                <span class="nav-icon fa-regular fa-object-group"></span>
-                <span class="nav-text">专栏</span>
-            </a>
-            <a href="#contact" class="nav-item">
-                <span class="nav-icon fa-regular fa-message"></span>
-                <span class="nav-text">联系</span>
-            </a>
-        </nav>
-
-        <!-- 主标题动画 -->
-        <div id="hero-title">
-            <span class="hero-letter">F</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.2s;">a</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.4s;">n</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.6s;">t</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.8s;">a</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.0s;">s</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.2s;">t</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.4s;">a</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.6s;">i</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.8s;">r</span>
+        <!-- 背景 -->
+        <div id="hero-bg">
+            <!-- 图标容器 -->
+            <div id="hero-icon-wrapper">
+                <img id="hero-icon" src="assets/images/icon.webp" alt="Fantastair的图标" />
+            </div>
+            <!-- 主标题动画 -->
+            <div id="hero-title">
+                <span class="hero-letter">F</span><!--
+             --><span class="hero-letter" style="animation-delay: 0.2s;">a</span><!--
+             --><span class="hero-letter" style="animation-delay: 0.4s;">n</span><!--
+             --><span class="hero-letter" style="animation-delay: 0.6s;">t</span><!--
+             --><span class="hero-letter" style="animation-delay: 0.8s;">a</span><!--
+             --><span class="hero-letter" style="animation-delay: 1.0s;">s</span><!--
+             --><span class="hero-letter" style="animation-delay: 1.2s;">t</span><!--
+             --><span class="hero-letter" style="animation-delay: 1.4s;">a</span><!--
+             --><span class="hero-letter" style="animation-delay: 1.6s;">i</span><!--
+             --><span class="hero-letter" style="animation-delay: 1.8s;">r</span>
+            </div>
         </div>
     </div>
-
-    <!-- 主要内容区域 -->
-    <main id="content">
-        <!-- 专栏部分 -->
-        <section id="column" class="content-section">
-            <!-- 一言区域 -->
-            <p id="hitokoto">
-                <a href="javascript:void(0);" id="hitokoto_text" onclick="refreshHitokoto()" data-tooltip="试试点击这句话😚">
-                    <span class="hitokoto-content">茫茫句海，总有一句适合你...</span>
-                    <button class="hitokoto-copy-btn" title="复制一言">
-                        <i class="fa-regular fa-copy"></i>
-                    </button>
-                </a>
-            </p>
-
-            <!-- 专栏容器 -->
-            <div class="column-container">
-                <!-- 专栏项目模板 -->
-                <article class="column-item" data-href="article.html?article=airport-tyrant" tabindex="0">
-                    <div class="column-bg" data-bg="assets/images/article_bg_01.webp"></div>
-                    <div class="column-content">
-                        <p class="column-title">机场霸王</p>
-                        <div class="column-tags">
-                            <span class="column-tag">python</span>
-                            <span class="column-tag">pygame</span>
-                            <span class="column-tag">fantas-v1</span>
-                            <span class="column-tag">游戏</span>
-                        </div>
-                        <p class="column-desc">梦开始的地方</p>
-                    </div>
-                </article>
-
-                <article class="column-item" data-href="article.html?article=minesweeper" tabindex="0">
-                    <div class="column-bg" data-bg="assets/images/article_bg_02.webp"></div>
-                    <div class="column-content">
-                        <p class="column-title">扫雷（反物质版）</p>
-                        <div class="column-tags">
-                            <span class="column-tag">python</span>
-                            <span class="column-tag">pygame</span>
-                            <span class="column-tag">fantas-v2</span>
-                            <span class="column-tag">游戏</span>
-                        </div>
-                        <p class="column-desc">动效大升级</p>
-                    </div>
-                </article>
-
-                <article class="column-item" data-href="article.html?article=pythoneye" tabindex="0">
-                    <div class="column-bg" data-bg="assets/images/article_bg_03.webp"></div>
-                    <div class="column-content">
-                        <p class="column-title">PythonEye</p>
-                        <div class="column-tags">
-                            <span class="column-tag">python</span>
-                            <span class="column-tag">pygame</span>
-                            <span class="column-tag">fantas-v2</span>
-                            <span class="column-tag">pdb</span>
-                            <span class="column-tag">debug</span>
-                        </div>
-                        <p class="column-desc">可视化python代码调试工具</p>
-                    </div>
-                </article>
-
-                <article class="column-item" data-href="article.html?article=serial-lens" tabindex="0">
-                    <div class="column-bg" data-bg="assets/images/article_bg_04.webp"></div>
-                    <div class="column-content">
-                        <p class="column-title">串口透镜</p>
-                        <div class="column-tags">
-                            <span class="column-tag">STM32</span>
-                            <span class="column-tag">python</span>
-                            <span class="column-tag">串口通信</span>
-                            <span class="column-tag">调试分析工具</span>
-                        </div>
-                        <p class="column-desc">实时串口通信内容显示终端</p>
-                    </div>
-                </article>
-
-                <article class="column-item" data-href="article.html?article=fantas-v3" tabindex="0">
-                    <div class="column-bg" data-bg="assets/images/article_bg_05.webp"></div>
-                    <div class="column-content">
-                        <p class="column-title">第三代Fantas框架</p>
-                        <div class="column-tags">
-                            <span class="column-tag">python</span>
-                            <span class="column-tag">pygame-ce</span>
-                            <span class="column-tag">fantas-v3</span>
-                            <span class="column-tag">图形框架</span>
-                        </div>
-                        <p class="column-desc">
-                            基于pygame的跨平台计算机图形开发框架</br>
-                            仍在开发中，敬请期待！
-                        </p>
-                    </div>
-                </article>
-
-                <article class="column-item" data-href="article.html?article=3d-print-pcb" tabindex="0">
-                    <div class="column-bg" data-bg="assets/images/article_bg_06.webp"></div>
-                    <div class="column-content">
-                        <p class="column-title">快速PCB制板工艺</p>
-                        <div class="column-tags">
-                            <span class="column-tag">PCB</span>
-                            <span class="column-tag">3D打印</span>
-                        </div>
-                        <p class="column-desc">
-                            一种基于3D打印的PCB制板工艺</br>
-                            工艺仍在实验中，欢迎交流！
-                        </p>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- 联系部分 -->
-        <section id="contact" class="contact-section">
-            <div class="contact-container">
-                <h2>联系我</h2>
-                <p class="contact-intro">欢迎通过以下方式与我取得联系</p>
-
-                <!-- 联系方式部分 -->
-                <div class="contact-methods">
-                    <!-- 社交媒体链接 -->
-                    <a href="https://github.com/Fantastair" target="_blank" rel="noopener" class="contact-link">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <span class="fa-brands fa-github"></span>
-                            </div>
-                            <h3>GitHub</h3>
-                            <p>Fantastair</p>
-                        </div>
-                    </a>
-
-                    <a href="mailto:fantastair@qq.com" class="contact-link">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <span class="fa-regular fa-envelope"></span>
-                            </div>
-                            <h3>邮箱</h3>
-                            <p>fantastair@qq.com</p>
-                        </div>
-                    </a>
-
-                    <a href="https://t.me/Fantastair" target="_blank" rel="noopener" class="contact-link">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <span class="fa-brands fa-telegram"></span>
-                            </div>
-                            <h3>Telegram</h3>
-                            <p>Fantastair</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="contact-methods">
-                    <!-- 二维码联系方式 -->
-                    <a href="javascript:void(0);" class="contact-link qr-trigger" data-qr-type="qq">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <span class="fa-brands fa-qq"></span>
-                            </div>
-                            <h3>QQ</h3>
-                            <p>2364209908</p>
-                        </div>
-                    </a>
-
-                    <a href="javascript:void(0);" class="contact-link qr-trigger" data-qr-type="wechat">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <span class="fa-brands fa-weixin"></span>
-                            </div>
-                            <h3>微信</h3>
-                            <p>Fantastair</p>
-                        </div>
-                    </a>
-
-                    <a href="https://space.bilibili.com/2041660957" target="_blank" rel="noopener" class="contact-link">
-                        <div class="contact-method">
-                            <div class="contact-icon">
-                                <span class="fa-brands fa-bilibili"></span>
-                            </div>
-                            <h3>bilibili</h3>
-                            <p>Fantastair</p>
-                        </div>
-                    </a>
-
-                    <div class="contact-method">
-                        <div class="contact-icon">
-                            <span class="fa-solid fa-location-dot"></span>
-                        </div>
-                        <h3>位置</h3>
-                        <p>中国 · 山东</p>
-                    </div>
-                </div>
-
-                <!-- 页脚信息 -->
-                <footer class="contact-footer">
-                    <a href="https://github.com/Fantastair/FantastairWeb" target="_blank" rel="noopener noreferrer">
-                        <span class="fa-brands fa-github"></span>本网站源代码由GitHub的公共仓库托管，欢迎访问
-                    </a>
-                    <br/>
-                    <a href="https://hitokoto.cn/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 20px; vertical-align: middle;" title="一言图标" alt="一言图标"/>
-                        一句话服务由一言（Hitokoto）提供
-                    </a>
-                    <br/>
-                    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" alt="备案图标" style="height: 20px; vertical-align: middle;">
-                        浙ICP备2025179704号-1
-                    </a>
-                </footer>
-            </div>
-        </section>
-    </main>
-
-    <!-- 二维码模态框 -->
-    <div id="qr-modal" class="qr-modal" aria-hidden="true">
-        <span class="close-btn" role="button" aria-label="关闭二维码">&times;</span>
-        <img class="qr-modal-content" id="qr-image" alt="联系二维码">
-        <div id="caption"></div>
-    </div>
-
-    <!-- JavaScript -->
-    <script src="js/main.js"></script>
-    <script src="js/hitokoto.js"></script>
 </body>
 </html>

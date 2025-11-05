@@ -1,0 +1,65 @@
+/* ===== 导航栏样式 ===== */
+#top-nav {
+    position: fixed;
+    top: 0;
+    right: 20px;
+    height: var(--nav-height);
+    z-index: 20;
+    display: flex;
+    gap: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+#top-nav.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 12px;
+    transition: var(--transition);
+}
+
+.nav-item:hover {
+    transform: translateY(-2px);
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+
+.nav-text {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    #top-nav {
+        top: 15px;
+        right: 15px;
+        gap: 10px;
+    }
+
+    .nav-item {
+        padding: 10px;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+    }
+
+    .nav-text {
+        display: none;
+    }
+
+    .nav-icon {
+        margin-right: 0;
+        font-size: 1.4rem;
+    }
+}
