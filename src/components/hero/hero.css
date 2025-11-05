@@ -7,28 +7,23 @@
     overflow: hidden;
     z-index: 10;
     background-color: var(--color-bg-blue);
-}
-
-/* 背景 */
-#hero-bg {
+    background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    inset: 0;
-    background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
+    justify-content: center;
     filter: blur(0px);
     transform: scale(1);
-    will-change: transform, filter;
 }
 
-/* 高清置换 */
-#hero-bg.bgloaded {
+/* 高清背景图置换 */
+#hero.bgloaded {
     background: url('../../../assets/images/background.webp') center/cover no-repeat;
 }
 
 /* 图标边框 */
 #hero-icon-wrapper {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +31,9 @@
     height: 20vmin;
     background-color: var(--color-white);
     border-radius: 40%;
-    margin-top: 20%;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 /* 图标本体 */
@@ -47,37 +44,28 @@
     border-radius: 40%;
 }
 
+/* 主标题 */
 #hero-title {
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
-    font-size: clamp(2.5rem, 16vmin, 8rem);
     font-weight: 900;
-    /* letter-spacing: 0.1em; */
-    /* color: var(--primary-color);
-    text-shadow:
-        0 0 16px var(--primary-color),
-        2px 2px 8px rgba(0, 0, 0, 0.3); */
-    /* white-space: nowrap; */
-    /* will-change: transform, font-size; */
+    font-size: clamp(2.5rem, 16vw, 8rem);
+    letter-spacing: 0.1em;
+    color: var(--color-title-pink);
+    text-shadow: 0 0 16px var(--color-title-pink);
 }
 
-/* 
-.hero-letter {
-    animation: shine 4s ease-in-out infinite alternate;
-    will-change: color, text-shadow;
-}
-
+/* 字符闪光动画 */
 @keyframes shine {
-    0%, 100% {
-        color: var(--primary-color);
-        text-shadow:
-            0 0 16px var(--primary-color),
-            2px 2px 8px rgba(0, 0, 0, 0.3);
+    0% {
+        color: var(--color-title-pink);
+        text-shadow: 0 0 16px var(--color-title-pink);
     }
     50% {
-        color: var(--primary-dark);
-        text-shadow:
-            0 0 32px var(--primary-dark),
-            2px 2px 8px rgba(0, 0, 0, 0.3);
+        color: var(--color-title-red);
+        text-shadow: 0 0 32px var(--color-title-red);
     }
-} */
+}
+
+/* 字符样式 */
+.hero-letter {
+    animation: shine 4s ease-in-out infinite alternate;
+}
