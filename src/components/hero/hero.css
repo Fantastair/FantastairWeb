@@ -7,22 +7,25 @@
     overflow: hidden;
     z-index: 10;
     background-color: var(--color-bg-blue);
-    background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+}
+
+#hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('../assets/images/background_small.webp') center/cover no-repeat;
     filter: blur(0px);
     transform: scale(1);
 }
 
 /* 高清背景图置换 */
-#hero.bgloaded {
+#hero-bg.bgloaded {
     background: url('../../../assets/images/background.webp') center/cover no-repeat;
 }
 
 /* 图标边框 */
 #hero-icon-wrapper {
+    --top: 35vh;
+
     position: absolute;
     display: flex;
     align-items: center;
@@ -31,8 +34,8 @@
     height: 20vmin;
     background-color: var(--color-white);
     border-radius: 40%;
-    left: 50%;
-    top: 30%;
+    left: 50vw;
+    top: var(--top);
     transform: translateX(-50%) translateY(-50%);
 }
 
@@ -46,6 +49,12 @@
 
 /* 主标题 */
 #hero-title {
+    --top: 55vh;
+
+    position: absolute;
+    left: 50vw;
+    top: var(--top);
+    transform: translateX(-50%) translateY(-50%);
     font-weight: 900;
     font-size: clamp(2.5rem, 16vw, 8rem);
     letter-spacing: 0.1em;
