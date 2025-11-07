@@ -32,8 +32,6 @@ function showNav() {
     if (navShowed) return;
     navShowed = true;
     elements.topNav.classList.add('show');
-
-    console.log("显示导航栏");
 }
 
 /**
@@ -43,6 +41,4 @@ function hideNav() {
     if (!navShowed) return;
     navShowed = false;
     elements.topNav.classList.remove('show');
-
-    console.log("隐藏导航栏");
 }

@@ -25,14 +25,24 @@
 }
 
 .nav-item {
+    --underline-y: 45px;
+
     display: flex;
     align-items: center;
     text-decoration: none;
     color: #fff;
     padding: 8px 12px;
-    transition: transform 0.3s ease;
+    background: linear-gradient(to left, var(--color-title-pink), var(--color-title-red)) no-repeat;
+    background-size: 0 4px;
+    background-position-y: var(--underline-y);
+    background-position-x: right;
+    transition:
+        transform 0.3s ease,
+        background-size 0.3s ease;
 }
 
 .nav-item:hover {
     transform: translateY(-2px);
+        background-size: 100% 4px;
+        background-position-x: left;
 }
