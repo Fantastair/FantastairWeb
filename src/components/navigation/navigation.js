@@ -24,7 +24,6 @@ export function updateNavStyles(ratio = null) {
 }
 
 let navShowed = false;  // 导航栏当前是否显示
-
 /**
  * 显示导航栏
  */

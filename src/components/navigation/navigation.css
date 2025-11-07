@@ -1,4 +1,5 @@
 /* ===== 导航栏样式 ===== */
+/* 导航栏 */
 #top-nav {
     --nav-height: 60px;
 
@@ -15,7 +16,7 @@
         opacity 0.3s ease,
         visibility 0s ease 0.3s;
 }
-
+/* 显示状态 */
 #top-nav.show {
     visibility: visible;
     opacity: 1;
@@ -23,7 +24,7 @@
         opacity 0.3s ease,
         visibility 0s ease 0s;
 }
-
+/* 导航项 */
 .nav-item {
     --underline-y: 45px;
 
@@ -40,7 +41,7 @@
         transform 0.3s ease,
         background-size 0.3s ease;
 }
-
+/* 悬停效果 */
 .nav-item:hover {
     transform: translateY(-2px);
         background-size: 100% 4px;

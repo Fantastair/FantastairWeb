@@ -1,180 +1,87 @@
 /* ===== 一言样式 ===== */
+/* 总体样式 */
 #hitokoto {
-    margin: 2rem 0 3rem;
+    display: flex;
     text-align: center;
-    font-style: italic;
-    position: relative;
-    padding: 0 2rem;
-}
-
-#hitokoto_text {
-    text-decoration: none;
-    color: inherit;
-    font-size: 1.4rem;
-    line-height: 1.6;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem 3.5rem 1.5rem 2rem;
-    transition: var(--transition);
-    border-radius: var(--border-radius);
-    background: rgba(240, 182, 210, 0.1);
-    border: 1px solid rgba(240, 182, 210, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    cursor: pointer;
-    max-width: 800px;
-    min-height: 60px;
+    width: fit-content;
+    margin: 1rem auto;
     gap: 1rem;
+    transition:
+        transform 0.3s ease,
+        gap 0.3s ease;
+}
+/* 悬停效果 */
+#hitokoto:hover {
+    gap: 2.5rem;
+    transform: translateY(-10%);
 }
 
-/* 浅色模式一言样式 */
-@media (prefers-color-scheme: light) {
-    #hitokoto_text {
-        background: rgba(240, 182, 210, 0.08);
-        border: 1px solid rgba(240, 182, 210, 0.4);
-        color: #333;
-        box-shadow: 0 4px 15px var(--shadow-light);
-    }
-
-    #hitokoto_text:hover {
-        background: rgba(240, 182, 210, 0.15);
-        border-color: rgba(240, 182, 210, 0.6);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px var(--shadow-light);
-    }
-}
-
-/* 深色模式一言样式 */
-@media (prefers-color-scheme: dark) {
-    #hitokoto_text {
-        background: rgba(240, 182, 210, 0.05);
-        border: 1px solid rgba(240, 182, 210, 0.1);
-        color: var(--text-dark);
-        box-shadow: 0 4px 15px var(--shadow-dark);
-    }
-
-    #hitokoto_text:hover {
-        background: rgba(240, 182, 210, 0.1);
-        border-color: rgba(240, 182, 210, 0.2);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px var(--shadow-dark);
-    }
-}
-
-/* 引用符号 */
-#hitokoto::before,
-#hitokoto::after {
-    content: '"';
-    font-size: 3rem;
-    color: rgba(240, 182, 210, 0.5);
-    position: absolute;
-    font-family: serif;
+/* 引号 */
+.hitokoto-quote {
+    font-size: 4rem;
+    color: color-mix(in srgb, var(--color-title-pink) 40%, transparent);
     line-height: 1;
 }
 
-#hitokoto::before {
-    top: -10px;
-    left: 0;
+/* 一言文本 */
+#hitokoto-text {
+    display: flex;
+    gap: 1rem;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--color-hitokoto-purple);
+    text-decoration: none;
+    background: color-mix(in srgb, var(--color-title-pink) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
+    border-radius: 1rem;
+    padding: 1rem 3rem 1rem 3rem;
+    transition:
+        border 0.3s ease,
+        background 0.3s ease;
+}
+/* 悬停效果 */
+#hitokoto:hover #hitokoto-text {
+    border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 50%, transparent);
+    background: color-mix(in srgb, var(--color-title-pink) 20%, transparent);
+}
+/* 激活效果 */
+#hitokoto:active #hitokoto-text {
+    border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 75%, transparent);
+    background: color-mix(in srgb, var(--color-title-pink) 50%, transparent);
 }
 
-#hitokoto::after {
-    bottom: -20px;
-    right: 0;
-}
-
-/* 一言内容区域 */
-.hitokoto-content {
-    flex: 1;
-    text-align: center;
-    padding: 0 0.5rem;
-}
-
-/* 复制按钮样式 - FontAwesome 版本 */
+/* 复制按钮样式 */
 .hitokoto-copy-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    font-size: 1rem;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    padding: 0.5rem;
-    border-radius: 6px;
-    width: 36px;
-    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
     color: inherit;
+    background: color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    width: 2rem;
+    height: 2rem;
 }
-
+/* 悬停效果 */
 .hitokoto-copy-btn:hover {
-    opacity: 1;
-    background: rgba(240, 182, 210, 0.3);
-    transform: translateY(-50%) scale(1.1);
+    background: color-mix(in srgb, var(--color-hitokoto-purple) 30%, transparent);
 }
-
+/* 激活效果 */
 .hitokoto-copy-btn:active {
-    transform: translateY(-50%) scale(0.95);
+    transform: scale(0.95);
 }
 
-.hitokoto-copy-btn.copied {
+/* .hitokoto-copy-btn.copied {
     opacity: 1;
     background: rgba(16, 185, 129, 0.3);
     border-color: rgba(16, 185, 129, 0.5);
     color: rgba(16, 185, 129, 1);
-}
+} */
 
-/* 浅色模式复制按钮 */
-@media (prefers-color-scheme: light) {
-    .hitokoto-copy-btn {
-        background: rgba(255, 255, 255, 0.6);
-        border-color: rgba(0, 0, 0, 0.1);
-        color: #555;
-    }
-    
-    .hitokoto-copy-btn:hover {
-        background: rgba(240, 182, 210, 0.4);
-        color: #333;
-    }
-}
-
-/* 深色模式复制按钮 */
-@media (prefers-color-scheme: dark) {
-    .hitokoto-copy-btn {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: rgba(255, 255, 255, 0.8);
-    }
-    
-    .hitokoto-copy-btn:hover {
-        background: rgba(240, 182, 210, 0.2);
-        color: white;
-    }
-}
-
-/* FontAwesome 图标样式 */
-.hitokoto-copy-btn i {
-    font-size: 1.1em;
-    transition: transform 0.2s ease;
-}
-
-.hitokoto-copy-btn:hover i {
-    transform: scale(1.1);
-}
-
-.hitokoto-copy-btn.copied i {
-    transform: scale(1.2);
-}
 
 /* 一言动画 */
-@keyframes typing {
+/* @keyframes typing {
     from { 
         opacity: 0; 
         transform: translateY(10px);
@@ -183,9 +90,9 @@
         opacity: 1; 
         transform: translateY(0);
     }
-}
+} */
 
-@keyframes pulse {
+/* @keyframes pulse {
     0% { 
         opacity: 1;
         transform: scale(1);
@@ -198,18 +105,18 @@
         opacity: 1;
         transform: scale(1);
     }
-}
+} */
 
-#hitokoto_text.loaded {
+/* #hitokoto_text.loaded {
     animation: typing 0.6s ease-out;
-}
+} */
 
-#hitokoto_text.refreshing {
+/* #hitokoto_text.refreshing {
     animation: pulse 1s ease-in-out;
-}
+} */
 
 /* 复制成功提示 */
-.hitokoto-copy-tooltip {
+/* .hitokoto-copy-tooltip {
     position: absolute;
     bottom: calc(100% + 8px);
     right: 10px;
@@ -225,83 +132,27 @@
     pointer-events: none;
     z-index: 1001;
     white-space: nowrap;
-}
+} */
 
-.hitokoto-copy-tooltip.show {
+/* .hitokoto-copy-tooltip.show {
     opacity: 1;
     transform: translateY(0);
-}
+} */
 
-.hitokoto-copy-tooltip::after {
+/* .hitokoto-copy-tooltip::after {
     content: '';
     position: absolute;
     top: 100%;
     right: 12px;
     border: 5px solid transparent;
     border-top-color: rgba(16, 185, 129, 0.9);
-}
+} */
 
 /* 错误提示 */
-.hitokoto-copy-tooltip.error {
+/* .hitokoto-copy-tooltip.error {
     background: rgba(239, 68, 68, 0.9);
-}
+} */
 
-.hitokoto-copy-tooltip.error::after {
+/* .hitokoto-copy-tooltip.error::after {
     border-top-color: rgba(239, 68, 68, 0.9);
-}
-
-/* 响应式一言 */
-@media (max-width: 768px) {
-    #hitokoto {
-        margin: 1.5rem 0 2rem;
-        padding: 0 1rem;
-    }
-
-    #hitokoto_text {
-        font-size: 1.2rem;
-        padding: 1.2rem 3rem 1.2rem 1.5rem;
-    }
-
-    #hitokoto::before,
-    #hitokoto::after {
-        font-size: 2.5rem;
-    }
-    
-    .hitokoto-copy-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
-    }
-    
-    .hitokoto-copy-btn i {
-        font-size: 1em;
-    }
-}
-
-@media (max-width: 480px) {
-    #hitokoto_text {
-        font-size: 1.1rem;
-        padding: 1rem 2.8rem 1rem 1.2rem;
-    }
-
-    #hitokoto::before,
-    #hitokoto::after {
-        font-size: 2rem;
-    }
-    
-    .hitokoto-copy-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-        right: 8px;
-    }
-    
-    .hitokoto-copy-btn i {
-        font-size: 0.9em;
-    }
-    
-    .hitokoto-copy-tooltip {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.6rem;
-    }
-}
+} */

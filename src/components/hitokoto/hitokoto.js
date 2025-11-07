@@ -1,5 +1,5 @@
 /**
- * 一言功能 - FontAwesome 图标版本
+ * 一言功能
  */
 let hitokotoClicked = false;
 let isRefreshing = false;
