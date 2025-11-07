@@ -12,6 +12,7 @@
 
     <!-- 组件样式表 -->
     <link href="src/components/hero/hero.css" rel="stylesheet" />
+    <link href="src/components/navigation/navigation.css" rel="stylesheet" />
 
     <!-- Font Awesome 图标 -->
     <link href="src/styles/fontawesome/fontawesome.min.css" rel="stylesheet" />
@@ -32,22 +33,27 @@
             <img id="hero-icon" src="assets/images/icon.webp" alt="Fantastair的图标" />
         </div>
         <!-- 主标题 -->
-        <div id="hero-title"><!--
-         --><span class="hero-letter">F</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.2s;">a</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.4s;">n</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.6s;">t</span><!--
-         --><span class="hero-letter" style="animation-delay: 0.8s;">a</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.0s;">s</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.2s;">t</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.4s;">a</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.6s;">i</span><!--
-         --><span class="hero-letter" style="animation-delay: 1.8s;">r</span><!--
-     --></div>
+        <div id="hero-title">Fantastair</div>
     </div>
-    <div style="height: 100vh"></div>
-    <div id="column" style="height: 100vh; background-color: #5f2f2f;">
-
-    </div>
+    <!-- 顶部导航 -->
+    <nav id="top-nav">
+        <a href="#hero-spacer" class="nav-item">
+            <span class="nav-icon fa-regular fa-house"></span>
+            <span class="nav-text">首页</span>
+        </a>
+        <a href="#column-spacer" class="nav-item">
+            <span class="nav-icon fa-regular fa-object-group"></span>
+            <span class="nav-text">专栏</span>
+        </a>
+        <a href="#contact-spacer" class="nav-item">
+            <span class="nav-icon fa-regular fa-message"></span>
+            <span class="nav-text">联系</span>
+        </a>
+    </nav>
+    <div id="hero-spacer" style="height: 100vh;"></div>
+    <div id="column-spacer" style="height: 60px;"></div>
+    <div id="column" style="height: 100vh; background-color: #5f2f2f;"></div>
+    <div id="contact-spacer" style="height: 60px;"></div>
+    <div id="contact" style="height: 100vh; background-color: #2f5f55;"></div>
 </body>
 </html>

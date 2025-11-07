@@ -12,7 +12,7 @@
 #hero-bg {
     position: absolute;
     inset: 0;
-    background: url('../assets/images/background_small.webp') center/cover no-repeat;
+    background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
     filter: blur(0px);
     transform: scale(1);
 }
@@ -58,23 +58,35 @@
     font-weight: 900;
     font-size: clamp(2.5rem, 16vw, 8rem);
     letter-spacing: 0.1em;
+}
+
+/* 字符样式 - 粉色基础层 */
+.hero-letter {
+    position: relative;
+    display: inline-block;
     color: var(--color-title-pink);
     text-shadow: 0 0 16px var(--color-title-pink);
 }
 
-/* 字符闪光动画 */
-@keyframes shine {
-    0% {
-        color: var(--color-title-pink);
-        text-shadow: 0 0 16px var(--color-title-pink);
-    }
-    50% {
-        color: var(--color-title-red);
-        text-shadow: 0 0 32px var(--color-title-red);
-    }
+/* 字符样式 - 红色覆盖层（通过伪元素） */
+.hero-letter::before {
+    content: attr(data-char);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-title-red);
+    text-shadow: 0 0 32px var(--color-title-red);
+    opacity: 0;
+    animation: shine-fade 4s ease-in-out infinite alternate;
+    animation-delay: inherit;
 }
 
-/* 字符样式 */
-.hero-letter {
-    animation: shine 4s ease-in-out infinite alternate;
+/* 闪光动画 */
+@keyframes shine-fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
