@@ -1,4 +1,24 @@
-import { elements } from '../../scripts/global.js';
+const elements = {
+    hero:            document.getElementById('hero'),
+    heroBg:          document.getElementById('hero-bg'),
+    heroIconWrapper: document.getElementById('hero-icon-wrapper'),
+    heroTitle:       document.getElementById('hero-title'),
+};
+
+/**
+ * 加载高清背景图片
+ */
+export function loadHighResBackground() {
+    const highResImage = new Image();
+    highResImage.src = '../../assets/images/background.webp';
+    highResImage.onload = () => {
+        elements.heroBg.classList.add('bgloaded');
+        console.log("高清背景图片加载完成");
+    };
+    highResImage.onerror = () => {
+        console.warn("高清背景图片加载失败，使用默认图片");
+    };
+}
 
 const finalHeight = 60;       // 最终高度
 const finalTitleTop = 30;     // 最终标题顶部位置

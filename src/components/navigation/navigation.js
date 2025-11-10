@@ -1,4 +1,6 @@
-import { elements } from '../../scripts/global.js';
+const elements = {
+    topNav: document.getElementById('top-nav'),
+};
 
 let last_ratio = 0;    // 上一次的滚动比例
 

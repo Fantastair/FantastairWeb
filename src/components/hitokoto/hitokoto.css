@@ -51,7 +51,7 @@
 }
 
 /* 复制按钮样式 */
-.hitokoto-copy-btn {
+#hitokoto-copy-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,95 +64,10 @@
     height: 2rem;
 }
 /* 悬停效果 */
-.hitokoto-copy-btn:hover {
+#hitokoto-copy-btn:hover {
     background: color-mix(in srgb, var(--color-hitokoto-purple) 30%, transparent);
 }
 /* 激活效果 */
-.hitokoto-copy-btn:active {
+#hitokoto-copy-btn:active {
     transform: scale(0.95);
 }
-
-/* .hitokoto-copy-btn.copied {
-    opacity: 1;
-    background: rgba(16, 185, 129, 0.3);
-    border-color: rgba(16, 185, 129, 0.5);
-    color: rgba(16, 185, 129, 1);
-} */
-
-
-/* 一言动画 */
-/* @keyframes typing {
-    from { 
-        opacity: 0; 
-        transform: translateY(10px);
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0);
-    }
-} */
-
-/* @keyframes pulse {
-    0% { 
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% { 
-        opacity: 0.7;
-        transform: scale(0.98);
-    }
-    100% { 
-        opacity: 1;
-        transform: scale(1);
-    }
-} */
-
-/* #hitokoto_text.loaded {
-    animation: typing 0.6s ease-out;
-} */
-
-/* #hitokoto_text.refreshing {
-    animation: pulse 1s ease-in-out;
-} */
-
-/* 复制成功提示 */
-/* .hitokoto-copy-tooltip {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    right: 10px;
-    background: rgba(16, 185, 129, 0.9);
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(5px);
-    transition: all 0.3s ease;
-    pointer-events: none;
-    z-index: 1001;
-    white-space: nowrap;
-} */
-
-/* .hitokoto-copy-tooltip.show {
-    opacity: 1;
-    transform: translateY(0);
-} */
-
-/* .hitokoto-copy-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    right: 12px;
-    border: 5px solid transparent;
-    border-top-color: rgba(16, 185, 129, 0.9);
-} */
-
-/* 错误提示 */
-/* .hitokoto-copy-tooltip.error {
-    background: rgba(239, 68, 68, 0.9);
-} */
-
-/* .hitokoto-copy-tooltip.error::after {
-    border-top-color: rgba(239, 68, 68, 0.9);
-} */
