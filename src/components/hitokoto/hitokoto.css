@@ -1,8 +1,9 @@
 /* ===== 一言样式 ===== */
 /* 总体样式 */
 #hitokoto {
+    position: relative;
     display: flex;
-    text-align: center;
+    /* text-align: center; */
     width: fit-content;
     margin: 1rem auto;
     gap: 1rem;
@@ -24,7 +25,7 @@
 }
 
 /* 一言文本 */
-#hitokoto-text {
+#hitokoto-text-box {
     display: flex;
     gap: 1rem;
     font-style: italic;
@@ -40,18 +41,18 @@
         background 0.3s ease;
 }
 /* 悬停效果 */
-#hitokoto:hover #hitokoto-text {
+#hitokoto:hover #hitokoto-text-box {
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 50%, transparent);
     background: color-mix(in srgb, var(--color-title-pink) 20%, transparent);
 }
 /* 激活效果 */
-#hitokoto:active #hitokoto-text {
+#hitokoto:active #hitokoto-text-box {
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 75%, transparent);
     background: color-mix(in srgb, var(--color-title-pink) 50%, transparent);
 }
 
 /* 复制按钮样式 */
-#hitokoto-copy-btn {
+#hitokoto-copy-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,10 +65,54 @@
     height: 2rem;
 }
 /* 悬停效果 */
-#hitokoto-copy-btn:hover {
+#hitokoto-copy-button:hover {
     background: color-mix(in srgb, var(--color-hitokoto-purple) 30%, transparent);
 }
 /* 激活效果 */
-#hitokoto-copy-btn:active {
+#hitokoto-copy-button:active {
     transform: scale(0.95);
+}
+
+/* 提示框样式 */
+#hitokoto-tip {
+    position:absolute;
+    color: var(--color-fakewhite);
+    background: color-mix(in srgb, var(--color-bg-blue) 80%, transparent);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    left: 50%;
+    top: 0%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-150%);
+    transition: 
+        visibility 0s ease 0.3s,
+        opacity 0.3s ease;
+}
+/* 悬停显示提示框 */
+#hitokoto:hover #hitokoto-tip {
+    opacity: 1;
+    visibility: visible;
+    transition: 
+        visibility 0s ease 0.5s,
+        opacity 0.3s ease 0.5s;
+}
+
+/* 提示框文本 */
+#hitokoto-tip-text {
+    font-size: 1rem;
+}
+
+/* 提示框箭头 */
+#hitokoto-tip-arrow {
+    width: 0;
+    height: 0;
+    border-left: 0.4rem solid transparent;
+    border-right: 0.4rem solid transparent;
+    border-top: 0.4rem solid color-mix(in srgb, var(--color-bg-blue) 80%, transparent);
+    border-bottom: 0.4rem solid transparent;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(calc(0.8rem - 1px));
 }

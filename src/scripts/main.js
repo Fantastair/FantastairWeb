@@ -1,7 +1,5 @@
-// 控制台欢迎信息
 import { loadHighResBackground, updateHeroStyles, initTitleAnimation } from "../components/hero/hero.js";
 import { updateNavStyles } from "../components/navigation/navigation.js";
-import "../components/hitokoto/hitokoto.js"
 console.log("泥嚎 🚀 --- Fantastair");
 
 loadHighResBackground();    // 加载
@@ -12,7 +10,7 @@ initTitleAnimation();
 let ticking = false;
 /**
  * 滚动事件处理
- */
+*/
 function handleScroll() {
     if (!ticking) {
         requestAnimationFrame(() => {
@@ -25,3 +23,4 @@ function handleScroll() {
 }
 window.addEventListener('scroll', handleScroll);
 
+import "../components/hitokoto/hitokoto.js"
