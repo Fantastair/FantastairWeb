@@ -5,7 +5,7 @@ console.log("泥嚎 🚀 --- Fantastair");
 loadHighResBackground();    // 加载
 
 // 初始化标题动画
-initTitleAnimation();
+initTitleAnimation(0.3);
 
 let ticking = false;
 /**

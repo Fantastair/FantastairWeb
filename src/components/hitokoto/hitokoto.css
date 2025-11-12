@@ -3,7 +3,6 @@
 #hitokoto {
     position: relative;
     display: flex;
-    /* text-align: center; */
     width: fit-content;
     margin: 1rem auto;
     gap: 1rem;
@@ -24,21 +23,18 @@
     line-height: 1;
 }
 
-/* 一言文本 */
+/* 一言文本框 */
 #hitokoto-text-box {
     display: flex;
     gap: 1rem;
-    font-style: italic;
-    font-size: 1.5rem;
-    color: var(--color-hitokoto-purple);
-    text-decoration: none;
     background: color-mix(in srgb, var(--color-title-pink) 10%, transparent);
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
     border-radius: 1rem;
     padding: 1rem 3rem 1rem 3rem;
     transition:
         border 0.3s ease,
-        background 0.3s ease;
+        background 0.3s ease,
+        padding 0.3s ease;
 }
 /* 悬停效果 */
 #hitokoto:hover #hitokoto-text-box {
@@ -49,6 +45,15 @@
 #hitokoto:active #hitokoto-text-box {
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 75%, transparent);
     background: color-mix(in srgb, var(--color-title-pink) 50%, transparent);
+}
+
+/* 一言文本样式 */
+#hitokoto-text {
+    min-width: 0;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--color-hitokoto-purple);
+    text-decoration: none;
 }
 
 /* 复制按钮样式 */
@@ -115,4 +120,9 @@
     left: 50%;
     bottom: 0;
     transform: translateX(-50%) translateY(calc(0.8rem - 1px));
+}
+
+.hitokoto-char {
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }

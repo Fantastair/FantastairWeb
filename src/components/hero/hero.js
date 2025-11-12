@@ -79,14 +79,13 @@ export function initTitleAnimation(delayStep = 0.2) {
         const span = document.createElement('span');
         span.className = 'hero-letter';
         span.textContent = char;
-        
+
         // 设置 data-char 属性，供 CSS 伪元素使用
         span.setAttribute('data-char', char);
-        
+
         // 自动计算并设置动画延时
-        const delay = index * delayStep;
-        span.style.animationDelay = `${delay}s`;
-        
+        span.style.animationDelay = `${index * delayStep}s`;
+
         elements.heroTitle.appendChild(span);
     });
 }
