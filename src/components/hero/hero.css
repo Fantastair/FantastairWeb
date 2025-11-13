@@ -7,6 +7,7 @@
     overflow: hidden;
     z-index: 10;
     background-color: var(--color-bg-blue);
+    box-shadow: 0 0 32px var(--color-black);
 }
 
 #hero-bg {
@@ -36,6 +37,7 @@
     border-radius: 40%;
     left: 50vw;
     top: var(--top);
+    box-shadow: 0 0 32px var(--color-black);
     transform: translateX(-50%) translateY(-50%);
 }
 
@@ -45,6 +47,9 @@
     height: 90%;
     display: block;
     border-radius: 40%;
+    /* background: linear-gradient(45deg, white, blue);
+    background-clip: padding-box;
+    border: 4px solid transparent; */
 }
 
 /* 主标题 */
@@ -65,7 +70,9 @@
     position: relative;
     display: inline-block;
     color: var(--color-title-pink);
-    text-shadow: 0 0 16px var(--color-title-pink);
+    text-shadow: 
+        0 0 16px var(--color-title-pink),
+        2px 2px 8px var(--color-black);
 }
 
 /* 字符样式 - 红色覆盖层（通过伪元素） */

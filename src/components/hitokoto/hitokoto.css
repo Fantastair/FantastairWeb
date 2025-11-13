@@ -61,7 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: inherit;
+    color: var(--color-hitokoto-purple);
     background: color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
     border: 1px solid color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
     font-size: 1rem;

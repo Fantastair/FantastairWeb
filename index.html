@@ -14,6 +14,7 @@
     <link href="src/components/hero/hero.css" rel="stylesheet" />
     <link href="src/components/navigation/navigation.css" rel="stylesheet" />
     <link href="src/components/hitokoto/hitokoto.css" rel="stylesheet" />
+    <link href="src/components/contact/contact.css" rel="stylesheet" />
 
     <!-- Font Awesome 图标 -->
     <link href="src/styles/fontawesome/fontawesome.min.css" rel="stylesheet" />
@@ -34,7 +35,9 @@
             <img id="hero-icon" src="assets/images/icon.webp" alt="Fantastair的图标" />
         </div>
         <!-- 主标题 -->
-        <div id="hero-title">Fantastair</div>
+        <a href="https://fantastair.cn" rel="noopener noreferrer">
+            <div id="hero-title">Fantastair</div>
+        </a>
     </div>
     <!-- 顶部导航 -->
     <nav id="top-nav">
@@ -62,6 +65,23 @@
     <!-- 联系标记 -->
     <div id="contact-spacer" style="height: 60px;"></div>
     <!-- 联系内容 -->
-    <div id="contact" style="height: 100vh; background-color: #2f5f55;"></div>
+    <div id="contact">
+        <!-- 页脚信息 -->
+        <div class="contact-split"></div>
+        <div id="contact-footer">
+            <a href="https://github.com/Fantastair/FantastairWeb" target="_blank" rel="noopener noreferrer">
+                <span class="fa-brands fa-github"></span>
+                本网站源代码由GitHub的公共仓库托管开源，欢迎访问
+            </a>
+            <a href="https://hitokoto.cn/" target="_blank" rel="noopener noreferrer">
+                <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 0.8rem; vertical-align: middle;" title="一言图标" alt="一言图标"/>
+                一句话服务由一言（Hitokoto）提供
+            </a>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+                <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" alt="备案图标" style="height: 0.8rem; vertical-align: middle;">
+                浙ICP备2025179704号-1
+            </a>
+        </div>
+    </div>
 </body>
 </html>

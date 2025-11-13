@@ -31,18 +31,20 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #fff;
+    color: var(--color-fakewhite);
     padding: 8px 12px;
     background: linear-gradient(to left, var(--color-title-pink), var(--color-title-red)) no-repeat;
     background-size: 0 4px;
     background-position-y: var(--underline-y);
     background-position-x: right;
     transition:
+        color 0.3s ease,
         transform 0.3s ease,
         background-size 0.3s ease;
 }
 /* 悬停效果 */
 .nav-item:hover {
+    color: color-mix(in srgb, var(--color-title-pink) 50%, var(--color-title-red) 50%);
     transform: translateY(-2px);
         background-size: 100% 4px;
         background-position-x: left;

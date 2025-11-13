@@ -1,135 +1,28 @@
 /* ===== 联系区域样式 ===== */
-.contact-section {
-    min-height: 100vh;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    margin-bottom: -6rem;
-    padding: 4rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(-30deg, #4d597b 0%, #0b1722 85%);
-    color: white;
-    scroll-margin-top: var(--nav-height);
+.contact-split {
+    background-color: var(--color-bg-blue);
+    width: 60%;
+    height: 2px;
+    opacity: 0.2;
+    margin: 0 auto;
 }
 
-.contact-container {
-    max-width: 1200px;
-    width: 100%;
-    text-align: center;
-}
-
-.contact-link {
-    text-decoration: none;
-    color: inherit;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-}
-
-.contact-section h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.contact-intro {
-    font-size: 1.3rem;
-    margin-bottom: 3rem;
-    opacity: 0.9;
-}
-
-.contact-methods {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-}
-
-.contact-method {
-    padding: 2rem 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--border-radius);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: var(--transition);
+#contact-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 200px;
+    font-size: 0.8rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
-.contact-method:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.contact-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #fff;
-}
-
-.contact-method h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.contact-method p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-}
-
-.contact-footer {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 0.95rem;
-    opacity: 0.7;
-}
-
-.contact-footer p {
-    margin: 0.5rem 0;
-}
-
-.contact-footer a {
-    color: inherit;
+#contact-footer a {
+    color: var(--color-gray);
     text-decoration: none;
     transition: opacity 0.3s ease;
 }
 
-.contact-footer a:hover {
+#contact-footer a:hover {
     opacity: 1;
     text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .contact-section {
-        padding: 3rem 1rem;
-    }
-
-    .contact-section h2 {
-        font-size: 2.5rem;
-    }
-
-    .contact-methods {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .contact-method {
-        padding: 1.5rem 1rem;
-        min-height: 180px;
-    }
 }
