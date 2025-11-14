@@ -1,4 +1,5 @@
 /* ===== 联系区域样式 ===== */
+/* 分割线 */
 .contact-split {
     background-color: var(--color-bg-blue);
     width: 60%;
@@ -7,6 +8,7 @@
     margin: 0 auto;
 }
 
+/* 页脚 */
 #contact-footer {
     display: flex;
     flex-direction: column;
@@ -16,13 +18,18 @@
     padding-bottom: 1rem;
 }
 
+/* 页脚链接样式 */
 #contact-footer a {
     color: var(--color-gray);
     text-decoration: none;
-    transition: opacity 0.3s ease;
+    background: linear-gradient(to left, var(--color-bg-blue), var(--color-fakewhite)) no-repeat;
+    background-size: 0 2px;
+    background-position: right bottom;
+    transition:
+        background-size 0.3s ease;
 }
-
+/* 页脚链接悬停效果 */
 #contact-footer a:hover {
-    opacity: 1;
-    text-decoration: underline;
+    background-size: 100% 2px;
+    background-position: left bottom;
 }
