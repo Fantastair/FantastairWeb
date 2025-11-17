@@ -24,3 +24,4 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 
 import "../components/hitokoto/hitokoto.js"
+import "../components/contact/contact.js"
