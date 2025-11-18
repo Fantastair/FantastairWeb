@@ -15,6 +15,7 @@
     <link href="src/components/navigation/navigation.css" rel="stylesheet" />
     <link href="src/components/hitokoto/hitokoto.css" rel="stylesheet" />
     <link href="src/components/contact/contact.css" rel="stylesheet" />
+    <link href="src/components/QRCode/QRCode.css" rel="stylesheet" />
 
     <!-- Font Awesome 图标 -->
     <link href="src/styles/fontawesome/fontawesome.min.css" rel="stylesheet" />
@@ -71,69 +72,13 @@
         <div class="contact-split"></div>
         <!-- 联系框 -->
         <div id="contact-card">
-            <a class="contact-item" href="https://github.com/Fantastair" target="_blank" rel="noopener">
-                <span class="contact-box">
-                    <p class="contact-text">Github</p>
-                    <p class="contact-info">Fantastair</p>
-                </span>
-                <span class="fa-brands fa-github contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
-            <a class="contact-item" href="mailto:fantastair@qq.com">
-                <span class="contact-box">
-                    <p class="contact-text">邮箱</p>
-                    <p class="contact-info">fantastair@qq.com</p>
-                </span>
-                <span class="fa-regular fa-envelope contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
-            <a class="contact-item" href="https://t.me/Fantastair" target="_blank" rel="noopener">
-                <span class="contact-box">
-                    <p class="contact-text">Telegram</p>
-                    <p class="contact-info">@Fantastair</p>
-                </span>
-                <span class="fa-brands fa-telegram contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
-            <a class="contact-item" href="javascript:void(0);" data-qr-path="./assets/images/qq_card.webp">
-                <span class="contact-box">
-                    <p class="contact-text">QQ</p>
-                    <p class="contact-info">2364209908</p>
-                </span>
-                <span class="fa-brands fa-qq contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
-            <a class="contact-item" href="javascript:void(0);" data-qr-path="./assets/images/wx_card.webp">
-                <span class="contact-box">
-                    <p class="contact-text">微信</p>
-                    <p class="contact-info">Fantastair</p>
-                </span>
-                <span class="fa-brands fa-weixin contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
-            <a class="contact-item" href="https://space.bilibili.com/2041660957" target="_blank" rel="noopener">
-                <span class="contact-box">
-                    <p class="contact-text">Bilibili</p>
-                    <p class="contact-info">@Fantastair</p>
-                </span>
-                <span class="fa-brands fa-bilibili contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
-            <a class="contact-item" href="javascript:void(0);">
-                <span class="contact-box">
-                    <p class="contact-text">位置</p>
-                    <p class="contact-info">中国 · 山东</p>
-                </span>
-                <span class="fa-solid fa-location-dot contact-icon">
-                    <span class="contact-icon-shadow"></span>
-                </span>
-            </a>
+            <a class="contact-item" href="https://github.com/Fantastair" target="_blank" rel="noopener" data-contact-text="Github" data-contact-info="Fantastair" data-contact-icon="fa-brands fa-github"></a>
+            <a class="contact-item" href="mailto:fantastair@qq.com" target="_blank" rel="noopener" data-contact-text="邮箱" data-contact-info="fantastair@qq.com" data-contact-icon="fa-regular fa-envelope"></a>
+            <a class="contact-item" href="https://t.me/Fantastair" target="_blank" rel="noopener" data-contact-text="Telegram" data-contact-info="@Fantastair" data-contact-icon="fa-brands fa-telegram"></a>
+            <a class="contact-item qr-trigger" href="javascript:void(0);" data-qr-path="./assets/images/qq_card.webp" data-contact-text="QQ" data-contact-info="2364209908" data-contact-icon="fa-brands fa-qq"></a>
+            <a class="contact-item qr-trigger" href="javascript:void(0);" data-qr-path="./assets/images/wx_card.webp" data-contact-text="微信" data-contact-info="Fantastair" data-contact-icon="fa-brands fa-weixin"></a>
+            <a class="contact-item" href="https://space.bilibili.com/2041660957" target="_blank" rel="noopener" data-contact-text="Bilibili" data-contact-info="@Fantastair" data-contact-icon="fa-brands fa-bilibili"></a>
+            <a class="contact-item" href="javascript:void(0);" data-contact-text="位置" data-contact-info="中国 · 山东" data-contact-icon="fa-solid fa-location-dot"></a>
         </div>
         <!-- 页脚信息 -->
         <div class="contact-split"></div>
@@ -147,10 +92,16 @@
                 一句话服务由一言（Hitokoto）提供
             </a>
             <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-                <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" alt="备案图标" style="height: 0.8rem; vertical-align: middle;">
+                <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" style="height: 0.8rem; vertical-align: middle;" title="备案图标" alt="备案图标"/>
                 浙ICP备2025179704号-1
             </a>
         </div>
+    </div>
+
+    <!-- 二维码模态框 -->
+    <div id="qr-modal">
+        <img id="qr-image" alt="二维码">
+        <span id="qr-close-button" class="fa-regular fa-circle-xmark"></span>
     </div>
 </body>
 </html>

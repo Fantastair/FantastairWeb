@@ -1,10 +1,6 @@
 import { sleep } from '../../scripts/utilities.js';
 
-/**
- * 加载一言组件
- */
-async function loadHitokotoComponent() {
-    // 找到唯一的 hitokoto 容器
+{
     const hitokotoContainer = document.querySelector('hitokoto');
     try {
         const response = await fetch('./src/components/hitokoto/hitokoto.html');
@@ -15,8 +11,6 @@ async function loadHitokotoComponent() {
         hitokotoContainer.innerHTML = '一言组件加载失败';
     }
 }
-
-await loadHitokotoComponent();
 
 let isRefreshing = false;    // 记录是否正在刷新一言
 let isClicked = true;        // 记录是否已经刷新过一言
