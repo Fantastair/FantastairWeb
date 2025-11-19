@@ -14,6 +14,7 @@
     <link href="src/components/hero/hero.css" rel="stylesheet" />
     <link href="src/components/navigation/navigation.css" rel="stylesheet" />
     <link href="src/components/hitokoto/hitokoto.css" rel="stylesheet" />
+    <link href="src/components/column/column.css" rel="stylesheet" />
     <link href="src/components/contact/contact.css" rel="stylesheet" />
     <link href="src/components/QRCode/QRCode.css" rel="stylesheet" />
 
@@ -62,7 +63,51 @@
     <!-- 一言区域 -->
     <hitokoto></hitokoto>
     <!-- 专栏内容 -->
-    <div id="column" style="height: 100vh; background-color: #5f2f2f;"></div>
+    <div id="column">
+        <!-- 专栏内容区域 -->
+        <div id="column-content" style="height: 50vh;">
+
+        </div>
+        <!-- 专栏页码 -->
+        <div id="column-pager">
+            <span id="column-pager-first" class="column-pager-button">
+                <span class="column-pager-button-shadow"></span>
+                <span class="column-pager-button-edge"></span>
+                <span class="column-pager-button-front">首页</span>
+            </span>
+            <span id="column-pager-prev" class="column-pager-button">
+                <span class="column-pager-button-shadow"></span>
+                <span class="column-pager-button-edge"></span>
+                <span class="column-pager-button-front">上一页</span>
+            </span>
+            <span class="column-pager-number">1</span>
+            <span class="column-pager-number">2</span>
+            <span class="column-pager-number">3</span>
+            <span class="column-pager-text">...</span>
+            <span class="column-pager-number">5</span>
+            <span id="column-pager-next" class="column-pager-button">
+                <span class="column-pager-button-shadow"></span>
+                <span class="column-pager-button-edge"></span>
+                <span class="column-pager-button-front">下一页</span>
+            </span>
+            <span id="column-pager-last" class="column-pager-button">
+                <span class="column-pager-button-shadow"></span>
+                <span class="column-pager-button-edge"></span>
+                <span class="column-pager-button-front">尾页</span>
+            </span>
+            <input type="number" id="column-pager-jump-input" min="1" max="6" value="1"/>
+            <span id="column-pager-jump-button" class="column-pager-button">
+                <span class="column-pager-button-shadow"></span>
+                <span class="column-pager-button-edge"></span>
+                <span class="column-pager-button-front">
+                    跳转
+                    <span id="column-pager-jump-icon">
+                        <span class="fa-solid fa-arrow-right"></span>
+                    </span>
+                </span>
+            </span>
+        </div>
+    </div>
     <!-- 联系标记 -->
     <div id="contact-spacer" style="height: 60px;"></div>
     <!-- 联系内容 -->

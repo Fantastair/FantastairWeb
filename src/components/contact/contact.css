@@ -48,8 +48,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: rgba(0, 0, 0, 0.1);
-    border: 2px solid color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
+    background: linear-gradient(45deg, color-mix(in srgb, var(--color-black) 20%, transparent), transparent);
+    border: 2px solid color-mix(in srgb, var(--color-bg-blue) 20%, var(--color-fakewhite));
     border-radius: 1.5rem;
     box-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
     transition:
@@ -65,7 +65,9 @@
 .contact-item .contact-icon {
     position: relative;
     font-size: 6rem;
-    color: color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
+    color: color-mix(in srgb, var(--color-bg-blue) 20%, var(--color-fakewhite));
+    background: linear-gradient(45deg, var(--color-bg-blue)30%, var(--color-fakewhite));
+    background-clip: text;
     text-shadow: 0 0 0 transparent;
     transition:
         transform 0.2s ease-out,
@@ -75,7 +77,7 @@
         color 0.5s ease;
 }
 .contact-item:hover .contact-icon {
-    color: var(--color-bg-blue);
+    color: transparent;
     font-size: 10rem;
     margin-top: -10rem;
     text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
