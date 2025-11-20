@@ -11,7 +11,12 @@ jobs:
       - name: 1. Checkout
         uses: actions/checkout@v4
 
-      - name: 2. Rsync to VPS
+      - name: 2. 预压缩静态资源
+        run: |
+          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" \) \
+            -exec gzip -k -9 {} \;
+
+      - name: 3. Rsync to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
