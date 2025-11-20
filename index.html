@@ -34,7 +34,7 @@
         <div id="hero-bg"></div>
         <!-- 图标容器 -->
         <div id="hero-icon-wrapper">
-            <img id="hero-icon" src="assets/images/icon.webp" alt="Fantastair的图标" />
+            <img id="hero-icon" src="assets/images/icon.webp" alt="Fantastair的图标">
         </div>
         <!-- 主标题 -->
         <a href="https://fantastair.cn" rel="noopener noreferrer">
@@ -65,11 +65,9 @@
     <!-- 专栏内容 -->
     <div id="column">
         <!-- 专栏内容区域 -->
-        <div id="column-content" style="height: 50vh;">
-
-        </div>
+        <div id="column-content" style="height: 50vh;"></div>
         <!-- 专栏页码 -->
-        <div id="column-pager">
+        <column-pager id="column-pager">
             <span id="column-pager-first" class="column-pager-button">
                 <span class="column-pager-button-shadow"></span>
                 <span class="column-pager-button-edge"></span>
@@ -78,24 +76,32 @@
             <span id="column-pager-prev" class="column-pager-button">
                 <span class="column-pager-button-shadow"></span>
                 <span class="column-pager-button-edge"></span>
-                <span class="column-pager-button-front">上一页</span>
+                <span class="column-pager-button-front">
+                    <span class="fa-solid fa-arrow-left"></span>
+                </span>
             </span>
-            <span class="column-pager-number">1</span>
-            <span class="column-pager-number">2</span>
-            <span class="column-pager-number">3</span>
-            <span class="column-pager-text">...</span>
-            <span class="column-pager-number">5</span>
+            <span class="column-pager-number current" id="column-pager-number1">1</span>
+            <span class="column-pager-text" id="column-pager-ellipsis1">...</span>
+            <span class="column-pager-number" id="column-pager-number2">2</span>
+            <span class="column-pager-number" id="column-pager-number3">3</span>
+            <span class="column-pager-number" id="column-pager-number4">4</span>
+            <span class="column-pager-number" id="column-pager-number5">5</span>
+            <span class="column-pager-number" id="column-pager-number6">6</span>
+            <span class="column-pager-text" id="column-pager-ellipsis2">...</span>
+            <span class="column-pager-number" id="column-pager-number7">14</span>
             <span id="column-pager-next" class="column-pager-button">
                 <span class="column-pager-button-shadow"></span>
                 <span class="column-pager-button-edge"></span>
-                <span class="column-pager-button-front">下一页</span>
+                <span class="column-pager-button-front">
+                    <span class="fa-solid fa-arrow-right"></span>
+                </span>
             </span>
             <span id="column-pager-last" class="column-pager-button">
                 <span class="column-pager-button-shadow"></span>
                 <span class="column-pager-button-edge"></span>
                 <span class="column-pager-button-front">尾页</span>
             </span>
-            <input type="number" id="column-pager-jump-input" min="1" max="6" value="1"/>
+            <input type="number" id="column-pager-jump-input" min="1" max="100" value="1">
             <span id="column-pager-jump-button" class="column-pager-button">
                 <span class="column-pager-button-shadow"></span>
                 <span class="column-pager-button-edge"></span>
@@ -106,7 +112,7 @@
                     </span>
                 </span>
             </span>
-        </div>
+        </column-pager>
     </div>
     <!-- 联系标记 -->
     <div id="contact-spacer" style="height: 60px;"></div>
@@ -133,11 +139,11 @@
                 本网站源代码由GitHub的公共仓库托管开源，欢迎访问
             </a>
             <a href="https://hitokoto.cn/" target="_blank" rel="noopener noreferrer">
-                <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 0.8rem; vertical-align: middle;" title="一言图标" alt="一言图标"/>
+                <img src="https://hitokoto.cn/favicon.ico?t=1527937218382" style="height: 0.8rem; vertical-align: middle;" title="一言图标" alt="一言图标">
                 一句话服务由一言（Hitokoto）提供
             </a>
             <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-                <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" style="height: 0.8rem; vertical-align: middle;" title="备案图标" alt="备案图标"/>
+                <img src="https://beian.mps.gov.cn/img/head-logo2.4d29d9b1.png" style="height: 0.8rem; vertical-align: middle;" title="备案图标" alt="备案图标">
                 浙ICP备2025179704号-1
             </a>
         </div>

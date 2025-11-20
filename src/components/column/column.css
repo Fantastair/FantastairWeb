@@ -1,4 +1,11 @@
 /* ===== 专栏样式 ===== */
+#column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* 页码区域样式 */
 #column-pager {
     display: flex;
@@ -6,6 +13,11 @@
     align-items: center;
     gap: 1rem;
     font-size: 1rem;
+    padding: 1rem 1rem;
+    border: 1px solid var(--color-fakewhite);
+    border-radius: 2rem;
+    background: #e8e8e8;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #e4e4e4;
 }
 
 /* 页码按钮样式 */
@@ -122,4 +134,70 @@
 }
 #column-pager-jump-button:hover #column-pager-jump-icon {
   width: calc(100% - 1rem);
+}
+
+/* 跳转输入框样式 */
+#column-pager-jump-input {
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: var(--color-fakewhite);
+    box-shadow: inset 2px 5px 10px color-mix(in srgb, var(--color-black) 30%, transparent);
+    text-align: center;
+    transition: filter 0.3s ease;
+}
+#column-pager-jump-input:focus {
+    filter: brightness(110%);
+}
+#column-pager-jump-input[type="number"]::-webkit-inner-spin-button,
+#column-pager-jump-input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;    /* 隐藏数字输入框的上下箭头 */
+    margin: 0;
+}
+#column-pager-jump-input[type="number"] {
+    appearance: textfield;
+}
+@keyframes jump_error {
+    0% { transform: translateX(0); background-color: var(--color-fakewhite);}
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); background-color: var(--color-title-red);}
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); background-color: var(--color-fakewhite);}
+}
+@keyframes jump_success {
+    0% { background-color: var(--color-fakewhite);}
+    50% { background-color: var(--color-jump-green); transform: scale(0.8);}
+    100% { background-color: var(--color-fakewhite);}
+}
+
+/* 页码数字和文本样式 */
+.column-pager-number,
+.column-pager-text {
+    user-select: none;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    font-style: italic;
+    text-align: center;
+    line-height: 2rem;
+    border-radius: 0.75rem;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+}
+.column-pager-number:not(.current) {
+    cursor: pointer;
+}
+.column-pager-number:not(.current):hover {
+    transform: translateY(-4px) scale(1.1);
+}
+.column-pager-number:not(.current):active {
+    transform: none;
+    box-shadow: inset 2px 5px 8px color-mix(in srgb, var(--color-black) 30%, transparent);
+}
+.column-pager-number.current {
+    background-color: var(--color-fakewhite);
+    box-shadow: inset 2px 5px 8px color-mix(in srgb, var(--color-black) 30%, transparent);
 }

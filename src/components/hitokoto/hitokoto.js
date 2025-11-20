@@ -113,9 +113,11 @@ export function copyHitokoto() {
     .then(() => {
         elements.hitokotoCopyIcon.classList.remove('fa-regular', 'fa-copy');
         elements.hitokotoCopyIcon.classList.add('fa-solid', 'fa-check');
+        elements.hitokotoCopyButton.style.backgroundColor = 'var(--color-jump-green)';
         setTimeout(() => {
             elements.hitokotoCopyIcon.classList.remove('fa-solid', 'fa-check');
             elements.hitokotoCopyIcon.classList.add('fa-regular', 'fa-copy');
+            elements.hitokotoCopyButton.style.backgroundColor = '';
         }, 1500);
     })
     .catch(err => {

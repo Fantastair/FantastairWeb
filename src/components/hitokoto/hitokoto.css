@@ -1,6 +1,7 @@
 /* ===== 一言样式 ===== */
 /* 总体样式 */
 #hitokoto {
+    user-select: none;
     position: relative;
     display: flex;
     width: fit-content;
@@ -70,6 +71,9 @@
     border-radius: 0.5rem;
     width: 2rem;
     height: 2rem;
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
 }
 /* 悬停效果 */
 #hitokoto-copy-button:hover {
@@ -77,7 +81,7 @@
 }
 /* 激活效果 */
 #hitokoto-copy-button:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
 }
 
 /* 提示框样式 */
