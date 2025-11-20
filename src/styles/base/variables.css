@@ -1,0 +1,48 @@
+/* ===== CSS 变量系统 ===== */
+
+/* 颜色系统 */
+:root {
+    /* 主题色 */
+    --color-bg-blue:         #0d1b28;
+    --color-title-pink:      #f0b6d2;
+    --color-title-red:       #ff5e71;
+    --color-hitokoto-purple: #595570;
+    --color-jump-purple:     #a370f0;
+    --color-jump-green:      #56bf6e;
+
+    /* 常用色 */
+    --color-white:     #ffffff;
+    --color-black:     #000000;
+    --color-gray:      #808080;
+    --color-fakewhite: #e6e6e6;
+
+    /* 颜色变量 */
+    /* --primary-color: #f0b6d2;
+    --primary-dark: #ff5e71;
+    --bg-light: #ffffff;
+    --bg-dark: #121212;
+    --text-light: #000000;
+    --text-dark: #eeeeee;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.3); */
+
+    /* 尺寸变量 */
+    /* --border-radius: 15px; */
+    /* --transition: all 0.3s ease; */
+}
+
+/* 深色模式变量 */
+/* @media (prefers-color-scheme: dark) {
+    :root {
+        --bg-light: var(--bg-dark);
+        --text-light: var(--text-dark);
+    }
+} */
+
+/* 响应式断点 */
+/* :root {
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+} */

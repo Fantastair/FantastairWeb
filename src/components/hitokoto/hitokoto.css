@@ -1,0 +1,134 @@
+/* ===== 一言样式 ===== */
+/* 总体样式 */
+#hitokoto {
+    user-select: none;
+    position: relative;
+    display: flex;
+    width: fit-content;
+    margin: 1rem auto;
+    gap: 1rem;
+    transition:
+        transform 0.3s ease,
+        gap 0.3s ease;
+}
+/* 悬停效果 */
+#hitokoto:hover {
+    gap: 2.5rem;
+    transform: translateY(-10%);
+}
+
+/* 引号 */
+.hitokoto-quote {
+    font-size: 4rem;
+    color: color-mix(in srgb, var(--color-title-pink) 40%, transparent);
+    line-height: 1;
+    text-shadow: 2px 2px 8px color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
+}
+
+/* 一言文本框 */
+#hitokoto-text-box {
+    display: flex;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--color-title-pink) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
+    border-radius: 1rem;
+    padding: 1rem 3rem 1rem 3rem;
+    box-shadow: 4px 4px 16px color-mix(in srgb, var(--color-hitokoto-purple) 50%, transparent);
+    transition:
+        border 0.3s ease,
+        background 0.3s ease,
+        padding 0.3s ease;
+}
+/* 悬停效果 */
+#hitokoto:hover #hitokoto-text-box {
+    border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 50%, transparent);
+    background: color-mix(in srgb, var(--color-title-pink) 20%, transparent);
+}
+/* 激活效果 */
+#hitokoto:active #hitokoto-text-box {
+    border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 75%, transparent);
+    background: color-mix(in srgb, var(--color-title-pink) 50%, transparent);
+}
+
+/* 一言文本样式 */
+#hitokoto-text {
+    min-width: 0;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--color-hitokoto-purple);
+    text-decoration: none;
+}
+
+/* 复制按钮样式 */
+#hitokoto-copy-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-hitokoto-purple);
+    background: color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+/* 悬停效果 */
+#hitokoto-copy-button:hover {
+    background: color-mix(in srgb, var(--color-hitokoto-purple) 30%, transparent);
+}
+/* 激活效果 */
+#hitokoto-copy-button:active {
+    transform: scale(0.9);
+}
+
+/* 提示框样式 */
+#hitokoto-tip {
+    position:absolute;
+    color: var(--color-fakewhite);
+    background: color-mix(in srgb, var(--color-bg-blue) 80%, transparent);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    left: 50%;
+    top: 0%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-150%);
+    transition: 
+        visibility 0s ease 0.3s,
+        opacity 0.3s ease;
+}
+/* 悬停显示提示框 */
+#hitokoto:hover #hitokoto-tip {
+    opacity: 1;
+    visibility: visible;
+    transition: 
+        visibility 0s ease 0.5s,
+        opacity 0.3s ease 0.5s;
+}
+
+/* 提示框文本 */
+#hitokoto-tip-text {
+    font-size: 1rem;
+}
+
+/* 提示框箭头 */
+#hitokoto-tip-arrow {
+    width: 0;
+    height: 0;
+    border-left: 0.4rem solid transparent;
+    border-right: 0.4rem solid transparent;
+    border-top: 0.4rem solid color-mix(in srgb, var(--color-bg-blue) 80%, transparent);
+    border-bottom: 0.4rem solid transparent;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(calc(0.8rem - 1px));
+}
+
+.hitokoto-char {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}

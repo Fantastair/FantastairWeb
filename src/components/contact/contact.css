@@ -1,0 +1,181 @@
+/* ===== 联系区域样式 ===== */
+#contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100vh - 60px);
+}
+
+/* 联系标题样式 */
+#contact-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-bg-blue);
+    padding: 1.5rem;
+}
+
+/* 联系框样式 */
+#contact-card {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    padding: 4rem;
+}
+
+/* 单个联系项样式 */
+.contact-item {
+    display: flex;
+    flex: 1 1 calc(25% - 4rem);
+    height: calc(100% / 2 - 2rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+.contact-item:active {
+    transform: scale(0.9);
+}
+
+/* 联系框效果 */
+.contact-box {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(45deg, color-mix(in srgb, var(--color-black) 20%, transparent), transparent);
+    border: 2px solid color-mix(in srgb, var(--color-bg-blue) 20%, var(--color-fakewhite));
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
+    transition:
+        box-shadow 0.2s ease-out,
+        transform 0.2s ease-out,
+        border-color 0.5s ease;
+}
+.contact-item:hover .contact-box {
+    border-color: var(--color-bg-blue);
+}
+
+/* 联系图标样式 */
+.contact-item .contact-icon {
+    position: relative;
+    font-size: 6rem;
+    color: color-mix(in srgb, var(--color-bg-blue) 20%, var(--color-fakewhite));
+    background: linear-gradient(45deg, var(--color-bg-blue)30%, var(--color-fakewhite));
+    background-clip: text;
+    text-shadow: 0 0 0 transparent;
+    transition:
+        transform 0.2s ease-out,
+        text-shadow 0.3s ease,
+        margin-top 0.3s ease,
+        font-size 0.3s ease,
+        color 0.5s ease;
+}
+.contact-item:hover .contact-icon {
+    color: transparent;
+    font-size: 10rem;
+    margin-top: -10rem;
+    text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+}
+
+/* 图标阴影 */
+.contact-icon-shadow {
+    display: block;
+    width: 0;
+    aspect-ratio: 4 / 1;
+    background: radial-gradient(circle, var(--color-bg-blue), transparent);
+    border-radius: 50%;
+    filter: blur(8px);
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    z-index: -1;
+    transition:
+        transform 0.2s ease-out,
+        left 0.3s ease,
+        width 0.3s ease;
+}
+.contact-item:hover .contact-icon-shadow {
+    width: 70%;
+    left: 15%;
+}
+
+/* 联系文本样式 */
+.contact-item .contact-text {
+    font-size: 1.5rem;
+    color: color-mix(in srgb, var(--color-bg-blue) 20%, transparent);
+    transform: translateY(4rem);
+    text-shadow: 0 0 0 transparent;
+    transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease,
+        font-size 0.3s ease,
+        color 0.5s ease;
+}
+.contact-item:hover .contact-text {
+    color: var(--color-bg-blue);
+    font-size: 3rem;
+    text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+    transform: translateY(2rem);
+}
+
+/* 联系信息样式 */
+.contact-info {
+    position: absolute;
+    font-size: 0;
+    color: var(--color-gray);
+    bottom: 2rem;
+    text-align: center;
+    text-shadow: 0 0 0 transparent;
+    transition:
+        text-shadow 0.3s ease,
+        font-size 0.3s ease,
+        color 0.5s ease;
+}
+.contact-item:hover .contact-info {
+    font-size: 1.5rem;
+    color: var(--color-bg-blue);
+    text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+}
+
+/* 分割线 */
+.contact-split {
+    background: linear-gradient(to right, var(--color-fakewhite), var(--color-gray), var(--color-fakewhite));
+    width: 60%;
+    height: 2px;
+    opacity: 0.2;
+    margin: 0 auto;
+}
+
+/* 页脚 */
+#contact-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* 页脚链接样式 */
+#contact-footer a {
+    color: var(--color-gray);
+    text-decoration: none;
+    background: linear-gradient(to left, var(--color-bg-blue), var(--color-fakewhite)) no-repeat;
+    background-size: 0 2px;
+    background-position: right bottom;
+    transition:
+        color 0.3s ease,
+        background-size 0.3s ease;
+}
+/* 页脚链接悬停效果 */
+#contact-footer a:hover {
+    background-size: 100% 2px;
+    background-position: left bottom;
+    color: var(--color-bg-blue);
+}

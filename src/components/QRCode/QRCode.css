@@ -1,0 +1,63 @@
+/* ===== 二维码模态框 ===== */
+#qr-modal {
+    visibility: hidden;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 100;
+    inset: 0;
+    background-color: color-mix(in srgb, var(--color-bg-blue) 0%, transparent);
+    backdrop-filter: blur(0rem);
+    transition:
+        visibility 0s ease 0.3s,
+        background-color 0.3s ease,
+        backdrop-filter 0.3s ease;
+}
+#qr-modal.show {
+    visibility: visible;
+    background-color: color-mix(in srgb, var(--color-bg-blue) 80%, transparent);
+    backdrop-filter: blur(1rem);
+    transition:
+        visibility 0s ease 0s,
+        background-color 0.3s ease,
+        backdrop-filter 0.3s ease;
+}
+
+/* 二维码图片样式 */
+#qr-image {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 2rem;
+    transform: scale(0);
+    opacity: 0;
+    box-shadow: 4px 4px 1rem var(--color-bg-blue);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+#qr-modal.show #qr-image {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* 关闭按钮样式 */
+#qr-close-button {
+    color: var(--color-fakewhite);
+    font-size: 0;
+    text-shadow: 4px 4px 1rem var(--color-bg-blue);
+    transition:
+        transform 0.3s ease,
+        font-size 0.3s ease;
+}
+#qr-modal.show #qr-close-button {
+    font-size: 3rem;
+}
+#qr-close-button:hover {
+    transform: scale(1.1);
+}
+#qr-close-button:active {
+    transform: scale(0.9);
+}

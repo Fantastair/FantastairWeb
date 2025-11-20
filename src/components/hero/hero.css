@@ -1,0 +1,96 @@
+/* ===== 英雄区域样式 ===== */
+/* 总区域 */
+#hero {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 10;
+    background-color: var(--color-bg-blue);
+    box-shadow: 0 0 32px var(--color-black);
+}
+
+#hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
+    filter: blur(0px);
+    transform: scale(1);
+}
+
+/* 高清背景图置换 */
+#hero-bg.bgloaded {
+    background: url('../../../assets/images/background.webp') center/cover no-repeat;
+}
+
+/* 图标边框 */
+#hero-icon-wrapper {
+    --top: 35vh;
+
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20vmin;
+    height: 20vmin;
+    background: linear-gradient(-45deg, var(--color-title-red), var(--color-white));
+    border-radius: 40%;
+    left: 50vw;
+    top: var(--top);
+    box-shadow: 0 0 32px var(--color-black);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+/* 图标本体 */
+#hero-icon {
+    width: 90%;
+    height: 90%;
+    display: block;
+    border-radius: 40%;
+}
+
+/* 主标题 */
+#hero-title {
+    --top: 55vh;
+
+    position: absolute;
+    left: 50vw;
+    top: var(--top);
+    transform: translateX(-50%) translateY(-50%);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 16vw, 8rem);
+    letter-spacing: 0.1em;
+}
+
+/* 字符样式 - 粉色基础层 */
+.hero-letter {
+    position: relative;
+    display: inline-block;
+    color: var(--color-title-pink);
+    text-shadow: 
+        0 0 16px var(--color-title-pink),
+        2px 2px 8px var(--color-black);
+}
+
+/* 字符样式 - 红色覆盖层（通过伪元素） */
+.hero-letter::before {
+    content: attr(data-char);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-title-red);
+    text-shadow: 0 0 32px var(--color-title-red);
+    opacity: 0;
+    animation: shine-fade 4s ease-in-out infinite alternate;
+    animation-delay: inherit;
+}
+
+/* 闪光动画 */
+@keyframes shine-fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

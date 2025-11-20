@@ -1,0 +1,203 @@
+/* ===== 专栏样式 ===== */
+#column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 页码区域样式 */
+column-pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    padding: 1rem 1rem;
+    border: 1px solid var(--color-fakewhite);
+    border-radius: 2rem;
+    background: #e8e8e8;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #e4e4e4;
+}
+
+/* 页码按钮样式 */
+.column-pager-button {
+    position: relative;
+    cursor: pointer;
+    transition: filter 250ms;
+}
+.column-pager-button:hover {
+    filter: brightness(110%);
+}
+
+/* 按钮阴影效果 */
+.column-pager-button-shadow {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+    border-radius: 1rem;
+    filter: blur(2px);
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.column-pager-button:hover .column-pager-button-shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+.column-pager-button:active .column-pager-button-shadow {
+    transform: translateY(1px);
+    transition: transform 80ms ease-out;
+}
+
+/* 按钮边缘样式 */
+.column-pager-button-edge {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--color-self) 30%, var(--color-black) 50%) 0%,
+    color-mix(in srgb, var(--color-self) 60%, var(--color-black)) 10%,
+    color-mix(in srgb, var(--color-self) 60%, var(--color-black)) 90%,
+    color-mix(in srgb, var(--color-self) 30%, var(--color-black) 50%) 100%
+    );
+}
+
+/* 按钮表面样式 */
+.column-pager-button-front {
+    display: block;
+    position: relative;
+    border-radius: 1rem;
+    background: linear-gradient(45deg, color-mix(in srgb, var(--color-self) 80%, var(--color-black)) 20%, var(--color-fakewhite));
+    padding: 1rem;
+    color: var(--color-fakewhite);
+    font-weight: 600;
+    font-size: 1rem;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.column-pager-button:hover .column-pager-button-front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+.column-pager-button:active .column-pager-button-front {
+    transform: translateY(-2px);
+    transition: transform 80ms ease-out;
+}
+
+/* 首页按钮样式 */
+#column-pager-first {
+    --color-self: var(--color-title-red);
+}
+
+/* 上一页按钮样式 */
+#column-pager-prev {
+    --color-self: var(--color-title-pink);
+}
+
+/* 下一页按钮样式 */
+#column-pager-next {
+    --color-self: var(--color-title-pink);
+}
+
+/* 尾页按钮样式 */
+#column-pager-last {
+    --color-self: var(--color-title-red);
+}
+
+/* 跳转按钮样式 */
+#column-pager-jump-button {
+    --color-self: var(--color-jump-purple);
+}
+#column-pager-jump-button .column-pager-button-front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 3rem;
+}
+
+/* 跳转图标样式 */
+#column-pager-jump-icon {
+    background: var(--color-fakewhite);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 1rem);
+    width: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 6px 2px #7b52b9;
+    right: 0.5rem;
+    color: var(--color-gray);
+    transition: width 0.3s ease;
+}
+#column-pager-jump-button:hover #column-pager-jump-icon {
+  width: calc(100% - 1rem);
+}
+
+/* 跳转输入框样式 */
+#column-pager-jump-input {
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: var(--color-fakewhite);
+    box-shadow: inset 2px 5px 10px color-mix(in srgb, var(--color-black) 30%, transparent);
+    text-align: center;
+    transition: filter 0.3s ease;
+}
+#column-pager-jump-input:focus {
+    filter: brightness(110%);
+}
+#column-pager-jump-input[type="number"]::-webkit-inner-spin-button,
+#column-pager-jump-input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;    /* 隐藏数字输入框的上下箭头 */
+    margin: 0;
+}
+#column-pager-jump-input[type="number"] {
+    appearance: textfield;
+}
+@keyframes jump_error {
+    0% { transform: translateX(0); background-color: var(--color-fakewhite);}
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); background-color: var(--color-title-red);}
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); background-color: var(--color-fakewhite);}
+}
+@keyframes jump_success {
+    0% { background-color: var(--color-fakewhite);}
+    50% { background-color: var(--color-jump-green); transform: scale(0.8);}
+    100% { background-color: var(--color-fakewhite);}
+}
+
+/* 页码数字和文本样式 */
+.column-pager-number,
+.column-pager-text {
+    user-select: none;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    font-style: italic;
+    text-align: center;
+    line-height: 2rem;
+    border-radius: 0.75rem;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+}
+.column-pager-number:not(.current) {
+    cursor: pointer;
+}
+.column-pager-number:not(.current):hover {
+    transform: translateY(-4px) scale(1.1);
+}
+.column-pager-number:not(.current):active {
+    transform: none;
+    box-shadow: inset 2px 5px 8px color-mix(in srgb, var(--color-black) 30%, transparent);
+}
+.column-pager-number.current {
+    background-color: var(--color-fakewhite);
+    box-shadow: inset 2px 5px 8px color-mix(in srgb, var(--color-black) 30%, transparent);
+}
