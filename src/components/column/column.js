@@ -1,4 +1,13 @@
 {
+    {
+        // 加载页码组件
+        const responsePromise = fetch('./src/components/column/column_pager.html');
+        const columnPager = document.querySelector('column-pager');
+        const response = await responsePromise;
+        const html = await response.text();
+        columnPager.innerHTML = html;
+    }
+
     const elements = {
         columnPagerFirst: document.getElementById('column-pager-first'),
         columnPagerPrev: document.getElementById('column-pager-prev'),
@@ -21,8 +30,10 @@
     const pagerEllipsis2 = document.getElementById('column-pager-ellipsis2');
 
     let currentNumberIndex = 0;    // 当前页码索引
-    const maxPageNumber = parseInt(pagerNumbers[pagerNumbers.length - 1].innerText);       // 最大页码数
+    const maxPageNumber = 8;       // 最大页码数
+    pagerNumbers[pagerNumbers.length - 1].innerText = maxPageNumber.toString();
 
+    // 监听点击事件
     pagerNumbers.forEach((element) => {
         element.addEventListener('click', () => {
             if (!element.classList.contains('current')) {
@@ -31,26 +42,31 @@
         });
     });
 
+    // 监听首页点击
     elements.columnPagerFirst.addEventListener('click', () => {
         updatePager(1);
     });
 
+    // 监听下一页点击
     elements.columnPagerPrev.addEventListener('click', () => {
         if (parseInt(pagerNumbers[currentNumberIndex].innerText) > 1) {
             updatePager(parseInt(pagerNumbers[currentNumberIndex].innerText) - 1);
         }
     });
 
+    // 监听上一页点击
     elements.columnPagerNext.addEventListener('click', () => {
         if (parseInt(pagerNumbers[currentNumberIndex].innerText) < maxPageNumber) {
             updatePager(parseInt(pagerNumbers[currentNumberIndex].innerText) + 1);
         }
     });
 
+    // 监听尾页点击
     elements.columnPagerLast.addEventListener('click', () => {
         updatePager(maxPageNumber);
     });
 
+    // 监听跳转按钮点击
     elements.columnPagerJumpButton.addEventListener('click', () => {
         const jumpPageNumber = Number(elements.columnPagerJumpInput.value);
         if (isNaN(jumpPageNumber) || jumpPageNumber < 1 || jumpPageNumber > maxPageNumber || !Number.isInteger(jumpPageNumber)) {
@@ -66,6 +82,13 @@
             setTimeout(() => {
                 elements.columnPagerJumpInput.style.animation = '';
             }, 500);
+        }
+    });
+
+    // 监听Enter跳转
+    elements.columnPagerJumpInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            elements.columnPagerJumpButton.click();
         }
     });
 

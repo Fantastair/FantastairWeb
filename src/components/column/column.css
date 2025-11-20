@@ -7,7 +7,7 @@
 }
 
 /* 页码区域样式 */
-#column-pager {
+column-pager {
     display: flex;
     justify-content: center;
     align-items: center;
