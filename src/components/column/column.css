@@ -6,12 +6,61 @@
     align-items: center;
 }
 
+/* 专栏内容区域样式 */
 #column-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 4rem;
+    gap: 4rem;
+}
+
+/* 专栏卡片样式 */
+.column-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    width: 80vw;
+    height: 200px;
+    border: 2px solid var(--color-bg-blue);
+    border-radius: 2rem;
+    background: linear-gradient(15deg, color-mix(in srgb, var(--color-bg-blue) 75%, transparent), var(--color-fakewhite));
+    box-shadow: 6px 6px 12px var(--color-gray);
+    transition: transform 0.3s ease;
+}
+.column-card:hover {
+    transform: scale(1.05);
+}
+.column-card:active {
+    transform: scale(0.95);
+}
+
+/* 专栏卡片标题样式 */
+.column-card-title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-bg-blue);
+    transition:
+        letter-spacing 0.3s ease,
+        margin-left 0.3s ease;
+}
+.column-card:hover .column-card-title {
+    letter-spacing: 2rem;
+    margin-left: 2rem;
+}
+
+/* 专栏卡片副标题样式 */
+.column-card-subtitle {
+    font-size: 0;
+    font-weight: 500;
+    color: var(--color-bg-blue);
+    transition: font-size 0.3s ease;
+}
+.column-card:hover .column-card-subtitle {
+    font-size: 2rem;
 }
 
 /* 页码区域样式 */
@@ -33,6 +82,7 @@ column-pager {
     position: relative;
     cursor: pointer;
     transition: filter 250ms;
+    user-select: none;
 }
 .column-pager-button:hover {
     filter: brightness(110%);
