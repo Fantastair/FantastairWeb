@@ -1,4 +1,4 @@
-name: Deploy-Static
+name: Deploy
 on:
   push:
     branches: [master]
@@ -20,29 +20,40 @@ jobs:
 
       - name: 3. 安装 minifier（仅缓存未命中时）
         if: steps.cache-minifier.outputs.cache-hit != 'true'
-        run: npm i -g html-minifier-terser csso terser
+        run: npm i -g html-minifier-terser csso-cli terser
 
-      - name: 4. 压缩 HTML（含内联）
+      - name: 4. 压缩 HTML
         run: |
-          find . -name "*.html" -exec html-minifier-terser \
-            {} --collapse-whitespace --remove-comments \
-            --minify-js --minify-css -o {}.min \;
+          find . -path './dynamic' -prune -o -name "*.html" -type f | while read file; do
+            html-minifier-terser "$file" \
+              --collapse-whitespace \
+              --remove-comments \
+              --minify-js \
+              --minify-css \
+              -o "$file.tmp" && mv "$file.tmp" "$file"
+          done
 
       - name: 5. 压缩 CSS
-        run: find . -name "*.css" -exec csso {} -o {} \;
+        run: |
+          find . -path './dynamic' -prune -o -name "*.css" -type f | while read file; do
+            csso "$file" --output "$file.tmp" && mv "$file.tmp" "$file"
+          done
 
       - name: 6. 压缩 JS
-        run: find . -name "*.js" -exec terser {} -c -m -o {} \;
+        run: |
+          find . -path './dynamic' -prune -o -name "*.js" -type f | while read file; do
+            terser "$file" -c -m -o "$file.tmp" && mv "$file.tmp" "$file"
+          done
 
       - name: 7. 预压缩静态资源
         run: |
-          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" \) \
+          find . -path './dynamic' -prune -o -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" \) \
             -exec gzip -k -9 {} \;
 
       - name: 8. Rsync to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
-          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
+          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --exclude='dynamic/' --chmod=Dg+rwx,Fg+rw
           path: ./
           remote_path: ${{ secrets.VPS_TARGET_DIR }}
           remote_host: ${{ secrets.VPS_HOST }}

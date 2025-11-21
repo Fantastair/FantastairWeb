@@ -6,6 +6,14 @@
     align-items: center;
 }
 
+#column-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+}
+
 /* 页码区域样式 */
 column-pager {
     display: flex;
