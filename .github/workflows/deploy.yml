@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 1. Checkout
+      - name: 1. 检出代码
         uses: actions/checkout@v4
 
       - name: 2. 缓存 minifier
@@ -20,9 +20,9 @@ jobs:
 
       - name: 3. 安装 minifier（仅缓存未命中时）
         if: steps.cache-minifier.outputs.cache-hit != 'true'
-        run: npm i -g html-minifier-terser csso-cli terser
+        run: npm i -g html-minifier-terser csso-cli terser@latest
 
-      - name: 4. 压缩 HTML
+      - name: 4. 裁剪 HTML
         run: |
           find . -path './dynamic' -prune -o -name "*.html" -type f | while read file; do
             html-minifier-terser "$file" \
@@ -33,16 +33,16 @@ jobs:
               -o "$file.tmp" && mv "$file.tmp" "$file"
           done
 
-      - name: 5. 压缩 CSS
+      - name: 5. 裁剪 CSS
         run: |
           find . -path './dynamic' -prune -o -name "*.css" -type f | while read file; do
             csso "$file" --output "$file.tmp" && mv "$file.tmp" "$file"
           done
 
-      - name: 6. 压缩 JS
+      - name: 6. 裁剪 JavaScript
         run: |
           find . -path './dynamic' -prune -o -name "*.js" -type f | while read file; do
-            terser "$file" -c -m -o "$file.tmp" && mv "$file.tmp" "$file"
+            terser "$file" -c -m --ecma 2017 -o "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
           done
 
       - name: 7. 预压缩静态资源
@@ -50,7 +50,7 @@ jobs:
           find . -path './dynamic' -prune -o -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" \) \
             -exec gzip -k -9 {} \;
 
-      - name: 8. Rsync to VPS
+      - name: 8. 部署到 VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --exclude='dynamic/' --chmod=Dg+rwx,Fg+rw
