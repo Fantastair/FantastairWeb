@@ -3,7 +3,8 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
-
+# -path './dynamic' -prune -o
+# --exclude='dynamic/'
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -24,7 +25,7 @@ jobs:
 
       - name: 4. 裁剪 HTML
         run: |
-          find . -path './dynamic' -prune -o -name "*.html" -type f | while read file; do
+          find . -name "*.html" -type f | while read file; do
             html-minifier-terser "$file" \
               --collapse-whitespace \
               --remove-comments \
@@ -35,25 +36,31 @@ jobs:
 
       - name: 5. 裁剪 CSS
         run: |
-          find . -path './dynamic' -prune -o -name "*.css" -type f | while read file; do
+          find . -name "*.css" -type f | while read file; do
             csso "$file" --output "$file.tmp" && mv "$file.tmp" "$file"
           done
 
       - name: 6. 裁剪 JavaScript
         run: |
-          find . -path './dynamic' -prune -o -name "*.js" -type f | while read file; do
+          find . -name "*.js" -type f | while read file; do
             terser "$file" -c -m --ecma 2018 --module -o "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
           done
 
-      - name: 7. 预压缩静态资源
+      - name: 7 裁剪 JSON
         run: |
-          find . -path './dynamic' -prune -o -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" \) \
+          find . -name "*.json" -type f | while read file; do
+            jq -c . "$file" > "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
+          done
+
+      - name: 8. 预压缩静态资源
+        run: |
+          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" \) \
             -exec gzip -k -9 {} \;
 
-      - name: 8. 部署到 VPS
+      - name: 9. 部署到 VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
-          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --exclude='dynamic/' --chmod=Dg+rwx,Fg+rw
+          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
           path: ./
           remote_path: ${{ secrets.VPS_TARGET_DIR }}
           remote_host: ${{ secrets.VPS_HOST }}
