@@ -42,7 +42,7 @@ jobs:
       - name: 6. 裁剪 JavaScript
         run: |
           find . -path './dynamic' -prune -o -name "*.js" -type f | while read file; do
-            terser "$file" -c -m --ecma 2017 -o "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
+            terser "$file" -c -m --ecma 2018 -o "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
           done
 
       - name: 7. 预压缩静态资源
