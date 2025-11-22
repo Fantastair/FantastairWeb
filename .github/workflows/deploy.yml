@@ -19,7 +19,7 @@ jobs:
       # ---------- 安装依赖 ----------
       - name: 2. Install dependencies
         run: |
-          npm install -g html-minifier-terser csso-cli terser glyphhanger
+          npm install -g html-minifier-terser csso-cli terser glyphhanger glyphhanger-fontawesome
           sudo apt-get update && sudo apt-get install -y python3-fonttools jq
 
       # ---------- 初始化警告计数器 ----------
@@ -88,14 +88,12 @@ jobs:
       # ---------- 生成 Unicode 子集 ----------
       - name: 8. Generate unicode subset
         run: |
-          if ! glyphhanger \
-               --subset=*.html,*.js,*.css \
-               --formats=woff2 \
-               --output=./glyphhanger-chars.txt; then
-            echo "::error::glyphhanger 扫描失败，终止流程"
-            exit 1
-          fi
-          # 如果字符集为空也报警
+          glyphhanger \
+            --subset=*.html,*.js,*.css \
+            --formats=woff2 \
+            --fontawesome=./src/styles/fontawesome \
+            --output=./glyphhanger-chars.txt
+          # 如果仍为空则报警
           if [[ ! -s ./glyphhanger-chars.txt ]]; then
             echo "::warning::字符集为空，字体将被裁成 0 字"
             echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
