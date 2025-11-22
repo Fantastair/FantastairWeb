@@ -16,25 +16,14 @@ jobs:
       - name: 1. Checkout
         uses: actions/checkout@v4
 
-      # ---------- 缓存 + 装依赖 ----------
-      - name: 2.1 Cache global npm & npx
-        id: cache-npm-global
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.npm
-            ~/.cache/npm
-            ~/.cache/_npx
-          key: ${{ runner.os }}-npm-global-${{ hashFiles('./deploy_version') }}
-
-      - name: 2.2 Install system依赖
+      # ---------- 安装依赖 ----------
+      - name: 2.1 Install system依赖
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y python3-pip zopfli parallel
           pip3 install --user fonttools brotli
 
-      - name: 2.3 Install npm CLI
-        if: steps.cache-npm-global.outputs.cache-hit != 'true'
+      - name: 2.2 Install npm CLI
         run: |
           npm i -g --loglevel=error \
             html-minifier-terser@7 \
