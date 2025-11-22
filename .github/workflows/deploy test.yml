@@ -32,8 +32,10 @@ jobs:
         run: |
           npm i -g --loglevel=error \
             html-minifier-terser csso-cli terser \
-            glyphhanger glyphhanger-font-awesome \
-            parallel brotli zopfli
+            glyphhanger \
+            github:filamentgroup/glyphhanger-font-awesome   # ← 关键
+          # 如果还想装 brotli/zopfli/parallel 再 apt 装即可
+          sudo apt-get update -qq && sudo apt-get install -y parallel zopfli brotli
 
       # ---------- 初始化警告计数器 ----------
       - name: 3. Init warning tracker
