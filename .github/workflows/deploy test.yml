@@ -78,6 +78,7 @@ jobs:
               'jq -c . {} > {.}.tmp && mv {.}.tmp {}'
 
       # ---------- 手动指定字符集 子集化 ----------
+# ---------- 手动指定字符集 子集化 ----------
       - name: 8. Subset Fonts
         run: |
           for fontpath in fa-regular-400 fa-brands-400 fa-solid-900; do
@@ -86,8 +87,7 @@ jobs:
             [[ -f "$listfile" ]] || { echo "⚠️ $listfile 不存在，跳过"; continue; }
             [[ -f "$fontfile" ]] || { echo "⚠️ $fontfile 不存在，跳过"; continue; }
 
-            # 用当前目录的临时文件名，避免 glyphhanger 拼接目录
-            tmpwoff="${fontpath}-subset.tmp.woff2"
+            tmpwoff="subset.tmp"          # ← 纯字母，无 dot 无 dash
             glyphhanger \
               --subset="$fontfile" \
               --unicodes-file="$listfile" \
