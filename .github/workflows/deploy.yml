@@ -19,10 +19,11 @@ jobs:
       # ---------- 安装依赖 ----------
       - name: 2. Install dependencies
         run: |
-          npm install -g html-minifier-terser csso-cli terser glyphhanger
-          sudo apt-get update && sudo apt-get install -y python3-fonttools jq
-          git clone --depth 1 https://github.com/googlefonts/glyphhanger.git /tmp/glyphhanger
-          cp /tmp/glyphhanger/subset/fa-icons.js ./fa-icons.js
+          npm install -g --loglevel=error html-minifier-terser csso-cli terser glyphhanger
+          sudo apt-get update -qq && sudo apt-get install -y python3-fonttools jq
+          curl -sL https://github.com/googlefonts/glyphhanger/archive/refs/heads/main.tar.gz \
+            | tar -xz -C /tmp
+          cp /tmp/glyphhanger-main/subset/fa-icons.js ./fa-icons.js
 
       # ---------- 初始化警告计数器 ----------
       - name: 3. Init warning tracker
@@ -90,10 +91,7 @@ jobs:
       # ---------- 生成 Unicode 子集 ----------
       - name: 8. Generate unicode subset
         run: |
-          glyphhanger \
-            --subset=*.html,*.js,*.css \
-            --formats=woff2 \
-            --output=./glyphhanger-chars.txt
+          glyphhanger --subset=*.html,*.js,*.css --formats=woff2 --output=./glyphhanger-chars.txt
           node fa-icons.js ./src/styles/fontawesome >> ./glyphhanger-chars.txt
           sort -u -o ./glyphhanger-chars.txt ./glyphhanger-chars.txt
           if [[ ! -s ./glyphhanger-chars.txt ]]; then
