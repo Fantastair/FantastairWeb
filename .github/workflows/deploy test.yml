@@ -132,3 +132,14 @@ jobs:
             echo "::error::因 FAIL_ON_WARNING=true，整流失败"
             exit 1
           fi
+
+      # ---------- 部署 ----------
+      - name: 11. Deploy to VPS
+        uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
+          path: ./
+          remote_path: ${{ secrets.VPS_TARGET_DIR }}
+          remote_host: ${{ secrets.VPS_HOST }}
+          remote_user: ${{ secrets.VPS_USER }}
+          remote_key: ${{ secrets.VPS_SSH_KEY }}
