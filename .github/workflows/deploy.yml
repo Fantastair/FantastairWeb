@@ -18,6 +18,7 @@ jobs:
 
       # ---------- 缓存 + 装依赖 ----------
       - name: 2.1 Cache global npm & npx
+        id: cache-npm-global
         uses: actions/cache@v4
         with:
           path: |
@@ -25,7 +26,6 @@ jobs:
             ~/.cache/npm
             ~/.cache/_npx
           key: ${{ runner.os }}-npm-global-${{ hashFiles('./deploy_version') }}
-          restore-keys: ${{ runner.os }}-npm-global-
 
       - name: 2.2 Install system依赖
         run: |
@@ -34,6 +34,7 @@ jobs:
           pip3 install --user fonttools brotli
 
       - name: 2.3 Install npm CLI
+        if: steps.cache-npm-global.outputs.cache-hit != 'true'
         run: |
           npm i -g --loglevel=error \
             html-minifier-terser@7 \
