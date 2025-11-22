@@ -16,55 +16,20 @@ jobs:
       - name: 1. Checkout
         uses: actions/checkout@v4
 
-      # ---------- 缓存 & 安装 ----------
-      - name: 2. Cache minifier
-        id: cache-minifier
-        uses: actions/cache@v4
-        with:
-          path: ~/tools/minifier
-          key: minifier-${{ runner.os }}-${{ hashFiles('minifier-version') }}
-
-      - name: 3. Cache glyphhanger
-        id: cache-glyphhanger
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/tools/glyphhanger
-            /usr/local/lib/python3*/site-packages/fontTools
-          key: glyphhanger-${{ runner.os }}-${{ hashFiles('glyphhanger-version') }}
-
-      - name: 4. Install minifier
-        if: steps.cache-minifier.outputs.cache-hit != 'true'
+      # ---------- 安装依赖 ----------
+      - name: 2. Install dependencies
         run: |
-          npm install --prefix ~/tools/minifier html-minifier-terser csso-cli terser@latest
-
-      - name: 5. Install glyphhanger
-        if: steps.cache-glyphhanger.outputs.cache-hit != 'true'
-        run: |
-          npm install --prefix ~/tools/glyphhanger -g glyphhanger
-          sudo apt-get update && sudo apt-get install -y python3-fonttools
-
-      - name: 6. Add tools to PATH
-        run: |
-          echo "$HOME/tools/minifier/bin" >> $GITHUB_PATH
-          echo "$HOME/tools/glyphhanger/bin" >> $GITHUB_PATH
-          sudo ln -sf /usr/bin/pyftsubset /usr/local/bin/pyftsubset
-
-      - name: 7. Install glyphhanger
-        if: steps.cache-glyphhanger.outputs.cache-hit != 'true'
-        run: |
-          npm install --prefix ~/tools/glyphhanger -g glyphhanger
-          sudo apt-get update && sudo apt-get install -y python3-fonttools
-          echo '~/tools/glyphhanger/bin' >> $GITHUB_PATH
+          npm install -g html-minifier-terser csso-cli terser glyphhanger
+          sudo apt-get update && sudo apt-get install -y python3-fonttools jq
 
       # ---------- 初始化警告计数器 ----------
-      - name: 8. Init warning tracker
+      - name: 3. Init warning tracker
         run: |
           echo "WARN_COUNT=0" >> $GITHUB_ENV
           echo "WARN_MSG=" >> $GITHUB_ENV
 
       # ---------- 裁剪 HTML ----------
-      - name: 9. Minify HTML
+      - name: 4. Minify HTML
         run: |
           while IFS= read -r -d '' file; do
             if ! html-minifier-terser "$file" \
@@ -82,7 +47,7 @@ jobs:
           done < <(find . -name "*.html" -type f -print0)
 
       # ---------- 裁剪 CSS ----------
-      - name: 10. Minify CSS
+      - name: 5. Minify CSS
         run: |
           while IFS= read -r -d '' file; do
             if ! csso "$file" --output "$file.tmp"; then
@@ -95,7 +60,7 @@ jobs:
           done < <(find . -name "*.css" -type f -print0)
 
       # ---------- 裁剪 JS ----------
-      - name: 11. Minify JS
+      - name: 6. Minify JS
         run: |
           while IFS= read -r -d '' file; do
             if ! terser "$file" -c -m --ecma 2018 --module -o "$file.tmp"; then
@@ -108,7 +73,7 @@ jobs:
           done < <(find . -name "*.js" -type f -print0)
 
       # ---------- 裁剪 JSON ----------
-      - name: 12. Minify JSON
+      - name: 7. Minify JSON
         run: |
           while IFS= read -r -d '' file; do
             if ! jq -c . "$file" > "$file.tmp"; then
@@ -121,7 +86,7 @@ jobs:
           done < <(find . -name "*.json" -type f -print0)
 
       # ---------- 生成 Unicode 子集 ----------
-      - name: 13. Generate unicode subset
+      - name: 8. Generate unicode subset
         run: |
           if ! glyphhanger \
                --subset=*.html,*.js,*.css \
@@ -138,7 +103,7 @@ jobs:
           fi
 
       # ---------- 子集化字体 ----------
-      - name: 14. Subset fonts
+      - name: 9. Subset fonts
         run: |
           for font in ./assets/fonts/fa-regular-400.woff2 \
                       ./assets/fonts/fa-brands-400.woff2 \
@@ -149,7 +114,7 @@ jobs:
               echo "WARN_MSG=${WARN_MSG}<li>Font missing: $font</li>" >> $GITHUB_ENV
               continue
             fi
-            if ! pyftsubset "$font" \
+            if ! python3 -m fontTools.subset "$font" \
                  --unicodes-file=./glyphhanger-chars.txt \
                  --flavor=woff2 \
                  --output-file="${font%.woff2}.subset.woff2"; then
@@ -162,13 +127,13 @@ jobs:
           done
 
       # ---------- 预压缩 ----------
-      - name: 15. Pre-compress static assets
+      - name: 10. Pre-compress static assets
         run: |
           find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" -o -name "*.woff2" \) \
             -exec gzip -k -9 {} \;
 
       # ---------- 最终汇总 ----------
-      - name: 16. Summary & decide exit code
+      - name: 11. Summary & decide exit code
         run: |
           echo "### Build Summary" >> $GITHUB_STEP_SUMMARY
           if [[ $WARN_COUNT -eq 0 ]]; then
@@ -183,36 +148,12 @@ jobs:
           fi
 
       # ---------- 部署 ----------
-      - name: 17. Deploy to VPS 
-        env:
-          VPS_HOST:   ${{ secrets.VPS_HOST }}
-          VPS_USER:   ${{ secrets.VPS_USER }}
-          VPS_TARGET: ${{ secrets.VPS_TARGET_DIR }}
-          VPS_KEY:    ${{ secrets.VPS_SSH_KEY }}
-          BACKUP_DIR: /var/backups/site/$(date +%Y%m%d-%H%M%S)
-        run: |
-          install -m 700 -d ~/.ssh
-          echo "$VPS_KEY" > ~/.ssh/ci_key
-          chmod 600 ~/.ssh/ci_key
-          ssh-keyscan -t ed25519 -p 22 "$VPS_HOST" 2>/dev/null > ~/.ssh/known_hosts
-
-          ssh -i ~/.ssh/ci_key -o StrictHostKeyChecking=accept-new \
-            "$VPS_USER@$VPS_HOST" \
-            "mkdir -p $BACKUP_DIR && rsync -a --delete $VPS_TARGET/ $BACKUP_DIR/"
-
-          rsync -rlzv --delete \
-                --exclude='.git*' \
-                --exclude='.user.ini' \
-                --chmod=Dg+rwx,Fg+rw \
-                -e 'ssh -i ~/.ssh/ci_key 2>/dev/null' \
-                ./ "$VPS_USER@$VPS_HOST:$VPS_TARGET/"
-
-          ssh -i ~/.ssh/ci_key "$VPS_USER@$VPS_HOST" \
-            "sudo systemctl reload php-fpm nginx"
-
-          if ! curl -sf https://yourdomain.com/health.txt >/dev/null; then
-            echo "::error::站点返回非 200，开始回滚"
-            ssh -i ~/.ssh/ci_key "$VPS_USER@$VPS_HOST" \
-              "rsync -a --delete $BACKUP_DIR/ $VPS_TARGET/"
-            exit 1
-          fi
+      - name: 12. Deploy to VPS
+        uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
+          path: ./
+          remote_path: ${{ secrets.VPS_TARGET_DIR }}
+          remote_host: ${{ secrets.VPS_HOST }}
+          remote_user: ${{ secrets.VPS_USER }}
+          remote_key: ${{ secrets.VPS_SSH_KEY }}
