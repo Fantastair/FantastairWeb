@@ -3,61 +3,176 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
-# -path './dynamic' -prune -o
-# --exclude='dynamic/'
+
+env:
+  # 开关： true=任何警告也整流失败  false=仅真正错误才失败
+  FAIL_ON_WARNING: 'false'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 1. 检出代码
+      # ---------- 基础 ----------
+      - name: 1. Checkout
         uses: actions/checkout@v4
 
-      - name: 2. 缓存 minifier
-        uses: actions/cache@v4
+      # ---------- 缓存 & 安装 ----------
+      - name: 2. Cache minifier
         id: cache-minifier
+        uses: actions/cache@v4
         with:
-          path: /usr/local/lib/node_modules
+          path: ~/tools/minifier
           key: minifier-${{ runner.os }}-${{ hashFiles('minifier-version') }}
 
-      - name: 3. 安装 minifier（仅缓存未命中时）
+      - name: 3. Install minifier
         if: steps.cache-minifier.outputs.cache-hit != 'true'
-        run: npm i -g html-minifier-terser csso-cli terser@latest
-
-      - name: 4. 裁剪 HTML
         run: |
-          find . -name "*.html" -type f | while read file; do
-            html-minifier-terser "$file" \
-              --collapse-whitespace \
-              --remove-comments \
-              --minify-js \
-              --minify-css \
-              -o "$file.tmp" && mv "$file.tmp" "$file"
+          npm install --prefix ~/tools/minifier html-minifier-terser csso-cli terser@latest
+          echo '~/tools/minifier/bin' >> $GITHUB_PATH
+
+      - name: 4. Cache glyphhanger
+        id: cache-glyphhanger
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/tools/glyphhanger
+            /usr/local/lib/python3*/site-packages/fontTools
+          key: glyphhanger-${{ runner.os }}-${{ hashFiles('glyphhanger-version') }}
+
+      - name: 5. Install glyphhanger
+        if: steps.cache-glyphhanger.outputs.cache-hit != 'true'
+        run: |
+          npm install --prefix ~/tools/glyphhanger -g glyphhanger
+          sudo apt-get update && sudo apt-get install -y python3-fonttools
+          echo '~/tools/glyphhanger/bin' >> $GITHUB_PATH
+
+      # ---------- 初始化警告计数器 ----------
+      - name: 6. Init warning tracker
+        run: |
+          echo "WARN_COUNT=0" >> $GITHUB_ENV
+          echo "WARN_MSG=" >> $GITHUB_ENV
+
+      # ---------- 裁剪 HTML ----------
+      - name: 7. Minify HTML
+        run: |
+          while IFS= read -r -d '' file; do
+            if ! html-minifier-terser "$file" \
+                 --collapse-whitespace \
+                 --remove-comments \
+                 --minify-js \
+                 --minify-css \
+                 -o "$file.tmp"; then
+              echo "::warning::HTML minify failed: $file"
+              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>HTML: $file</li>" >> $GITHUB_ENV
+              continue
+            fi
+            mv "$file.tmp" "$file"
+          done < <(find . -name "*.html" -type f -print0)
+
+      # ---------- 裁剪 CSS ----------
+      - name: 8. Minify CSS
+        run: |
+          while IFS= read -r -d '' file; do
+            if ! csso "$file" --output "$file.tmp"; then
+              echo "::warning::CSS minify failed: $file"
+              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>CSS: $file</li>" >> $GITHUB_ENV
+              continue
+            fi
+            mv "$file.tmp" "$file"
+          done < <(find . -name "*.css" -type f -print0)
+
+      # ---------- 裁剪 JS ----------
+      - name: 9. Minify JS
+        run: |
+          while IFS= read -r -d '' file; do
+            if ! terser "$file" -c -m --ecma 2018 --module -o "$file.tmp"; then
+              echo "::warning::JS minify failed: $file"
+              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>JS: $file</li>" >> $GITHUB_ENV
+              continue
+            fi
+            mv "$file.tmp" "$file"
+          done < <(find . -name "*.js" -type f -print0)
+
+      # ---------- 裁剪 JSON ----------
+      - name: 10. Minify JSON
+        run: |
+          while IFS= read -r -d '' file; do
+            if ! jq -c . "$file" > "$file.tmp"; then
+              echo "::warning::JSON minify failed: $file"
+              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>JSON: $file</li>" >> $GITHUB_ENV
+              continue
+            fi
+            mv "$file.tmp" "$file"
+          done < <(find . -name "*.json" -type f -print0)
+
+      # ---------- 生成 Unicode 子集 ----------
+      - name: 11. Generate unicode subset
+        run: |
+          if ! glyphhanger \
+               --subset=*.html,*.js,*.css \
+               --formats=woff2 \
+               --output=./glyphhanger-chars.txt; then
+            echo "::error::glyphhanger 扫描失败，终止流程"
+            exit 1
+          fi
+          # 如果字符集为空也报警
+          if [[ ! -s ./glyphhanger-chars.txt ]]; then
+            echo "::warning::字符集为空，字体将被裁成 0 字"
+            echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+            echo "WARN_MSG=${WARN_MSG}<li>Glyphhanger: 未提取到任何字符</li>" >> $GITHUB_ENV
+          fi
+
+      # ---------- 子集化字体 ----------
+      - name: 12. Subset fonts
+        run: |
+          for font in ./assets/fonts/fa-regular-400.woff2 \
+                      ./assets/fonts/fa-brands-400.woff2 \
+                      ./assets/fonts/fa-solid-900.woff2; do
+            if [[ ! -f $font ]]; then
+              echo "::warning::字体文件不存在: $font"
+              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>Font missing: $font</li>" >> $GITHUB_ENV
+              continue
+            fi
+            if ! pyftsubset "$font" \
+                 --unicodes-file=./glyphhanger-chars.txt \
+                 --flavor=woff2 \
+                 --output-file="${font%.woff2}.subset.woff2"; then
+              echo "::warning::字体子集化失败: $font"
+              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>Font subset: $font</li>" >> $GITHUB_ENV
+              continue
+            fi
+            mv "${font%.woff2}.subset.woff2" "$font"
           done
 
-      - name: 5. 裁剪 CSS
+      # ---------- 预压缩 ----------
+      - name: 13. Pre-compress static assets
         run: |
-          find . -name "*.css" -type f | while read file; do
-            csso "$file" --output "$file.tmp" && mv "$file.tmp" "$file"
-          done
-
-      - name: 6. 裁剪 JavaScript
-        run: |
-          find . -name "*.js" -type f | while read file; do
-            terser "$file" -c -m --ecma 2018 --module -o "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
-          done
-
-      - name: 7 裁剪 JSON
-        run: |
-          find . -name "*.json" -type f | while read file; do
-            jq -c . "$file" > "$file.tmp" && mv "$file.tmp" "$file" || echo "警告: $file 压缩失败，但继续流程"
-          done
-
-      - name: 8. 预压缩静态资源
-        run: |
-          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" \) \
+          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" -o -name "*.woff2" \) \
             -exec gzip -k -9 {} \;
 
-      - name: 9. 部署到 VPS
+      # ---------- 最终汇总 ----------
+      - name: 14. Summary & decide exit code
+        run: |
+          echo "### Build Summary" >> $GITHUB_STEP_SUMMARY
+          if [[ $WARN_COUNT -eq 0 ]]; then
+            echo "✅ 无警告，全部成功" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ 出现 <b>$WARN_COUNT</b> 个警告：" >> $GITHUB_STEP_SUMMARY
+            echo "<ul>${WARN_MSG}</ul>" >> $GITHUB_STEP_SUMMARY
+            if [[ "$FAIL_ON_WARNING" == "true" ]]; then
+              echo "::error::因 FAIL_ON_WARNING=true，整流失败"
+              exit 1
+            fi
+          fi
+
+      # ---------- 部署 ----------
+      - name: 15. Deploy to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
