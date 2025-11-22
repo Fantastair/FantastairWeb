@@ -1,7 +1,8 @@
-name: Deploy
+# 除了最终没有部署到 VPS 之外，所有操作和主分支相同
+name: DeployTest
 on:
   push:
-    branches: [master]
+    branches: [deploy]
   workflow_dispatch:
 
 env:
@@ -19,13 +20,19 @@ jobs:
       # ---------- 安装依赖 ----------
       - name: 2. Install dependencies
         run: |
+          # 1. 常规工具
           npm install -g --loglevel=error html-minifier-terser csso-cli terser
-          # 全局设置 git 默认用 https 而不是 ssh
-          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
-          npm install -g github:googlefonts/glyphhanger
           sudo apt-get update -qq && sudo apt-get install -y python3-fonttools jq
-          cp "$(npm root -g)"/glyphhanger/subset/fa-icons.js ./fa-icons.js
+
+          # 2. 手动拉 glyphhanger 仓库（HTTPS，永远可行）
+          curl -sL https://codeload.github.com/googlefonts/glyphhanger/tar.gz/refs/heads/main \
+            | tar -xz -C /tmp
+          # 3. 本地 link 成全局命令
+          cd /tmp/glyphhanger-main
+          npm link --loglevel=error        # 把 bin 注册到全局
+          cd "$GITHUB_WORKSPACE"
+          # 4. 拷出 FontAwesome 插件
+          cp /tmp/glyphhanger-main/subset/fa-icons.js ./fa-icons.js
 
       # ---------- 初始化警告计数器 ----------
       - name: 3. Init warning tracker
@@ -146,14 +153,3 @@ jobs:
               exit 1
             fi
           fi
-
-      # ---------- 部署 ----------
-      - name: 12. Deploy to VPS
-        uses: burnett01/rsync-deployments@6.0.0
-        with:
-          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
-          path: ./
-          remote_path: ${{ secrets.VPS_TARGET_DIR }}
-          remote_host: ${{ secrets.VPS_HOST }}
-          remote_user: ${{ secrets.VPS_USER }}
-          remote_key: ${{ secrets.VPS_SSH_KEY }}
