@@ -77,29 +77,31 @@ jobs:
             parallel -0 -j$(nproc) --bar \
               'jq -c . {} > {.}.tmp && mv {.}.tmp {}'
 
-      # ---------- 手动指定字符集 子集化 Font-Awesome ----------
-      - name: 8. Subset FontAwesome fonts
+      # ---------- 手动指定字符集 子集化 ----------
+      - name: 8. Subset Fonts
         run: |
-          mkdir -p tmp
           for fontpath in fa-regular-400 fa-brands-400 fa-solid-900; do
             fontfile="./assets/fonts/${fontpath}.woff2"
             listfile="./assets/fonts/${fontpath}.woff2.txt"
             [[ -f "$listfile" ]] || { echo "⚠️ $listfile 不存在，跳过"; continue; }
             [[ -f "$fontfile" ]] || { echo "⚠️ $fontfile 不存在，跳过"; continue; }
 
+            # 用当前目录的临时文件名，避免 glyphhanger 拼接目录
+            tmpwoff="${fontpath}-subset.tmp.woff2"
             glyphhanger \
               --subset="$fontfile" \
               --unicodes-file="$listfile" \
               --formats=woff2 \
-              --output=tmp/subset.woff2
+              --output="$tmpwoff"
 
-            if [[ -s tmp/subset.woff2 ]]; then
-              mv tmp/subset.woff2 "$fontfile"
+            if [[ -s "$tmpwoff" ]]; then
+              mv "$tmpwoff" "$fontfile"
               echo "✔ ${fontpath} 子集化完成"
             else
               echo "::warning::${fontpath} 子集化失败"
               echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>Font Awesome ${fontpath} subset failed</li>" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>Fonts ${fontpath} subset failed</li>" >> $GITHUB_ENV
+              rm -f "$tmpwoff"
             fi
           done
 
