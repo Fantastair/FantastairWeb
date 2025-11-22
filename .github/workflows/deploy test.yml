@@ -78,26 +78,26 @@ jobs:
               'jq -c . {} > {.}.tmp && mv {.}.tmp {}'
 
       # ---------- 手动指定字符集 子集化 Font-Awesome ----------
-      - name: 8. Subset Fonts
+      - name: 8. Subset FontAwesome fonts
         run: |
+          mkdir -p tmp
           for fontpath in fa-regular-400 fa-brands-400 fa-solid-900; do
             fontfile="./assets/fonts/${fontpath}.woff2"
             listfile="./assets/fonts/${fontpath}.woff2.txt"
-            # 如果白名单不存在就跳过，避免 0 字字体
-            [[ -f "$listfile" ]] || { echo "⚠️ $listfile 不存在，跳过子集化"; continue; }
-            [[ -f "$fontfile" ]] || { echo "⚠️ $fontfile 不存在，跳过";        continue; }
+            [[ -f "$listfile" ]] || { echo "⚠️ $listfile 不存在，跳过"; continue; }
+            [[ -f "$fontfile" ]] || { echo "⚠️ $fontfile 不存在，跳过"; continue; }
 
             glyphhanger \
               --subset="$fontfile" \
               --unicodes-file="$listfile" \
               --formats=woff2 \
-              --output="${fontfile%.woff2}.subset.woff2"
+              --output=tmp/subset.woff2
 
-            if [[ -s "${fontfile%.woff2}.subset.woff2" ]]; then
-              mv "${fontfile%.woff2}.subset.woff2" "$fontfile"
+            if [[ -s tmp/subset.woff2 ]]; then
+              mv tmp/subset.woff2 "$fontfile"
               echo "✔ ${fontpath} 子集化完成"
             else
-              echo "::warning::${fontpath} 子集化失败或白名单为空"
+              echo "::warning::${fontpath} 子集化失败"
               echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
               echo "WARN_MSG=${WARN_MSG}<li>Font Awesome ${fontpath} subset failed</li>" >> $GITHUB_ENV
             fi
