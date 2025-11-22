@@ -20,7 +20,10 @@ jobs:
       - name: 2. Install dependencies
         run: |
           npm install -g --loglevel=error html-minifier-terser csso-cli terser
-          npm install -g github:googlefonts/glyphhanger   # ← 用 npm 拉仓库
+          # 全局设置 git 默认用 https 而不是 ssh
+          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          npm install -g github:googlefonts/glyphhanger
           sudo apt-get update -qq && sudo apt-get install -y python3-fonttools jq
           cp "$(npm root -g)"/glyphhanger/subset/fa-icons.js ./fa-icons.js
 
