@@ -17,130 +17,104 @@ jobs:
       - name: 1. Checkout
         uses: actions/checkout@v4
 
-      # ---------- 安装依赖 ----------
-      - name: 2. Install dependencies
+      # ---------- 缓存 + 装依赖 ----------
+      - name: 2.1 Cache global npm & npx
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/npm
+            ~/.cache/_npx
+          key: ${{ runner.os }}-npm-global-${{ hashFiles('./deploy_version') }}
+          restore-keys: ${{ runner.os }}-npm-global-
+
+      - name: 2.2 Install dependencies
         run: |
-          npm install -g --loglevel=error html-minifier-terser csso-cli terser glyphhanger
-          sudo apt-get update -qq && sudo apt-get install -y python3-fonttools jq
-          # 从全局包里拷出 FontAwesome 插件
-          cp "$(npm root -g)/glyphhanger/subset/fa-icons.js" ./fa-icons.js
+          npm i -g --loglevel=error \
+            html-minifier-terser csso-cli terser \
+            glyphhanger glyphhanger-font-awesome \
+            parallel brotli zopfli
 
       # ---------- 初始化警告计数器 ----------
       - name: 3. Init warning tracker
         run: |
           echo "WARN_COUNT=0" >> $GITHUB_ENV
-          echo "WARN_MSG=" >> $GITHUB_ENV
+          echo "WARN_MSG="   >> $GITHUB_ENV
 
-      # ---------- 裁剪 HTML ----------
+      # ---------- 并行裁剪 HTML ----------
       - name: 4. Minify HTML
         run: |
-          while IFS= read -r -d '' file; do
-            if ! html-minifier-terser "$file" \
-                 --collapse-whitespace \
-                 --remove-comments \
-                 --minify-js \
-                 --minify-css \
-                 -o "$file.tmp"; then
-              echo "::warning::HTML minify failed: $file"
-              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>HTML: $file</li>" >> $GITHUB_ENV
-              continue
-            fi
-            mv "$file.tmp" "$file"
-          done < <(find . -name "*.html" -type f -print0)
+          find . -name '*.html' -print0 |
+            parallel -0 -j$(nproc) --bar \
+              'html-minifier-terser {} --collapse-whitespace --remove-comments \
+               --minify-js --minify-css -o {.}.tmp && mv {.}.tmp {}'
 
-      # ---------- 裁剪 CSS ----------
+      # ---------- 并行裁剪 CSS ----------
       - name: 5. Minify CSS
         run: |
-          while IFS= read -r -d '' file; do
-            if ! csso "$file" --output "$file.tmp"; then
-              echo "::warning::CSS minify failed: $file"
-              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>CSS: $file</li>" >> $GITHUB_ENV
-              continue
-            fi
-            mv "$file.tmp" "$file"
-          done < <(find . -name "*.css" -type f -print0)
+          find . -name '*.css' -print0 |
+            parallel -0 -j$(nproc) --bar \
+              'csso {} -o {.}.tmp && mv {.}.tmp {}'
 
-      # ---------- 裁剪 JS ----------
+      # ---------- 并行裁剪 JS ----------
       - name: 6. Minify JS
         run: |
-          while IFS= read -r -d '' file; do
-            if ! terser "$file" -c -m --ecma 2018 --module -o "$file.tmp"; then
-              echo "::warning::JS minify failed: $file"
-              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>JS: $file</li>" >> $GITHUB_ENV
-              continue
-            fi
-            mv "$file.tmp" "$file"
-          done < <(find . -name "*.js" -type f -print0)
+          find . -name '*.js' -print0 |
+            parallel -0 -j$(nproc) --bar \
+              'terser {} -c -m --ecma 2018 --module -o {.}.tmp && mv {.}.tmp {}'
 
-      # ---------- 裁剪 JSON ----------
+      # ---------- 并行裁剪 JSON ----------
       - name: 7. Minify JSON
         run: |
-          while IFS= read -r -d '' file; do
-            if ! jq -c . "$file" > "$file.tmp"; then
-              echo "::warning::JSON minify failed: $file"
-              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>JSON: $file</li>" >> $GITHUB_ENV
-              continue
-            fi
-            mv "$file.tmp" "$file"
-          done < <(find . -name "*.json" -type f -print0)
+          find . -name '*.json' -print0 |
+            parallel -0 -j$(nproc) --bar \
+              'jq -c . {} > {.}.tmp && mv {.}.tmp {}'
 
-      # ---------- 生成 Unicode 子集 ----------
-      - name: 8. Generate unicode subset
+      # ---------- 一键子集化 Font-Awesome（原地替换） ----------
+      - name: 8. Subset FontAwesome fonts
         run: |
-          glyphhanger --subset=*.html,*.js,*.css --formats=woff2 --output=./glyphhanger-chars.txt
-          node fa-icons.js ./src/styles/fontawesome >> ./glyphhanger-chars.txt
-          sort -u -o ./glyphhanger-chars.txt ./glyphhanger-chars.txt
-          if [[ ! -s ./glyphhanger-chars.txt ]]; then
-            echo "::warning::字符集为空，字体将被裁成 0 字"
-            echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-            echo "WARN_MSG=${WARN_MSG}<li>Glyphhanger: 未提取到任何字符</li>" >> $GITHUB_ENV
-          fi
+          for weight in regular brands solid; do
+            srcfont="./assets/fonts/fa-${weight}-400.woff2"
+            [[ $weight == solid ]] && srcfont="./assets/fonts/fa-${weight}-900.woff2"
+            [[ ! -f $srcfont ]] && continue   # 字体不存在则跳过
 
-      # ---------- 子集化字体 ----------
-      - name: 9. Subset fonts
-        run: |
-          for font in ./assets/fonts/fa-regular-400.woff2 \
-                      ./assets/fonts/fa-brands-400.woff2 \
-                      ./assets/fonts/fa-solid-900.woff2; do
-            if [[ ! -f $font ]]; then
-              echo "::warning::字体文件不存在: $font"
+            npx glyphhanger-font-awesome \
+              --src=. \
+              --weight=$weight \
+              --font="$srcfont" \
+              --output="${srcfont%.woff2}.subset.woff2"
+
+            if [[ -s "${srcfont%.woff2}.subset.woff2" ]]; then
+              mv "${srcfont%.woff2}.subset.woff2" "$srcfont"
+              echo "✔ fa-${weight} 子集化完成"
+            else
+              echo "::warning::fa-${weight} 子集化失败或没有用到任何图标"
               echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>Font missing: $font</li>" >> $GITHUB_ENV
-              continue
+              echo "WARN_MSG=${WARN_MSG}<li>Font Awesome ${weight} subset failed</li>" >> $GITHUB_ENV
             fi
-            if ! python3 -m fontTools.subset "$font" \
-                 --unicodes-file=./glyphhanger-chars.txt \
-                 --flavor=woff2 \
-                 --output-file="${font%.woff2}.subset.woff2"; then
-              echo "::warning::字体子集化失败: $font"
-              echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>Font subset: $font</li>" >> $GITHUB_ENV
-              continue
-            fi
-            mv "${font%.woff2}.subset.woff2" "$font"
           done
 
-      # ---------- 预压缩 ----------
-      - name: 10. Pre-compress static assets
+      # ---------- 高压缩（gzip + brotli + zopfli）原地 ----------
+      - name: 9. Pre-compress static assets
         run: |
-          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" -o -name "*.json" -o -name "*.html" -o -name "*.woff2" \) \
-            -exec gzip -k -9 {} \;
+          find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" \
+            -o -name "*.json" -o -name "*.html" -o -name "*.woff2" \) \
+            -exec sh -c 'zopfli -i999 {} && brotli -q 11 -f {}' \;
 
       # ---------- 最终汇总 ----------
-      - name: 11. Summary & decide exit code
+      - name: 10. Summary & decide exit code
         run: |
-          echo "### Build Summary" >> $GITHUB_STEP_SUMMARY
-          if [[ $WARN_COUNT -eq 0 ]]; then
-            echo "✅ 无警告，全部成功" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "⚠️ 出现 <b>$WARN_COUNT</b> 个警告：" >> $GITHUB_STEP_SUMMARY
-            echo "<ul>${WARN_MSG}</ul>" >> $GITHUB_STEP_SUMMARY
-            if [[ "$FAIL_ON_WARNING" == "true" ]]; then
-              echo "::error::因 FAIL_ON_WARNING=true，整流失败"
-              exit 1
+          {
+            echo "### Build Summary"
+            if [[ $WARN_COUNT -eq 0 ]]; then
+              echo "✅ 无警告，全部成功"
+            else
+              echo "⚠️ 出现 <b>$WARN_COUNT</b> 个警告："
+              echo "<ul>${WARN_MSG}</ul>"
             fi
+          } >> $GITHUB_STEP_SUMMARY
+
+          if [[ "$FAIL_ON_WARNING" == "true" && $WARN_COUNT -gt 0 ]]; then
+            echo "::error::因 FAIL_ON_WARNING=true，整流失败"
+            exit 1
           fi
