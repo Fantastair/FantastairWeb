@@ -32,7 +32,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y python3-pip brotli zopfli parallel
-          pip3 install --user fonttools
+          pip3 install --user fonttools brotli
 
       - name: 2.3 Install npm CLI
         run: |
