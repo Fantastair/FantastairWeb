@@ -19,8 +19,10 @@ jobs:
       # ---------- 安装依赖 ----------
       - name: 2. Install dependencies
         run: |
-          npm install -g html-minifier-terser csso-cli terser glyphhanger glyphhanger-fontawesome
+          npm install -g html-minifier-terser csso-cli terser glyphhanger
           sudo apt-get update && sudo apt-get install -y python3-fonttools jq
+          git clone --depth 1 https://github.com/googlefonts/glyphhanger.git /tmp/glyphhanger
+          cp /tmp/glyphhanger/subset/fa-icons.js ./fa-icons.js
 
       # ---------- 初始化警告计数器 ----------
       - name: 3. Init warning tracker
@@ -91,9 +93,9 @@ jobs:
           glyphhanger \
             --subset=*.html,*.js,*.css \
             --formats=woff2 \
-            --fontawesome=./src/styles/fontawesome \
             --output=./glyphhanger-chars.txt
-          # 如果仍为空则报警
+          node fa-icons.js ./src/styles/fontawesome >> ./glyphhanger-chars.txt
+          sort -u -o ./glyphhanger-chars.txt ./glyphhanger-chars.txt
           if [[ ! -s ./glyphhanger-chars.txt ]]; then
             echo "::warning::字符集为空，字体将被裁成 0 字"
             echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
