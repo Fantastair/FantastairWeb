@@ -28,14 +28,19 @@ jobs:
           key: ${{ runner.os }}-npm-global-${{ hashFiles('./deploy_version') }}
           restore-keys: ${{ runner.os }}-npm-global-
 
-      - name: 2.2 Install dependencies
+      - name: 2.2 Install system依赖
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y python3-pip brotli zopfli parallel
+          pip3 install --user fonttools
+
+      - name: 2.3 Install npm CLI
         run: |
           npm i -g --loglevel=error \
-            html-minifier-terser csso-cli terser \
-            glyphhanger \
-            github:filamentgroup/glyphhanger-font-awesome   # ← 关键
-          # 如果还想装 brotli/zopfli/parallel 再 apt 装即可
-          sudo apt-get update -qq && sudo apt-get install -y parallel zopfli brotli
+            html-minifier-terser@7 \
+            csso-cli@4 \
+            terser@5 \
+            glyphhanger@5
 
       # ---------- 初始化警告计数器 ----------
       - name: 3. Init warning tracker
@@ -72,27 +77,29 @@ jobs:
             parallel -0 -j$(nproc) --bar \
               'jq -c . {} > {.}.tmp && mv {.}.tmp {}'
 
-      # ---------- 一键子集化 Font-Awesome（原地替换） ----------
-      - name: 8. Subset FontAwesome fonts
+      # ---------- 手动指定字符集 子集化 Font-Awesome ----------
+      - name: 8. Subset Fonts
         run: |
-          for weight in regular brands solid; do
-            srcfont="./assets/fonts/fa-${weight}-400.woff2"
-            [[ $weight == solid ]] && srcfont="./assets/fonts/fa-${weight}-900.woff2"
-            [[ ! -f $srcfont ]] && continue   # 字体不存在则跳过
+          for fontpath in fa-regular-400 fa-brands-400 fa-solid-900; do
+            fontfile="./assets/fonts/${fontpath}.woff2"
+            listfile="./assets/fonts/${fontpath}.woff2.txt"
+            # 如果白名单不存在就跳过，避免 0 字字体
+            [[ -f "$listfile" ]] || { echo "⚠️ $listfile 不存在，跳过子集化"; continue; }
+            [[ -f "$fontfile" ]] || { echo "⚠️ $fontfile 不存在，跳过";        continue; }
 
-            npx glyphhanger-font-awesome \
-              --src=. \
-              --weight=$weight \
-              --font="$srcfont" \
-              --output="${srcfont%.woff2}.subset.woff2"
+            glyphhanger \
+              --subset="$fontfile" \
+              --unicodes-file="$listfile" \
+              --formats=woff2 \
+              --output="${fontfile%.woff2}.subset.woff2"
 
-            if [[ -s "${srcfont%.woff2}.subset.woff2" ]]; then
-              mv "${srcfont%.woff2}.subset.woff2" "$srcfont"
-              echo "✔ fa-${weight} 子集化完成"
+            if [[ -s "${fontfile%.woff2}.subset.woff2" ]]; then
+              mv "${fontfile%.woff2}.subset.woff2" "$fontfile"
+              echo "✔ ${fontpath} 子集化完成"
             else
-              echo "::warning::fa-${weight} 子集化失败或没有用到任何图标"
+              echo "::warning::${fontpath} 子集化失败或白名单为空"
               echo "WARN_COUNT=$(($WARN_COUNT+1))" >> $GITHUB_ENV
-              echo "WARN_MSG=${WARN_MSG}<li>Font Awesome ${weight} subset failed</li>" >> $GITHUB_ENV
+              echo "WARN_MSG=${WARN_MSG}<li>Font Awesome ${fontpath} subset failed</li>" >> $GITHUB_ENV
             fi
           done
 
