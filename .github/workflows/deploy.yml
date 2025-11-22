@@ -125,7 +125,7 @@ jobs:
       - name: 11. Deploy to VPS
         uses: burnett01/rsync-deployments@6.0.0
         with:
-          switches: -rlvz --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
+          switches: -rlvz --delete --exclude='.git*' --exclude='.user.ini' --chmod=Dg+rwx,Fg+rw
           path: ./
           remote_path: ${{ secrets.VPS_TARGET_DIR }}
           remote_host: ${{ secrets.VPS_HOST }}
