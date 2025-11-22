@@ -79,6 +79,9 @@ jobs:
       # ---------- 手动指定字符集 子集化 ----------
       - name: 8. Subset Fonts
         run: |
+          sed -i 's/#.*//; /^[[:space:]]*$/d' fa-*.woff2.txt
+          dos2unix fa-*.woff2.txt || true
+
           for fontpath in fa-regular-400 fa-brands-400 fa-solid-900; do
             fontfile="./assets/fonts/${fontpath}.woff2"
             listfile="./assets/fonts/${fontpath}.woff2.txt"
