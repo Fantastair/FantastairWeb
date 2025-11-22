@@ -107,12 +107,12 @@ jobs:
             cd -
           done
 
-      # ---------- 高压缩（gzip + brotli + zopfli）原地 ----------
+      # ---------- 高压缩（zopfli） ----------
       - name: 9. Pre-compress static assets
         run: |
           find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.svg" \
             -o -name "*.json" -o -name "*.html" -o -name "*.woff2" \) \
-            -exec sh -c 'zopfli -i999 {} && brotli -q 11 -f {}' \;
+            -exec sh -c 'zopfli -i999 {}' \;
 
       # ---------- 最终汇总 ----------
       - name: 10. Summary & decide exit code
