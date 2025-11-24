@@ -36,18 +36,58 @@ let articles_content;
 }
 
 /**
+ * 动态加载 CSS
+ * @param {string} url
+ */
+function loadCSS(url) {
+    return new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = url;
+        link.onload = () => resolve();
+        link.onerror = () => reject(new Error(`CSS load failed: ${url}`));
+        document.head.appendChild(link);
+    });
+}
+
+const cardDict = {};
+/**
  * 加载文章卡片
  * @param {number} start 
  * @param {number} end 
 */
-function loadArticlesCard(start, end) {
-    let columnContentInnerHTML = '';
+async function loadArticlesCard(start, end) {
+    columnContent.innerHTML = '';
     for (let i = start; i <= end && i < articles_content.count; i++) {
-        columnContentInnerHTML += articles_content.articles[i].entryHtml;
+        console.log(articles_content.articles[i].id);
+        if (cardDict[articles_content.articles[i].id]) {
+            columnContent.appendChild(cardDict[articles_content.articles[i].id]);
+            continue;
+        }
+        if (articles_content.articles[i].entryHtml === 'default') {
+            const response = await fetch(`./dynamic/articles/default.html`);
+            const html = await response.text();
+            let customizedHtml = html.replace('<span class="column-card-title"></span>', `<span class="column-card-title">${articles_content.articles[i].title}</span>`);
+            customizedHtml = customizedHtml.replace('<span class="column-card-subtitle"></span>', `<span class="column-card-subtitle">${articles_content.articles[i].subtitle}</span>`);
+            const node = document.createRange().createContextualFragment(customizedHtml).firstChild;
+            columnContent.appendChild(node);
+            cardDict[articles_content.articles[i].id] = node;
+        } else {
+            const response = await fetch(`./dynamic/articles/${articles_content.articles[i].id}/card.html`);
+            const html = await response.text();
+            const node = document.createRange().createContextualFragment(html).firstChild;
+            columnContent.appendChild(node);
+            cardDict[articles_content.articles[i].id] = node;
+        }
+        if (articles_content.articles[i].entryCss) {
+            loadCSS(`./dynamic/articles/${articles_content.articles[i].id}/card.css`);
+        }
+        if (articles_content.articles[i].entryJs) {
+            import(`../../../dynamic/articles/${articles_content.articles[i].id}/card.js`);
+        }
     }
-    columnContent.innerHTML = columnContentInnerHTML;
 }
-loadArticlesCard(0, 5);
 
 let currentNumberIndex = 0;    // 当前页码索引
 const maxPageNumber = Math.ceil(articles_content.count / articles_content.pageCount);       // 最大页码数

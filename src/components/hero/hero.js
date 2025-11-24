@@ -60,6 +60,19 @@ export function updateHeroStyles(ratio = null) {
     elements.heroTitle.style.top = `${titleTop}px`;
     elements.heroTitle.style.transform = `translate(-${50 * (1 - ratio ** 2)}%, -50%)`;
 
+    // 背景图片透明度变换
+    if (ratio > 0.5) {
+        elements.heroBg.style.opacity = `${2 - ratio * 2}`;
+        if (ratio == 1 && elements.heroBg.style.visibility != 'hidden') {
+            elements.heroBg.style.visibility = 'hidden';
+        } else if (ratio < 1 && elements.heroBg.style.visibility != 'visible') {
+            elements.heroBg.style.visibility = 'visible';
+        }
+    }
+    else if (ratio <= 0.5 && elements.heroBg.style.opacity !== '') {
+        elements.heroBg.style.opacity = '';
+    }
+
     return ratio;
 }
 

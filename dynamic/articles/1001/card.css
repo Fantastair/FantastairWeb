@@ -1,0 +1,101 @@
+/* 卡片样式 */
+#column-card-1001 {
+    --scale: 1.0;
+    position: relative;
+    background: linear-gradient(to right, #8888ff, #ff8888);
+    border-color: #ffd246;
+    border-width: 4px;
+    transform: scale(var(--scale));
+}
+#column-card-1001:hover {
+    --scale: 1.02;
+}
+#column-card-1001:active {
+    --scale: 0.98;
+}
+
+/* 字体引入 */
+@font-face {
+  font-family: 'jimo';
+  src: url('jimo.ttf') format('truetype');
+}
+
+/* 标题样式 */
+#column-card-1001 .column-card-title {
+    font-size: 6rem;
+    background: linear-gradient(to right, #404088, #884040);
+    background-clip: text;
+    color: transparent;
+    font-family: 'jimo';
+    z-index: 10;
+    text-shadow: 0px 0px 1rem #00000044;
+}
+
+/* 副标题样式 */
+#column-card-1001 .column-card-subtitle {
+    font-style: italic;
+    background: linear-gradient(to right, #404088, #884040);
+    background-clip: text;
+    color: transparent;
+    z-index: 1;
+    transition:
+        font-size 0.3s ease,
+        filter 0.3s ease;
+}
+#column-card-1001:hover .column-card-subtitle {
+    font-size: 1.5rem;
+}
+#column-card-1001 .column-card-subtitle:hover {
+    filter: blur(2px);
+}
+
+/* 十字样式 */
+.cross-1001 {
+    --size: 36px;
+    position: absolute;
+    background-color: transparent;
+    pointer-events: none;
+    z-index: 5;
+    transition: background-color 0.3s ease;
+}
+#column-card-1001:hover .cross-1001 {
+    background-color: #ffffff88; 
+}
+#column-card-1001:active .cross-1001 {
+    background-color: #88404066; 
+}
+#cross-x-1001 {
+    width: 100%;
+    height: var(--size);
+    left: 0;
+    top: 0;
+    transition:
+        top 0.15s ease-out,
+        background-color 0.3s ease;
+}
+#cross-y-1001 {
+    width: var(--size);
+    height: 100%;
+    left: 0;
+    top: 0;
+    transition:
+        left 0.15s ease-out,
+        background-color 0.3s ease;
+}
+
+/* 飞机样式  */
+#plane-1001 {
+    overflow: hidden;
+    position: absolute;
+    font-size: 10rem;
+    color: #e3e3e3;
+    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    z-index: 20;
+    text-shadow: 0px 0px 1rem #00000044;
+    transition:
+        top 1.5s ease-in-out,
+        left 1.5s ease-in-out;
+}
+#plane-1001.start {
+    transition: none;
+}

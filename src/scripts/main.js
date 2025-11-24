@@ -7,11 +7,9 @@ loadHighResBackground();    // 加载
 // 初始化标题动画
 initTitleAnimation(0.3);
 
+// 滚动事件处理
 let ticking = false;
-/**
- * 滚动事件处理
-*/
-function handleScroll() {
+window.addEventListener('scroll', () => {
     if (!ticking) {
         requestAnimationFrame(() => {
             const ratio = updateHeroStyles();
@@ -20,8 +18,7 @@ function handleScroll() {
         });
         ticking = true;
     }
-}
-window.addEventListener('scroll', handleScroll);
+});
 
 import "../components/hitokoto/hitokoto.js"
 import "../components/column/column.js"
