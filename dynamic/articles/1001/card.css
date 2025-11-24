@@ -1,0 +1,31 @@
+/* 卡片样式 */
+#column-card-1001 {
+    background: linear-gradient(to right, #8888ff, #ff8888);
+    border-color: #ffd246;
+    border-width: 4px;
+}
+
+@font-face {
+  font-family: 'jimo';
+  src: url('jimo.ttf') format('truetype');
+}
+
+/* 标题样式 */
+#column-card-1001 .column-card-title {
+    font-size: 6rem;
+    background: linear-gradient(to right, #404088, #884040);
+    background-clip: text;
+    color: transparent;
+    font-family: 'jimo';
+}
+
+/* 副标题样式 */
+ #column-card-1001 .column-card-subtitle {
+    font-style: italic;
+    background: linear-gradient(to right, #404088, #884040);
+    background-clip: text;
+    color: transparent;
+}
+#column-card-1001:hover .column-card-subtitle {
+    font-size: 1.5rem;
+}

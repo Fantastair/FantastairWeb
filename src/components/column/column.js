@@ -36,14 +36,46 @@ let articles_content;
 }
 
 /**
+ * 动态加载 CSS
+ * @param {string} url
+ */
+function loadCSS(url) {
+    return new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = url;
+        link.onload = () => resolve();
+        link.onerror = () => reject(new Error(`CSS load failed: ${url}`));
+        document.head.appendChild(link);
+    });
+}
+
+/**
  * 加载文章卡片
  * @param {number} start 
  * @param {number} end 
 */
-function loadArticlesCard(start, end) {
+async function loadArticlesCard(start, end) {
     let columnContentInnerHTML = '';
     for (let i = start; i <= end && i < articles_content.count; i++) {
-        columnContentInnerHTML += articles_content.articles[i].entryHtml;
+        if (articles_content.articles[i].entryHtml === 'default') {
+            const response = await fetch(`./dynamic/articles/default.html`);
+            const html = await response.text();
+            let customizedHtml = html.replace('<span class="column-card-title"></span>', `<span class="column-card-title">${articles_content.articles[i].title}</span>`);
+            customizedHtml = customizedHtml.replace('<span class="column-card-subtitle"></span>', `<span class="column-card-subtitle">${articles_content.articles[i].subtitle}</span>`);
+            columnContentInnerHTML += customizedHtml;
+        } else {
+            const response = await fetch(`./dynamic/articles/${articles_content.articles[i].id}/card.html`);
+            const html = await response.text();
+            columnContentInnerHTML += html;
+        }
+        if (articles_content.articles[i].entryCss) {
+            loadCSS(`./dynamic/articles/${articles_content.articles[i].id}/card.css`);
+        }
+        if (articles_content.articles[i].entryJs) {
+            import(`./dynamic/articles/${articles_content.articles[i].id}/card.js`);
+        }
     }
     columnContent.innerHTML = columnContentInnerHTML;
 }
