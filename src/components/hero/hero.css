@@ -6,8 +6,9 @@
     height: 100vh;
     overflow: hidden;
     z-index: 10;
-    background-color: var(--color-bg-blue);
+    background-color: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
     box-shadow: 0 0 32px var(--color-black);
+    backdrop-filter: blur(8px);
 }
 
 #hero-bg {

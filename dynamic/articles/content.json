@@ -7,7 +7,7 @@
             "url": null,
             "entryHtml": null,
             "entryCss": true,
-            "entryJs": false
+            "entryJs": true
         },
         {
             "id": 1002,

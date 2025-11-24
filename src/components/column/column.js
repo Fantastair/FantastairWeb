@@ -51,35 +51,43 @@ function loadCSS(url) {
     });
 }
 
+const cardDict = {};
 /**
  * 加载文章卡片
  * @param {number} start 
  * @param {number} end 
 */
 async function loadArticlesCard(start, end) {
-    let columnContentInnerHTML = '';
+    columnContent.innerHTML = '';
     for (let i = start; i <= end && i < articles_content.count; i++) {
+        console.log(articles_content.articles[i].id);
+        if (cardDict[articles_content.articles[i].id]) {
+            columnContent.appendChild(cardDict[articles_content.articles[i].id]);
+            continue;
+        }
         if (articles_content.articles[i].entryHtml === 'default') {
             const response = await fetch(`./dynamic/articles/default.html`);
             const html = await response.text();
             let customizedHtml = html.replace('<span class="column-card-title"></span>', `<span class="column-card-title">${articles_content.articles[i].title}</span>`);
             customizedHtml = customizedHtml.replace('<span class="column-card-subtitle"></span>', `<span class="column-card-subtitle">${articles_content.articles[i].subtitle}</span>`);
-            columnContentInnerHTML += customizedHtml;
+            const node = document.createRange().createContextualFragment(customizedHtml).firstChild;
+            columnContent.appendChild(node);
+            cardDict[articles_content.articles[i].id] = node;
         } else {
             const response = await fetch(`./dynamic/articles/${articles_content.articles[i].id}/card.html`);
             const html = await response.text();
-            columnContentInnerHTML += html;
+            const node = document.createRange().createContextualFragment(html).firstChild;
+            columnContent.appendChild(node);
+            cardDict[articles_content.articles[i].id] = node;
         }
         if (articles_content.articles[i].entryCss) {
             loadCSS(`./dynamic/articles/${articles_content.articles[i].id}/card.css`);
         }
         if (articles_content.articles[i].entryJs) {
-            import(`./dynamic/articles/${articles_content.articles[i].id}/card.js`);
+            import(`../../../dynamic/articles/${articles_content.articles[i].id}/card.js`);
         }
     }
-    columnContent.innerHTML = columnContentInnerHTML;
 }
-loadArticlesCard(0, 5);
 
 let currentNumberIndex = 0;    // 当前页码索引
 const maxPageNumber = Math.ceil(articles_content.count / articles_content.pageCount);       // 最大页码数
