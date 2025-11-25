@@ -17,7 +17,7 @@
 /* 字体引入 */
 @font-face {
   font-family: 'jimo';
-  src: url('jimo.ttf') format('truetype');
+  src: url('Jimo.woff2') format('woff2');
 }
 
 /* 标题样式 */

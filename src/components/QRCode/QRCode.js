@@ -33,6 +33,9 @@ function showQRCode(path) {
  * 关闭二维码模态框
  */
 function closeQRCode() {
+    setTimeout(() => {
+        elements.qrImage.src = '';
+    }, 300);
     elements.qrModal.classList.remove('show');
     document.body.style.overflow = '';
 }
