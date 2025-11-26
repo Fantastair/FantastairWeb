@@ -4,17 +4,18 @@
     user-select: none;
     position: relative;
     display: flex;
+    align-items: center;
     width: fit-content;
-    margin: 1rem auto;
+    left: 50%;
+    transform: translateX(-50%);
     gap: 1rem;
     transition:
         transform 0.3s ease,
         gap 0.3s ease;
 }
-/* 悬停效果 */
 #hitokoto:hover {
     gap: 2.5rem;
-    transform: translateY(-10%);
+    transform: translateX(-50%) translateY(-10%);
 }
 
 /* 引号 */
@@ -28,6 +29,7 @@
 /* 一言文本框 */
 #hitokoto-text-box {
     display: flex;
+    align-items: center;
     gap: 1rem;
     background: color-mix(in srgb, var(--color-title-pink) 10%, transparent);
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 20%, transparent);
@@ -39,12 +41,10 @@
         background 0.3s ease,
         padding 0.3s ease;
 }
-/* 悬停效果 */
 #hitokoto:hover #hitokoto-text-box {
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 50%, transparent);
     background: color-mix(in srgb, var(--color-title-pink) 20%, transparent);
 }
-/* 激活效果 */
 #hitokoto:active #hitokoto-text-box {
     border: 1px solid color-mix(in srgb, var(--color-hitokoto-purple) 75%, transparent);
     background: color-mix(in srgb, var(--color-title-pink) 50%, transparent);
@@ -52,7 +52,6 @@
 
 /* 一言文本样式 */
 #hitokoto-text {
-    min-width: 0;
     font-style: italic;
     font-size: 1.5rem;
     color: var(--color-hitokoto-purple);
@@ -75,11 +74,9 @@
         background 0.3s ease,
         transform 0.3s ease;
 }
-/* 悬停效果 */
 #hitokoto-copy-button:hover {
     background: color-mix(in srgb, var(--color-hitokoto-purple) 30%, transparent);
 }
-/* 激活效果 */
 #hitokoto-copy-button:active {
     transform: scale(0.9);
 }
@@ -100,7 +97,6 @@
         visibility 0s ease 0.3s,
         opacity 0.3s ease;
 }
-/* 悬停显示提示框 */
 #hitokoto:hover #hitokoto-tip {
     opacity: 1;
     visibility: visible;
@@ -131,4 +127,30 @@
 .hitokoto-char {
     opacity: 0;
     transition: opacity 0.3s ease;
+}
+
+@media (max-width: 600px) {
+    #hitokoto {
+        gap: 0.5rem;
+    }
+    #hitokoto:hover {
+        transform: translateX(-50%);
+        gap: 0.5rem;
+    }
+    .hitokoto-quote {
+        font-size: 2rem;
+    }
+    #hitokoto-text-box {
+        gap: 0.5rem;
+        padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+        border-radius: 0.8rem;
+    }
+    #hitokoto-text {
+        font-size: 1rem;
+    }
+    #hitokoto-copy-button {
+        font-size: 0.7rem;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
 }

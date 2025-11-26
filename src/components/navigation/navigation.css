@@ -9,7 +9,7 @@
     right: 20px;
     z-index: 20;
     display: flex;
-    gap: 15px;
+    gap: 1rem;
     visibility: hidden;
     opacity: 0;
     transition: 
@@ -48,4 +48,14 @@
     transform: translateY(-2px);
         background-size: 100% 4px;
         background-position-x: left;
+}
+
+@media (max-width: 600px) {
+    .nav-text {
+        display: none;
+    }
+    #top-nav {
+        right: 0;
+        gap: 0;
+    }
 }

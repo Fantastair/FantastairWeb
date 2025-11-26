@@ -20,6 +20,11 @@
             elements.contactIcon.classList.add(cls);
         });
 
+        // 如果屏幕宽度小于600px则不启用鼠标交互效果
+        if (window.innerWidth < 600) {
+            return;
+        }
+
         let ticking = false;
         item.addEventListener('mousemove', (event) => {
             if (ticking) return;

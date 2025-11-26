@@ -11,6 +11,7 @@
     backdrop-filter: blur(8px);
 }
 
+/* 背景图 */
 #hero-bg {
     position: absolute;
     inset: 0;
@@ -32,8 +33,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20vmin;
-    height: 20vmin;
+    width: 20vh;
+    height: 20vh;
     background: linear-gradient(-45deg, var(--color-title-red), var(--color-white));
     border-radius: 40%;
     left: 50vw;
@@ -61,6 +62,7 @@
     font-weight: 900;
     font-size: clamp(2.5rem, 16vw, 8rem);
     letter-spacing: 0.1em;
+    white-space: nowrap;
 }
 
 /* 字符样式 - 粉色基础层 */

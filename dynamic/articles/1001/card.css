@@ -99,3 +99,25 @@
 #plane-1001.start {
     transition: none;
 }
+
+@media (max-width: 600px) {
+    #column-card-1001:hover {
+        --scale: 1;
+    }
+    #column-card-1001:active {
+        --scale: 1;
+    }
+    #column-card-1001 .column-card-title {
+        font-size: 4rem;
+    }
+    #column-card-1001 .column-card-subtitle {
+        font-size: 1.5rem;
+        transition: none;
+    }
+    #column-card-1001 .column-card-subtitle:hover {
+        filter: none;
+    }
+    #column-card-1001:hover .cross-1001 {
+        display: none;
+    }
+}
