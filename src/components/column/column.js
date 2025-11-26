@@ -60,7 +60,6 @@ const cardDict = {};
 async function loadArticlesCard(start, end) {
     columnContent.innerHTML = '';
     for (let i = start; i <= end && i < articles_content.count; i++) {
-        console.log(articles_content.articles[i].id);
         if (cardDict[articles_content.articles[i].id]) {
             columnContent.appendChild(cardDict[articles_content.articles[i].id]);
             continue;

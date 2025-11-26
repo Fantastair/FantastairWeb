@@ -30,7 +30,7 @@
     box-sizing: border-box;
     border-radius: 2rem;
     background: linear-gradient(15deg, color-mix(in srgb, var(--color-bg-blue) 75%, transparent), var(--color-fakewhite));
-    box-shadow: 6px 6px 12px var(--color-gray);
+    box-shadow: 0px 0px 16px var(--color-gray);
     transition: transform 0.3s ease;
 }
 .column-card:hover {
@@ -72,7 +72,6 @@ column-pager {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    font-size: 1rem;
     padding: 1rem 1rem;
     border: 1px solid var(--color-fakewhite);
     border-radius: 2rem;
@@ -194,7 +193,7 @@ column-pager {
     transition: width 0.3s ease;
 }
 #column-pager-jump-button:hover #column-pager-jump-icon {
-  width: calc(100% - 1rem);
+    width: calc(100% - 1rem);
 }
 
 /* 跳转输入框样式 */
@@ -261,4 +260,94 @@ column-pager {
 .column-pager-number.current {
     background-color: var(--color-fakewhite);
     box-shadow: inset 2px 5px 8px color-mix(in srgb, var(--color-black) 30%, transparent);
+}
+
+@media (max-width: 600px) {
+    #column-content {
+        padding: 2rem;
+        gap: 2rem;
+    }
+    .column-card {
+        border-radius: 1.5rem;
+        transition: transform 0.1s ease;
+    }
+    .column-card:hover {
+        transform: none;
+    }
+    .column-card-title {
+        font-size: 2rem;
+        font-weight: 700;
+        transition: none;
+    }
+    .column-card:hover .column-card-title {
+        letter-spacing: normal;
+        margin-left: 0;
+    }
+    .column-card-subtitle {
+        font-size: 1rem;
+        font-weight: 500;
+        transition: none;
+    }
+    .column-card:hover .column-card-subtitle {
+        font-size: 1rem;
+    }
+    column-pager {
+        gap: 0.5rem;
+        padding: 0.5rem 0.5rem;
+        border-radius: 1rem;
+    }
+    .column-pager-button-shadow {
+        border-radius: 0.5rem;
+    }
+    .column-pager-button-edge {
+        border-radius: 0.5rem;
+    }
+    .column-pager-button-front {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    #column-pager-first {
+        display: none;
+    }
+    #column-pager-prev {
+        display: none;
+    }
+    #column-pager-next {
+        display: none;
+    }
+    #column-pager-last {
+        display: none;
+    }
+    #column-pager-jump-button .column-pager-button-front {
+        padding-right: 2rem;
+    }
+    #column-pager-jump-icon {
+        height: calc(100% - 0.5rem);
+        width: 1.5rem;
+        border-radius: 0.25rem;
+        right: 0.25rem;
+    }
+    #column-pager-jump-button:hover #column-pager-jump-icon {
+        width: calc(100% - 0.5rem);
+    }
+    #column-pager-jump-input {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+    }
+    .column-pager-number,
+    .column-pager-text {
+        user-select: none;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.8rem;
+        line-height: 1.5rem;
+        border-radius: 0.5rem;
+    }
+    .column-pager-number:not(.current):hover {
+        transform: none;
+    }
+    .column-pager-number:not(.current):active {
+        transform: none;
+    }
 }

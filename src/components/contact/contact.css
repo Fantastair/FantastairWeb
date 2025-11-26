@@ -173,9 +173,65 @@
         color 0.3s ease,
         background-size 0.3s ease;
 }
-/* 页脚链接悬停效果 */
 #contact-footer a:hover {
     background-size: 100% 2px;
     background-position: left bottom;
     color: var(--color-bg-blue);
+}
+
+@media (max-width: 600px) {
+    #contact-card {
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 4rem;
+        padding: 4rem;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+    }
+    .contact-item {
+        flex: none;
+        flex-grow: 1;
+        flex-shrink: 0;
+        width: calc(100vw - 8rem);
+        height: 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+    .contact-item:active {
+        transform: none;
+    }
+    .contact-item .contact-icon {
+        transition: none;
+        color: transparent;
+        font-size: 10rem;
+        margin-top: -10rem;
+        text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+        transform: none;
+    }
+    .contact-icon-shadow {
+        transition: none;
+        width: 70%;
+        left: 15%;
+        transform: none;
+    }
+    .contact-box {
+        transition: none;
+        transform: none;
+        box-shadow: 0px 0px 16px color-mix(in srgb, var(--color-bg-blue) 40%, transparent);
+        border-color: var(--color-bg-blue);
+    }
+    .contact-item .contact-text {
+        transition: none;
+        color: var(--color-bg-blue);
+        font-size: 3rem;
+        text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+        transform: translateY(2rem);
+    }
+    .contact-info {
+        transition: none;
+        font-size: 1.5rem;
+        color: var(--color-bg-blue);
+        text-shadow: 0 4px 16px color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
+    }
 }
