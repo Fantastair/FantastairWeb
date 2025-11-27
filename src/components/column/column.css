@@ -24,6 +24,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
+    -webkit-user-select: none;
     width: 80vw;
     height: 200px;
     border: 2px solid var(--color-bg-blue);
@@ -85,6 +86,7 @@ column-pager {
     cursor: pointer;
     transition: filter 250ms;
     user-select: none;
+    -webkit-user-select: none;
 }
 .column-pager-button:hover {
     filter: brightness(110%);
@@ -235,6 +237,7 @@ column-pager {
 .column-pager-number,
 .column-pager-text {
     user-select: none;
+    -webkit-user-select: none;
     width: 2rem;
     height: 2rem;
     font-size: 1.2rem;
@@ -337,7 +340,6 @@ column-pager {
     }
     .column-pager-number,
     .column-pager-text {
-        user-select: none;
         width: 1.5rem;
         height: 1.5rem;
         font-size: 0.8rem;
