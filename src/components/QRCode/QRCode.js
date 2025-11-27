@@ -4,7 +4,7 @@ const elements = {
     closeButton: document.getElementById('qr-close-button'),
 }
 
-{
+export function initQRCode() {
     const qrTriggers = document.querySelectorAll('.qr-trigger');
 
     // 二维码触发器

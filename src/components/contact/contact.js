@@ -1,4 +1,4 @@
-{
+export async function initContact() {
     const responsePromise = fetch('./src/components/contact/contact.html');
     const contactItems = document.querySelectorAll('.contact-item');
     const response = await responsePromise;
