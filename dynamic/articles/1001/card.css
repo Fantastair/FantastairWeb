@@ -6,6 +6,7 @@
     border-color: #ffd246;
     border-width: 4px;
     transform: scale(var(--scale));
+    mask-image: -webkit-radial-gradient(white, black);
 }
 #column-card-1001:hover {
     --scale: 1.02;
@@ -53,7 +54,7 @@
 .cross-1001 {
     --size: 36px;
     position: absolute;
-    background-color: transparent;
+    background-color: #fff0;
     pointer-events: none;
     z-index: 5;
     transition: background-color 0.3s ease;
