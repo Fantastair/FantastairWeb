@@ -124,6 +124,7 @@
     transform: translateX(-50%) translateY(calc(0.8rem - 1px));
 }
 
+/* 一言字符 */
 .hitokoto-char {
     opacity: 0;
     transition: opacity 0.3s ease;

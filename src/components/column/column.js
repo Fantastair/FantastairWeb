@@ -159,7 +159,7 @@ if (maxPageNumber <= 7) {
  * 更新页码显示
  * @param {number} pageNumber - 要更新到的页码
  */
-function updatePager(pageNumber) {
+export function updatePager(pageNumber) {
     loadArticlesCard((pageNumber - 1) * articles_content.pageCount, pageNumber * articles_content.pageCount - 1);
     if (maxPageNumber <= 7) {
         if (currentNumberIndex != pageNumber - 1) {
@@ -228,5 +228,3 @@ function setPagerNumber(centerNumber) {
     pagerNumbers[4].innerText = (centerNumber + 1).toString();
     pagerNumbers[5].innerText = (centerNumber + 2).toString();
 }
-
-updatePager(1);
