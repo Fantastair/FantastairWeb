@@ -83,8 +83,12 @@ column-pager {
 /* 页码按钮样式 */
 .column-pager-button {
     position: relative;
+    background: transparent;
+    padding: 0px;
+    border: none;
     cursor: pointer;
     transition: filter 250ms;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     user-select: none;
     -webkit-user-select: none;
 }
@@ -99,6 +103,7 @@ column-pager {
     background: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
     border-radius: 1rem;
     filter: blur(2px);
+    will-change: transform;
     transform: translateY(2px);
     transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
 }
