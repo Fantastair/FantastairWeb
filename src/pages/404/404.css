@@ -24,7 +24,7 @@ body {
     background-color: var(--bg-light);
     color: var(--text-light);
     overflow: hidden;
-    height: 100vh;
+    height: 100dvh;
 }
 
 /* 深色模式支持 */
@@ -40,7 +40,7 @@ body {
     position: fixed;
     inset: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     background-color: #0d1b28;
 }
@@ -78,18 +78,18 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100dvh;
     padding: 2rem;
     text-align: center;
     /* 向上移动整体内容 */
-    transform: translateY(-5vh);
+    transform: translateY(-5dvh);
 }
 
 /* 404 图标 */
 #error-icon {
     font-size: clamp(4rem, 15vmin, 8rem);
     color: var(--primary-color);
-    margin-top: 5vh;
+    margin-top: 5dvh;
     animation: floatIcon 3s ease-in-out infinite;
     text-shadow:
         0 0 20px var(--primary-color),
@@ -207,12 +207,12 @@ body {
 @media (max-width: 768px) {
     #error-content {
         padding: 1.5rem;
-        transform: translateY(-3vh);
+        transform: translateY(-3dvh);
     }
 
     #error-icon {
         font-size: clamp(3rem, 12vmin, 6rem);
-        margin-top: 3vh;
+        margin-top: 3dvh;
         margin-bottom: 1.5rem;
     }
 
@@ -242,7 +242,7 @@ body {
 @media (max-width: 480px) {
     #error-content {
         padding: 1rem;
-        transform: translateY(-2vh);
+        transform: translateY(-2dvh);
     }
 
     #home-button {

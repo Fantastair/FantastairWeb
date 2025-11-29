@@ -3,7 +3,7 @@
 #hero {
     position: fixed;
     inset: 0;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     z-index: 10;
     background-color: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
@@ -27,14 +27,14 @@
 
 /* 图标边框 */
 #hero-icon-wrapper {
-    --top: 35vh;
+    --top: 35dvh;
 
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20vh;
-    height: 20vh;
+    width: 20dvh;
+    height: 20dvh;
     background: linear-gradient(-45deg, var(--color-title-red), var(--color-white));
     border-radius: 40%;
     left: 50vw;
@@ -53,7 +53,7 @@
 
 /* 主标题 */
 #hero-title {
-    --top: 55vh;
+    --top: 55dvh;
 
     position: absolute;
     left: 50vw;
