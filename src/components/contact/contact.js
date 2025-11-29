@@ -1,8 +1,11 @@
 export async function initContact() {
-    const responsePromise = fetch('./src/components/contact/contact.html');
+    const responsePromise = fetch('./src/components/contact/contact_card.html');
     const contactItems = document.querySelectorAll('.contact-item');
+    const contact = document.getElementById('contact');
+    const h = (window.visualViewport?.height ?? window.innerHeight) - 60;
     const response = await responsePromise;
     const html = await response.text();
+    contact.style.setProperty('--contact-height', `${h}px`);
 
     contactItems.forEach(item => {
         item.innerHTML = html;

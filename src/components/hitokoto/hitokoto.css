@@ -154,4 +154,13 @@
         width: 1.5rem;
         height: 1.5rem;
     }
+    #hitokoto-tip {
+        display: none;
+        transition: none;
+    }
+    #hitokoto:hover #hitokoto-tip {
+        opacity: 0;
+        visibility: hidden;
+        transition: none;
+    }
 }
