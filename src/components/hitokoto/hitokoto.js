@@ -31,8 +31,6 @@ const hitokotoTextSpans = [];
  */
 async function hitokotoTextAppear(text) {
     const originalText = text.trim();
-    console.log("show text: ", originalText);
-    // elements.hitokotoText.innerHTML = '';
     originalText.split('').forEach((char, index) => {
         let span;
         if (index < hitokotoTextSpans.length) {
@@ -99,7 +97,6 @@ async function refreshHitokoto() {
         await hitokotoTextDisappear();
         // 解析响应数据
         const { hitokoto: hitokotoText } = await response.json()
-        console.log("get  text: ", hitokotoText);
         // 淡入请求得到的文本
         await hitokotoTextAppear(hitokotoText);
     }

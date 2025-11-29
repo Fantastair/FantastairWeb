@@ -3,7 +3,7 @@
 /* 文章英雄区域 */
 #article-hero {
     position: relative;
-    height: 60vh;
+    height: 60dvh;
     min-height: 400px;
     overflow: hidden;
     background: linear-gradient(135deg, #0d1b28 0%, #1a2d3e 100%);
@@ -129,7 +129,7 @@
     padding: 4rem 2rem;
     background: var(--bg-light);
     color: var(--text-light);
-    min-height: 60vh;
+    min-height: 60dvh;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -253,7 +253,7 @@
 /* 响应式设计 */
 @media (max-width: 768px) {
     #article-hero {
-        height: 50vh;
+        height: 50dvh;
         min-height: 350px;
     }
 

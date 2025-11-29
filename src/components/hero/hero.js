@@ -51,7 +51,7 @@ export function updateHeroStyles(ratio = null) {
     elements.heroTitle.style.fontSize = `clamp(${min}rem, ${ideal}vmin, ${max}rem)`;
 
     // 图标位置变换
-    elements.heroIconWrapper.style.top = `${-iconWrapperTop * ratio + (1 - ratio) * iconWrapperTop}vh`;
+    elements.heroIconWrapper.style.top = `${-iconWrapperTop * ratio + (1 - ratio) * iconWrapperTop}dvh`;
 
     // 标题位置变换
     const titleLeft = finalTitleLeft * ratio ** 2 + window.innerWidth * (1 - ratio ** 2) / 2;
