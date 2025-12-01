@@ -9,15 +9,18 @@
     background-color: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
     box-shadow: 0 0 32px var(--color-black);
     backdrop-filter: blur(8px);
+    will-change: height;
 }
 
 /* 背景图 */
 #hero-bg {
     position: absolute;
-    inset: 0;
+    width: 100dvw;
+    height: 100dvh;
     background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
     filter: blur(0px);
     transform: scale(1);
+    will-change: transform, filter, top, opacity;
 }
 
 /* 高清背景图置换 */
@@ -41,6 +44,7 @@
     top: var(--top);
     box-shadow: 0 0 32px var(--color-black);
     transform: translateX(-50%) translateY(-50%);
+    will-change: top;
 }
 
 /* 图标本体 */
@@ -63,37 +67,33 @@
     font-size: clamp(2.5rem, 16vw, 8rem);
     letter-spacing: 0.1em;
     white-space: nowrap;
+    will-change: font-size, left, top;
 }
 
-/* 字符样式 - 粉色基础层 */
+/* 字符样式 */
 .hero-letter {
     position: relative;
     display: inline-block;
     color: var(--color-title-pink);
+    animation: shine-fade 4s ease-in-out infinite alternate;
     text-shadow: 
         0 0 16px var(--color-title-pink),
         2px 2px 8px var(--color-black);
-}
-
-/* 字符样式 - 红色覆盖层（通过伪元素） */
-.hero-letter::before {
-    content: attr(data-char);
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--color-title-red);
-    text-shadow: 0 0 32px var(--color-title-red);
-    opacity: 0;
-    animation: shine-fade 4s ease-in-out infinite alternate;
-    animation-delay: inherit;
+    will-change: text-shadow;
 }
 
 /* 闪光动画 */
 @keyframes shine-fade {
     0% {
-        opacity: 0;
+        color: var(--color-title-pink);
+        text-shadow: 
+            0 0 16px var(--color-title-pink),
+            2px 2px 8px var(--color-black);
     }
     100% {
-        opacity: 1;
+        color: var(--color-title-red);
+        text-shadow:
+            0 0 32px var(--color-title-red),
+            2px 2px 8px var(--color-black);
     }
 }

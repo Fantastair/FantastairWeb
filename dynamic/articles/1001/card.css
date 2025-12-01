@@ -121,4 +121,7 @@
     #column-card-1001:hover .cross-1001 {
         display: none;
     }
+    #plane-1001 {
+        display: none;
+    }
 }
