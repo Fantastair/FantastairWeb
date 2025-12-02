@@ -7,6 +7,9 @@ import { initQRCode } from "../components/QRCode/QRCode.js"
 
 console.log("泥嚎 🚀 --- Fantastair");
 
+document.documentElement.style.setProperty('--vw', `${window.innerWidth}px`);
+document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+
 loadHighResBackground();    // 加载高清背景图
 initTitleAnimation(0.3);    // 初始化标题动画
 {
