@@ -3,7 +3,7 @@
 #hero {
     position: fixed;
     inset: 0;
-    height: 100dvh;
+    height: var(--vh);
     overflow: hidden;
     z-index: 10;
     background-color: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
@@ -15,8 +15,8 @@
 /* 背景图 */
 #hero-bg {
     position: absolute;
-    width: 100dvw;
-    height: 100dvh;
+    width: var(--vw);
+    height: var(--vh);
     background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
     filter: blur(0px);
     transform: scale(1);
