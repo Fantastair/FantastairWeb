@@ -30,14 +30,14 @@
 
 /* 图标边框 */
 #hero-icon-wrapper {
-    --top: 35dvh;
+    --top: 35svh;
 
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20dvh;
-    height: 20dvh;
+    width: 20svh;
+    height: 20svh;
     background: linear-gradient(-45deg, var(--color-title-red), var(--color-white));
     border-radius: 40%;
     left: 50vw;
@@ -57,7 +57,7 @@
 
 /* 主标题 */
 #hero-title {
-    --top: 55dvh;
+    --top: 55svh;
 
     position: absolute;
     left: 50vw;

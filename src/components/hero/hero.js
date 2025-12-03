@@ -35,7 +35,7 @@ export function updateHeroStyles(ratio = null) {
         ratio = Math.min(window.scrollY / (window.innerHeight - finalHeight), 1);
     }
 
-    if (ratio === last_ratio) return ratio;    // 避免重复计算
+    if (ratio === last_ratio || ratio < 0) return ratio;    // 避免重复计算
     if (ratio === 1 && last_ratio !== 1) {     // 锁定最终状态
         elements.hero.style.willChange = 'auto';
         elements.heroBg.style.willChange = 'auto';
@@ -50,10 +50,10 @@ export function updateHeroStyles(ratio = null) {
     last_ratio = ratio;
 
     // 区域高度变换
-    elements.hero.style.height = `${(1 - ratio) * (window.innerHeight - finalHeight) + finalHeight}px`;
+    elements.hero.style.height = `${Math.max(window.innerHeight - window.scrollY, finalHeight)}px`;
     
     // 图标位置变换
-    elements.heroIconWrapper.style.top = `${-iconWrapperTop * ratio + (1 - ratio) * iconWrapperTop}dvh`;
+    elements.heroIconWrapper.style.top = `${-iconWrapperTop * ratio + (1 - ratio) * iconWrapperTop}svh`;
 
     // 主标题变换
     elements.heroTitle.style.fontSize = `clamp(2.5rem, ${16 - ratio * 11.2}vmin, 8rem)`;

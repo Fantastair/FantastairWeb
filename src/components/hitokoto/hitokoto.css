@@ -61,6 +61,7 @@
 /* 复制按钮样式 */
 #hitokoto-copy-button {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     color: var(--color-hitokoto-purple);
@@ -133,9 +134,10 @@
 @media (max-width: 600px) {
     #hitokoto {
         gap: 0.5rem;
+        transition: none;
     }
     #hitokoto:hover {
-        transform: translateX(-50%);
+        transform: none;
         gap: 0.5rem;
     }
     .hitokoto-quote {
