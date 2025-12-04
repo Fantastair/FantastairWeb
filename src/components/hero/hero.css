@@ -1,9 +1,13 @@
 /* ===== 英雄区域样式 ===== */
+#hero-spacer {
+    height: 100dvh;
+}
+
 /* 总区域 */
 #hero {
     position: fixed;
     inset: 0;
-    height: var(--vh);
+    height: 100dvh;
     overflow: hidden;
     z-index: 10;
     background-color: color-mix(in srgb, var(--color-bg-blue) 50%, transparent);
@@ -15,8 +19,8 @@
 /* 背景图 */
 #hero-bg {
     position: absolute;
-    width: var(--vw);
-    height: var(--vh);
+    width: 100dvw;
+    height: 100dvh;
     background: url('../../../assets/images/background_small.webp') center/cover no-repeat;
     filter: blur(0px);
     transform: scale(1);
@@ -95,5 +99,17 @@
         text-shadow:
             0 0 32px var(--color-title-red),
             2px 2px 8px var(--color-black);
+    }
+}
+
+@media (min-width: 600px) {
+    #hero-spacer {
+        height: var(--vh);
+    }
+    #hero {
+        height: var(--vh);
+    }
+    #hero-bg {
+        height: var(--vh);
     }
 }

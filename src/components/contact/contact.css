@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(var(--vh) - 60px);
+    height: calc(100dvh - 60px);
 }
 
 /* 联系标题样式 */
@@ -181,6 +181,9 @@
 }
 
 @media (max-width: 600px) {
+    #contact {
+        height: calc(var(--vh) - 60px);
+    }
     #contact-card {
         flex-wrap: nowrap;
         align-items: center;
