@@ -11,6 +11,7 @@ html {
     color: var(--color-black);
     overflow-x: hidden;
     max-width: 100vw;
+    scrollbar-width: none;
 }
 
 body {
