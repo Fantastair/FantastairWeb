@@ -1,0 +1,53 @@
+# 个人作品集 - 自动部署（含压缩）
+# push 到 master 分支时自动压缩并部署到服务器
+
+name: Deploy Personal Site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install minifiers
+        run: npm install -g html-minifier-terser csso-cli terser
+
+      - name: Minify HTML
+        run: |
+          find . -name "*.html" -type f \
+            -exec html-minifier-terser \
+              --collapse-whitespace \
+              --remove-comments \
+              --remove-redundant-attributes \
+              --remove-script-type-attributes \
+              --remove-style-link-type-attributes \
+              --use-short-doctype \
+              --minify-css true \
+              --minify-js true \
+              -o {} {} \;
+
+      - name: Minify CSS
+        run: find . -name "*.css" -type f ! -name "*.min.css" -exec csso {} --output {} \;
+
+      - name: Minify JS
+        run: find . -name "*.js" -type f ! -name "*.min.js" -exec terser {} --compress --mangle -o {} \;
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.2
+        with:
+          switches: -avz --delete --exclude='.git*' --exclude='.github'
+          path: ./
+          remote_path: /var/www/fantastair.cn/public/
+          remote_host: 8.152.101.207
+          remote_user: deployer
+          remote_key: ${{ secrets.DEPLOY_KEY }}
