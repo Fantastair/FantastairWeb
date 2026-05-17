@@ -6,6 +6,10 @@ name: Deploy Personal Site
 on:
   push:
     branches: [master]
+    paths:
+      - 'index.html'
+      - 'src/**'
+      - 'assets/**'
   workflow_dispatch:
 
 jobs:
@@ -45,9 +49,9 @@ jobs:
       - name: Deploy via rsync
         uses: burnett01/rsync-deployments@v8
         with:
-          switches: -avz --no-t --no-perms --no-owner --no-group --delete --exclude='.git*' --exclude='.github'
+          switches: -avz --no-t --no-perms --no-owner --no-group --delete --include='index.html' --include='src/***' --include='assets/***' --exclude='*'
           path: ./
           remote_path: /var/www/fantastair.cn/public/
-          remote_host: 8.152.101.207
+          remote_host: fantastair.cn
           remote_user: deployer
           remote_key: ${{ secrets.DEPLOY_KEY }}
