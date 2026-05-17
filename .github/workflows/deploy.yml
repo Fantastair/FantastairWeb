@@ -8,8 +8,11 @@ on:
     branches: [master]
     paths:
       - 'index.html'
+      - 'robots.txt'
+      - 'sitemap.xml'
       - 'src/**'
       - 'assets/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 jobs:
