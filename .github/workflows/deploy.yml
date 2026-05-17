@@ -43,9 +43,9 @@ jobs:
         run: find . -name "*.js" -type f ! -name "*.min.js" -exec terser {} --compress --mangle -o {} \;
 
       - name: Deploy via rsync
-        uses: burnett01/rsync-deployments@7.0.2
+        uses: burnett01/rsync-deployments@8.0
         with:
-          switches: -avz --delete --exclude='.git*' --exclude='.github'
+          switches: -avz --no-t --no-perms --no-owner --no-group --delete --exclude='.git*' --exclude='.github'
           path: ./
           remote_path: /var/www/fantastair.cn/public/
           remote_host: 8.152.101.207
