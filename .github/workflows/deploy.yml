@@ -49,7 +49,7 @@ jobs:
       - name: Deploy via rsync
         uses: burnett01/rsync-deployments@v8
         with:
-          switches: -avz --no-t --no-perms --no-owner --no-group --delete --include='index.html' --include='src/***' --include='assets/***' --exclude='*'
+          switches: -avz --no-t --no-perms --no-owner --no-group --delete --include='index.html' --include='robots.txt' --include='sitemap.xml' --include='src/***' --include='assets/***' --exclude='*'
           path: ./
           remote_path: /var/www/fantastair.cn/public/
           remote_host: fantastair.cn
