@@ -29,3 +29,9 @@ projects/*.md                  # Detailed project writeups (reference, not rende
 - **`projects.js`** — contains an array of 13 project objects (`slug`, `name`, `desc`, `tags`, `github`, `release`, `hasRelease`) and a render loop that creates DOM elements. Add or edit projects in this file.
 - **CSS** — CSS custom properties for the dark color scheme. Grid layout: 3 columns (≥900px) → 2 columns (600–900px) → 1 column (<600px). Project cards have a 16:9 image area at the top. Images use lazy loading with a placeholder gradient background; if an image fails to load it's hidden and the placeholder shows through.
 - **Project images** — place screenshots at `assets/images/projects/<slug>.webp`. The `<slug>` field in `projects.js` determines the filename. Cards gracefully degrade if the image is missing.
+
+## Deployment
+
+Push to `master` → GitHub Actions (`.github/workflows/deploy.yml`) minifies HTML/CSS/JS, then rsyncs to VPS (incremental, only changed files).
+
+Secrets: `DEPLOY_KEY` (SSH private key for `deployer` user on the VPS).
