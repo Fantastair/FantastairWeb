@@ -217,23 +217,42 @@ projects.forEach((p) => {
     let particles = [];
     let mouse = { x: -1000, y: -1000 };
 
+    const RESIZE_DEBOUNCE = 250;
+
+    let resizeTimer = null;
+    let w = 0, h = 0;
+
     function resize() {
         const rect = landing.getBoundingClientRect();
-        canvas.width = rect.width * devicePixelRatio;
-        canvas.height = rect.height * devicePixelRatio;
-        canvas.style.width = rect.width + "px";
-        canvas.style.height = rect.height + "px";
+        w = rect.width;
+        h = rect.height;
+        canvas.width = w * devicePixelRatio;
+        canvas.height = h * devicePixelRatio;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
         ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
     }
 
+    function wrapOutOfBounds() {
+        for (const p of particles) {
+            if (p.x < -20) p.x = w + 20;
+            if (p.x > w + 20) p.x = -20;
+            if (p.y < -20) p.y = h + 20;
+            if (p.y > h + 20) p.y = -20;
+        }
+    }
+
+    function onResize() {
+        resize();
+        wrapOutOfBounds();
+    }
+
     function createParticles() {
-        particles = [];
-        const w = landing.getBoundingClientRect().width;
-        const h = landing.getBoundingClientRect().height;
+        const rect = landing.getBoundingClientRect();
         for (let i = 0; i < PARTICLE_COUNT; i++) {
             particles.push({
-                x: Math.random() * w,
-                y: Math.random() * h,
+                x: Math.random() * rect.width,
+                y: Math.random() * rect.height,
                 vx: (Math.random() - 0.5) * 0.5,
                 vy: (Math.random() - 0.5) * 0.5,
                 r: Math.random() * 1.2 + 1.2,
@@ -242,9 +261,6 @@ projects.forEach((p) => {
     }
 
     function animate() {
-        const w = landing.getBoundingClientRect().width;
-        const h = landing.getBoundingClientRect().height;
-
         ctx.clearRect(0, 0, w, h);
 
         // Update & draw connections
@@ -317,8 +333,8 @@ projects.forEach((p) => {
     animate();
 
     window.addEventListener("resize", function () {
-        resize();
-        createParticles();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(onResize, RESIZE_DEBOUNCE);
     });
 
     landing.addEventListener("mousemove", function (e) {

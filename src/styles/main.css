@@ -50,6 +50,7 @@ img {
 #landing {
     position: relative;
     height: 100vh;
+    height: 100dvh;
     min-height: 500px;
     display: flex;
     flex-direction: column;
