@@ -78,12 +78,49 @@ img {
     text-align: center;
 }
 
+.avatar-wrap {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.avatar-wrap::before,
+.avatar-wrap::after {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at center,
+        transparent 48%,
+        rgba(88, 166, 255, 0.55) 54%,
+        rgba(88, 166, 255, 0.3) 60%,
+        rgba(88, 166, 255, 0.12) 68%,
+        rgba(88, 166, 255, 0.03) 78%,
+        transparent 88%
+    );
+    transform: scale(0.6);
+    opacity: 0;
+    animation: ripple 5s ease-out infinite;
+    pointer-events: none;
+}
+
+.avatar-wrap::after {
+    animation-delay: 2.5s;
+}
+
+@keyframes ripple {
+    0%   { transform: scale(0.6); opacity: 1; }
+    70%  { opacity: 0.15; }
+    100% { transform: scale(2.8); opacity: 0; }
+}
+
 #hero-avatar {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     border: 2px solid var(--border);
-    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
 }
 
 #hero-name {
@@ -413,10 +450,13 @@ img {
         padding: 20px 16px;
     }
 
+    .avatar-wrap {
+        margin-bottom: 18px;
+    }
+
     #hero-avatar {
         width: 88px;
         height: 88px;
-        margin-bottom: 18px;
     }
 
     #hero-name {
