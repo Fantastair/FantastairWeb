@@ -79,18 +79,69 @@ img {
 }
 
 #hero-avatar {
-    width: 96px;
-    height: 96px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     border: 2px solid var(--border);
     margin-bottom: 24px;
 }
 
 #hero-name {
-    font-size: 2rem;
+    position: relative;
+    font-size: 2.8rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: 12px;
+    background-image: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        #c084fc 17%,
+        var(--accent) 33%,
+        #c084fc 50%,
+        var(--accent) 67%,
+        #c084fc 83%,
+        var(--accent) 100%
+    );
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
+}
+
+/* 光晕 */
+#hero-name::after {
+    content: "Fantastair";
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: -4px;
+    bottom: -4px;
+    background-image: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        #c084fc 17%,
+        var(--accent) 33%,
+        #c084fc 50%,
+        var(--accent) 67%,
+        #c084fc 83%,
+        var(--accent) 100%
+    );
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(6px);
+    opacity: 0.5;
+    animation: shimmer 5s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    from { background-position: 100% 0; }
+    to   { background-position: -100% 0; }
 }
 
 #hero-tagline {
@@ -363,13 +414,13 @@ img {
     }
 
     #hero-avatar {
-        width: 72px;
-        height: 72px;
+        width: 88px;
+        height: 88px;
         margin-bottom: 18px;
     }
 
     #hero-name {
-        font-size: 1.6rem;
+        font-size: 2rem;
     }
 
     #hero-tagline {
