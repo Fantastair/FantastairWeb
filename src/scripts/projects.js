@@ -239,6 +239,7 @@ projects.forEach((p) => {
 
     let resizeTimer = null;
     let w = 0, h = 0;
+    let running = true;
 
     function resize() {
         const rect = landing.getBoundingClientRect();
@@ -279,6 +280,7 @@ projects.forEach((p) => {
     }
 
     function animate() {
+        if (!running) return;
         ctx.clearRect(0, 0, w, h);
 
         // Update & draw connections
@@ -365,4 +367,19 @@ projects.forEach((p) => {
         mouse.x = -1000;
         mouse.y = -1000;
     });
+
+    function startLoop() {
+        if (running) return;
+        running = true;
+        requestAnimationFrame(animate);
+    }
+
+    function stopLoop() {
+        running = false;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries[0].isIntersecting ? startLoop() : stopLoop();
+    }, { threshold: 0 });
+    observer.observe(landing);
 })();
