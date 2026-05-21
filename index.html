@@ -15,7 +15,15 @@
         <header id="hero">
             <img id="hero-avatar" src="assets/images/icon.webp" alt="Fantastair的头像" />
             <h1 id="hero-name">Fantastair</h1>
-            <p id="hero-tagline">热衷于用代码构建有趣的事物，从嵌入式系统到桌面应用。</p>
+            <div id="hero-tagline">
+                <span id="hitokoto-text"></span>
+                <button id="hitokoto-refresh" title="换一句" aria-label="换一句">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </svg>
+                </button>
+            </div>
             <a id="hero-github" href="https://github.com/Fantastair" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
                 GitHub
@@ -37,9 +45,105 @@
 
     <footer id="footer">
         <p>&copy; 2026 Fantastair</p>
+        <p>一句话服务由 <a href="https://hitokoto.cn/" target="_blank" rel="noopener noreferrer">Hitokoto</a> 提供</p>
         <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2025179704号-1</a></p>
     </footer>
 
     <script src="src/scripts/projects.js"></script>
+    <script>
+        const hitokotoText = document.getElementById('hitokoto-text');
+        const hitokotoRefresh = document.getElementById('hitokoto-refresh');
+
+        const CHAR_DELAY = 28; // 每个字的动画间隔(ms)
+        const API = 'https://v1.hitokoto.cn/?min_length=3&max_length=36';
+
+        let loading = false;
+        let charSpans = [];
+
+        function formatHitokoto(data) {
+            const parts = [];
+            if (data.from_who) parts.push(data.from_who);
+            if (data.from) parts.push(`《${data.from}》`);
+            return parts.length ? `${data.hitokoto} —— ${parts.join(' ')}` : data.hitokoto;
+        }
+
+        // 将文字拆成逐字 <span>
+        function buildCharSpans(text) {
+            hitokotoText.innerHTML = '';
+            const chars = [...text];
+            return chars.map((char, i) => {
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.textContent = char;
+                span.style.setProperty('--i', i);
+                hitokotoText.appendChild(span);
+                return span;
+            });
+        }
+
+        // 逐字出场（反向：从末尾到开头）
+        function animateOut(spans) {
+            return new Promise(resolve => {
+                if (!spans.length) return resolve();
+                const total = spans.length;
+                spans.forEach((span, i) => {
+                    span.style.setProperty('--i', total - 1 - i);
+                    span.classList.add('exit');
+                });
+                const duration = total * CHAR_DELAY + 180;
+                setTimeout(resolve, duration);
+            });
+        }
+
+        // 逐字入场
+        function animateIn(text) {
+            return new Promise(resolve => {
+                const spans = buildCharSpans(text);
+                charSpans = spans;
+                if (!spans.length) return resolve();
+                const duration = spans.length * CHAR_DELAY + 250;
+                setTimeout(resolve, duration);
+            });
+        }
+
+        async function refreshHitokoto() {
+            if (loading) return;
+            loading = true;
+            hitokotoRefresh.classList.add('spinning');
+
+            const oldSpans = charSpans;
+            const oldText = [...oldSpans].map(s => s.textContent).join('') || hitokotoText.textContent;
+
+            // 退出动画 + 请求并行
+            const [ , data ] = await Promise.all([
+                animateOut(oldSpans),
+                fetch(API).then(r => r.ok ? r.json() : Promise.reject()).catch(() => null)
+            ]);
+
+            if (data) {
+                await animateIn(formatHitokoto(data));
+            } else {
+                await animateIn(oldText);
+            }
+
+            loading = false;
+            hitokotoRefresh.classList.remove('spinning');
+        }
+
+        async function initHitokoto() {
+            let data;
+            try {
+                const res = await fetch(API);
+                if (!res.ok) throw new Error(res.status);
+                data = await res.json();
+            } catch {
+                return;
+            }
+            await animateIn(formatHitokoto(data));
+        }
+
+        hitokotoRefresh.addEventListener('click', refreshHitokoto);
+        initHitokoto();
+    </script>
 </body>
 </html>
