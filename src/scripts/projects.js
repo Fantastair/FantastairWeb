@@ -383,3 +383,19 @@ projects.forEach((p) => {
     }, { threshold: 0 });
     observer.observe(landing);
 })();
+
+// ===== Card Hover Glow =====
+(function () {
+    const cards = document.querySelectorAll(".project-card");
+    if (!cards.length) return;
+
+    document.getElementById("projects-grid").addEventListener("mousemove", function (e) {
+        cards.forEach(function (card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty("--mouse-x", x + "px");
+            card.style.setProperty("--mouse-y", y + "px");
+        });
+    });
+})();

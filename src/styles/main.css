@@ -307,6 +307,8 @@ img {
 
 /* ===== Project Card ===== */
 .project-card {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -314,12 +316,33 @@ img {
     transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y),
+        rgba(88, 166, 255, 0.15),
+        transparent 40%
+    );
+    transition: opacity 0.4s;
 }
 
 .project-card:hover {
     border-color: var(--border-hover);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.project-card:hover::after {
+    opacity: 1;
 }
 
 /* Image placeholder */
@@ -346,7 +369,11 @@ img {
     height: 100%;
     object-fit: cover;
     z-index: 1;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, transform 0.4s;
+}
+
+.project-card:hover .project-image-wrap img {
+    transform: scale(1.08);
 }
 
 .project-image-wrap img.not-loaded {
