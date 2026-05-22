@@ -28,7 +28,8 @@ const projects = [
         desc: "双人对战回合制轰炸棋游戏，在 12×12 网格中部署飞机、轮流轰炸对方机场，含 AI 概率推理算法。",
         tags: ["Python", "Pygame"],
         github: "https://github.com/Fantastair/Airport-Hegemony",
-        hasRelease: false,
+        release: "https://github.com/Fantastair/Airport-Hegemony/releases",
+        hasRelease: true,
     },
     {
         slug: "PythonEye",
@@ -36,13 +37,15 @@ const projects = [
         desc: "面向 Python 初学者的可视化代码调试器，基于 pdb 扩展，支持断点、步进、变量追踪和语法高亮。",
         tags: ["Python", "Pygame", "fantas UI"],
         github: "https://github.com/Fantastair/PythonEye",
-        hasRelease: false,
+        release: "https://github.com/Fantastair/PythonEye/releases",
+        hasRelease: true,
     },
     {
         slug: "AutoBingWallpaper",
         name: "AutoBingWallpaper",
         desc: "每日自动下载 Bing 官方 4K 壁纸并设为 Windows 桌面壁纸，运行即退出，无后台常驻，核心仅 58 行。",
         tags: ["Python", "requests", "PyInstaller"],
+        img: "assets/images/projects/AutoBingWallpaper.svg",
         github: "https://github.com/Fantastair/AutoBingWallpaper",
         release: "https://github.com/Fantastair/AutoBingWallpaper/releases",
         hasRelease: true,
@@ -132,7 +135,7 @@ projects.forEach((p) => {
     const imgWrap = document.createElement("div");
     imgWrap.className = "project-image-wrap";
     const img = document.createElement("img");
-    img.src = `assets/images/projects/${p.slug}.webp`;
+    img.src = p.img || `assets/images/projects/${p.slug}.webp`;
     img.alt = p.name;
     img.loading = "lazy";
     img.classList.add("not-loaded");
